@@ -1,0 +1,225 @@
+<style>
+    .dynamic-section {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        min-height: 100vh;
+        color: white;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .dynamic-container {
+        max-width: 800px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .dynamic-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .dynamic-header h2 {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+        color: white;
+    }
+
+    .dynamic-content {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    .dynamic-item {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px 0;
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .dynamic-item:last-child {
+        border-bottom: none;
+    }
+
+    .dynamic-timestamp {
+        font-size: 0.9em;
+        color: rgba(255, 255, 255, 0.7);
+        min-width: 100px;
+    }
+
+    .dynamic-message {
+        flex: 1;
+        line-height: 1.6;
+    }
+
+    .dynamic-tag {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 0.8em;
+        margin-right: 8px;
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .dynamic-content:hover {
+        transform: translateY(-5px);
+    }
+
+    .loading {
+        text-align: center;
+        padding: 20px;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .loading-spinner {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<section class="dynamic-section">
+    <div class="dynamic-container">
+        <div class="dynamic-header">
+            <h2>实时动态</h2>
+        </div>
+        <div id="dynamic-feed"></div>
+        <div class="loading">
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // 模拟动态数据
+    const dynamicData = [
+        {
+            timestamp: "2024-01-15 14:30",
+            message: "今天的阳光真好，窗台上的猫咪懒洋洋地晒着太阳",
+            tags: ["日常", "猫咪"]
+        },
+        {
+            timestamp: "2024-01-15 12:15",
+            message: "完成了一幅新的水彩画，记录下午后的温柔时光",
+            tags: ["创作", "艺术"]
+        },
+        {
+            timestamp: "2024-01-15 10:00",
+            message: "清晨的雨滴打在窗户上，整个世界都安静下来",
+            tags: ["感悟", "生活"]
+        }
+    ];
+
+    // 渲染动态内容
+    function renderDynamicContent() {
+        const feed = document.getElementById('dynamic-feed');
+        feed.innerHTML = ''; // 清空现有内容
+
+        dynamicData.forEach((item, index) => {
+            const dynamicContent = document.createElement('div');
+            dynamicContent.className = 'dynamic-content';
+            dynamicContent.style.animationDelay = `${index * 0.2}s`;
+
+            const dynamicItem = document.createElement('div');
+            dynamicItem.className = 'dynamic-item';
+
+            const timestamp = document.createElement('div');
+            timestamp.className = 'dynamic-timestamp';
+            timestamp.textContent = item.timestamp;
+
+            const message = document.createElement('div');
+            message.className = 'dynamic-message';
+
+            const tags = item.tags.map(tag => 
+                `<span class="dynamic-tag">#${tag}</span>`
+            ).join('');
+
+            message.innerHTML = `
+                ${tags}
+                <p>${item.message}</p>
+            `;
+
+            dynamicItem.appendChild(timestamp);
+            dynamicItem.appendChild(message);
+            dynamicContent.appendChild(dynamicItem);
+            feed.appendChild(dynamicContent);
+        });
+    }
+
+    // 模拟实时更新
+    function simulateRealtimeUpdates() {
+        const newMessages = [
+            "夜深人静，思绪万千",
+            "城市的霓虹映照着雨后的街道",
+            "又是一个适合创作的下午"
+        ];
+
+        setInterval(() => {
+            if (Math.random() > 0.7) { // 30%的概率添加新动态
+                const newMessage = {
+                    timestamp: new Date().toLocaleString(),
+                    message: newMessages[Math.floor(Math.random() * newMessages.length)],
+                    tags: ["实时", "更新"]
+                };
+                dynamicData.unshift(newMessage);
+                if (dynamicData.length > 5) {
+                    dynamicData.pop();
+                }
+                renderDynamicContent();
+            }
+        }, 5000);
+    }
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', () => {
+        renderDynamicContent();
+        simulateRealtimeUpdates();
+    });
+
+    // 添加页面可见性检测
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+            renderDynamicContent(); // 页面重新可见时更新内容
+        }
+    });
+</script> 

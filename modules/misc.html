@@ -1,0 +1,195 @@
+<style>
+    .misc-section {
+        background-color: var(--bg-light);
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .misc-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        padding: 20px;
+    }
+
+    .misc-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .misc-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .misc-card h3 {
+        color: var(--primary-color);
+        margin-bottom: 15px;
+        font-size: 1.5em;
+    }
+
+    .misc-card p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+    .misc-stats {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-value {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: var(--secondary-color);
+    }
+
+    .stat-label {
+        font-size: 0.9em;
+        color: #888;
+    }
+
+    .misc-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 15px;
+    }
+
+    .misc-tag {
+        background: #f0f0f0;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.9em;
+        color: #666;
+    }
+
+    @media (max-width: 768px) {
+        .misc-container {
+            grid-template-columns: 1fr;
+            padding: 10px;
+        }
+    }
+</style>
+
+<section class="misc-section">
+    <div class="misc-container">
+        <div class="misc-card">
+            <h3>关于我</h3>
+            <p>热爱艺术创作的程序员，在代码与画笔间寻找平衡。</p>
+            <div class="misc-tags">
+                <span class="misc-tag">艺术</span>
+                <span class="misc-tag">编程</span>
+                <span class="misc-tag">创作</span>
+            </div>
+            <div class="misc-stats">
+                <div class="stat-item">
+                    <div class="stat-value">142</div>
+                    <div class="stat-label">作品</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">3.5k</div>
+                    <div class="stat-label">关注</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="misc-card">
+            <h3>创作历程</h3>
+            <p>记录每一个值得铭记的创作瞬间，分享创作过程中的点点滴滴。</p>
+            <div class="misc-tags">
+                <span class="misc-tag">过程</span>
+                <span class="misc-tag">记录</span>
+                <span class="misc-tag">分享</span>
+            </div>
+            <div class="misc-stats">
+                <div class="stat-item">
+                    <div class="stat-value">56</div>
+                    <div class="stat-label">专栏</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">2.8k</div>
+                    <div class="stat-label">收藏</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="misc-card">
+            <h3>联系方式</h3>
+            <p>期待与你交流，分享创作的快乐。</p>
+            <div class="misc-tags">
+                <span class="misc-tag">社交</span>
+                <span class="misc-tag">交流</span>
+                <span class="misc-tag">合作</span>
+            </div>
+            <div id="contact-info"></div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // 统计数字动画
+    function animateNumbers() {
+        const stats = document.querySelectorAll('.stat-value');
+        stats.forEach(stat => {
+            const target = parseInt(stat.textContent);
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    stat.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    stat.textContent = Math.floor(current);
+                }
+            }, 30);
+        });
+    }
+
+    // 联系方式加密显示
+    function setupContactInfo() {
+        const contactInfo = document.getElementById('contact-info');
+        const email = 'example@domain.com';
+        contactInfo.innerHTML = `
+            <p style="color: #666;">
+                邮箱: ${email.replace(/@/, '[at]')}
+            </p>
+        `;
+    }
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', () => {
+        animateNumbers();
+        setupContactInfo();
+    });
+
+    // 观察者，当卡片进入视口时触发动画
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = 1;
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('.misc-card').forEach(card => {
+        observer.observe(card);
+    });
+</script> 
