@@ -1,398 +1,82 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <!-- 基本的元数据设置 -->
     <meta charset="UTF-8">
-    <!-- 设置视口以适应移动设备 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 网站描述信息 -->
-    <meta name="description" content="单页设计，四模块布局：文字、画廊、动态、杂项">
+    <meta name="description" content="单页设计，四模块布局">
     <title>单页网站设计</title>
-    <!-- 引入Google的Noto Serif SC字体，用于中文显示 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS变量定义，用于全局颜色和过渡效果管理 */
+        /* 只包含基础样式 */
         :root {
-            --primary-color: #2c3e50;    /* 主要颜色 - 深蓝灰色 */
-            --secondary-color: #3498db;   /* 次要颜色 - 亮蓝色 */
-            --accent-color: #e74c3c;      /* 强调颜色 - 红色 */
-            --text-color: #2c3e50;        /* 文本颜色 - 深蓝灰色 */
-            --bg-light: #f8f9fa;          /* 背景浅色 - 淡灰色 */
-            --transition: all 0.3s ease;   /* 统一过渡效果 - 0.3秒缓动 */
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-color: #2c3e50;
+            --bg-light: #f8f9fa;
         }
 
-        /* 基础页面样式设置 - 重置默认样式并设置基本字体和背景 */
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Noto Serif SC', serif;
-            background-color: var(--bg-light);
-            color: var(--text-color);
-            line-height: 1.8;
             min-width: 100vw;
-            overflow-x: hidden;  /* 防止水平滚动 */
+            overflow-x: hidden;
         }
 
-        /* 内容容器样式 - 确保内容占满整个宽度 */
         .container {
             width: 100%;
             margin: 0;
-            max-width: none;
             padding: 0;
-        }
-
-        /* 通用区块样式 - 为所有section设置基本布局 */
-        section {
-            padding: 80px 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-        }
-
-        /* 文字区块样式 - 设置全屏高度的文字展示区 */
-        .text-section {
-            background-color: #ffffff;
-            height: 100vh;  /* 占满整个视口高度 */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 0;
-        }
-
-        /* 文字区块标题样式 - 大号标题文字设置 */
-        .text-section h1 {
-            font-size: 3rem;
-            font-weight: 300;
-            letter-spacing: 0.2em;
-            margin-bottom: 20px;
-            opacity: 0.8;
-        }
-
-        /* 标语样式 - 设置标语的基本外观 */
-        .slogon {
-            font-size: 1rem;
-            letter-spacing: 0.1em;
-            opacity: 0.6;
-            margin-top: 10px;
-            font-family: monospace;
-            position: relative;
-            height: 1.5em;
-        }
-
-        /* 固定前缀样式 - 设置前缀文字的动画和显示效果 */
-        .prefix {
-            display: inline-block;
-            margin-right: 5px;
-            opacity: 0;
-            transform: translateX(-10px);
-            animation: melancholyFadeInPrefix 1.2s ease-in-out forwards;
-        }
-
-        /* 文字渐变效果样式 - 设置打字效果的动画 */
-        .typed-quotes {
-            display: inline-block;
-            opacity: 0;
-            transform: translateX(10px);
-            animation: melancholyFadeInQuotes 1.2s ease-in-out 0.3s forwards;
-        }
-
-        /* 诗句容器样式 - 初始隐藏的诗句容器 */
-        .poem-container {
-            margin-top: 40px;
-            opacity: 0;
-            display: none;
-        }
-
-        /* 单行诗句样式 */
-        .poem-line {
-            font-size: 1rem;
-            margin: 10px 0;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        /* 诗句淡入动画 */
-        @keyframes fadeInLine {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 0.7;
-                transform: translateY(0);
-            }
-        }
-
-        /* 诗句容器显示动画 */
-        @keyframes showPoemContainer {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* 前缀文字淡入动画 */
-        @keyframes melancholyFadeInPrefix {
-            0% {
-                opacity: 0;
-                transform: translateX(-10px);
-            }
-            100% {
-                opacity: 0.7;
-                transform: translateX(0);
-            }
-        }
-
-        /* 打字效果淡入动画 */
-        @keyframes melancholyFadeInQuotes {
-            0% {
-                opacity: 0;
-                transform: translateX(10px);
-            }
-            100% {
-                opacity: 0.7;
-                transform: translateX(0);
-            }
-        }
-
-        /* 文字淡出动画 */
-        @keyframes melancholyFadeOut {
-            0% {
-                opacity: 0.7;
-                transform: translateX(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateX(-10px);
-                filter: blur(2px);
-            }
-        }
-
-        /* 各个区块背景样式设置 */
-        .gallery-section {
-            background-color: #ffffff;
-        }
-
-        .dynamic-section {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-        }
-
-        .misc-section {
-            background-color: var(--bg-light);
-        }
-
-        /* 标题通用样式 - 响应式字体大小设置 */
-        h1, h2 {
-            margin: 0 0 30px;
-            font-size: clamp(2rem, 5vw, 3.5rem);  /* 响应式字体大小 */
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        /* 段落文本样式 - 响应式字体大小设置 */
-        p {
-            font-size: clamp(1rem, 2vw, 1.4rem);
-            margin: 15px 0;
-            line-height: 1.8;
-            opacity: 0.9;
-        }
-
-        /* 画廊网格布局样式 - 响应式网格设置 */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-            padding: 20px;
-            width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* 画廊项目样式 - 设置每个画廊项的外观 */
-        .gallery-item {
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
-            height: 300px;
-            border-radius: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        /* 画廊项目悬停效果 - 添加交互动画 */
-        .gallery-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 8px 8px 20px rgba(0,0,0,0.15);
-        }
-
-        /* 动态内容样式 - 设置动态更新内容的外观 */
-        .dynamic-content {
-            font-style: italic;
-            animation: fadeInUp 3s infinite alternate;
-            padding: 20px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* 定义淡入上升动画 - 用于动态内容 */
-        @keyframes fadeInUp {
-            0% { 
-                opacity: 0.5;
-                transform: translateY(20px);
-            }
-            100% { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* 移动端适配样式 - 响应式布局调整 */
-        @media (max-width: 768px) {
-            section {
-                padding: 60px 10px;
-            }
-            .container {
-                width: 100%;
-                padding: 0;
-            }
-            .text-section h1 {
-                font-size: 2rem;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- 主容器 - 包含所有内容区块 -->
     <div class="container">
-        <!-- 文字展示区块 - 显示主标题和动态文字 -->
-        <section class="text-section">
-            <h1>Catzz</h1>
-            <p class="slogon">
-                <span class="prefix"></span>
-                <span class="typed-quotes"></span>
-            </p>
-            <!-- 诗句容器 - 用于显示诗句内容 -->
-            <div class="poem-container">
-                <p class="poem-line">人应阳光向上，但原谅时而脆弱</p>
-                <p class="poem-line">雨水是否协同音律，夜色或否夹杂酒精，杯中水又为何五味杂陈……</p>
-                <p class="poem-line">忧郁的梦没有终点，她又以何种姿态存在着？</p>
-            </div>
-        </section>
-
-        <!-- 画廊展示区块 - 显示图片网格 -->
-        <section class="gallery-section">
-            <h2>画廊展示</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item">画作 1</div>
-                <div class="gallery-item">画作 2</div>
-                <div class="gallery-item">画作 3</div>
-                <div class="gallery-item">画作 4</div>
-            </div>
-        </section>
-
-        <!-- 动态内容区块 - 显示实时更新的内容 -->
-        <section class="dynamic-section">
-            <h2>直播放映动态</h2>
-            <p class="dynamic-content">这里是实时更新的文字动态...</p>
-        </section>
-
-        <!-- 杂项区块 - 用于其他内容 -->
-        <section class="misc-section">
-            <h2>杂项</h2>
-        </section>
+        <div id="text-section"></div>
+        <div id="gallery-section"></div>
+        <div id="dynamic-section"></div>
+        <div id="misc-section"></div>
     </div>
 
     <script>
-        // 定义文字数组 - 用于动态显示的前缀和后缀
-        const prefixes = ["清凉雨夜", "脆弱雨伞", "街边电话", "路旁雨滩"];
-        const suffixes = ["温暖过谁的心", "保护了谁前行", "少女心伤忧郁", "天空触手可及"];
-        
-        // 初始化变量
-        let currentIndex = 0;  // 当前显示的文字索引
-        let cycleCount = 0;    // 循环计数器
-        const maxCycles = 1;   // 最大循环次数（只循环一次）
-        let quoteInterval;     // 定时器变量
-        
-        // 获取DOM元素
-        const prefix = document.querySelector('.prefix');
-        const typedQuotes = document.querySelector('.typed-quotes');
-        const poemContainer = document.querySelector('.poem-container');
-        const poemLines = document.querySelectorAll('.poem-line');
-        
-        // 更新显示文字的函数
-        function updateQuote() {
-            // 添加淡出动画
-            prefix.style.animation = 'melancholyFadeOut 1.2s ease-in-out forwards';
-            typedQuotes.style.animation = 'melancholyFadeOut 1.2s ease-in-out forwards';
-            
-            // 等待淡出动画完成后更新文字
-            setTimeout(() => {
-                // 更新索引，循环显示
-                currentIndex = (currentIndex + 1) % prefixes.length;
+        // 加载模块的函数
+        async function loadModule(elementId, fileName) {
+            try {
+                const response = await fetch(`modules/${fileName}.html`);
+                const html = await response.text();
                 
-                // 更新文字内容
-                prefix.textContent = prefixes[currentIndex];
-                typedQuotes.textContent = suffixes[currentIndex];
-                
-                // 添加淡入动画
-                prefix.style.animation = 'melancholyFadeInPrefix 0.6s ease-in-out forwards';
-                typedQuotes.style.animation = 'melancholyFadeInQuotes 0.6s ease-in-out 0.3s forwards';
+                // 创建一个临时容器来解析HTML
+                const temp = document.createElement('div');
+                temp.innerHTML = html;
 
-                // 检查是否完成一次完整循环
-                if (currentIndex === prefixes.length - 1) {
-                    cycleCount++;
-                    if (cycleCount >= maxCycles) {
-                        // 停止当前定时器
-                        clearInterval(quoteInterval);
-                        // 显示诗句
-                        setTimeout(() => {
-                            showPoem();
-                            // 等待5秒后重新开始循环
-                            setTimeout(() => {
-                                cycleCount = 0;  // 重置循环计数
-                                currentIndex = -1;  // 设置为-1，因为updateQuote开始时会+1
-                                updateQuote();  // 立即更新一次
-                                quoteInterval = setInterval(updateQuote, 3000);  // 重新开始定时器
-                            }, 8000);
-                        }, 2000);
-                    }
+                // 提取并添加样式
+                const styles = temp.querySelector('style');
+                if (styles) {
+                    document.head.appendChild(styles);
                 }
-            }, 1200);
+
+                // 提取并添加内容
+                const content = temp.querySelector('section');
+                document.getElementById(elementId).appendChild(content);
+
+                // 提取并执行脚本
+                const scripts = temp.querySelector('script');
+                if (scripts) {
+                    const newScript = document.createElement('script');
+                    newScript.textContent = scripts.textContent;
+                    document.body.appendChild(newScript);
+                }
+            } catch (error) {
+                console.error(`Error loading ${fileName}:`, error);
+            }
         }
 
-        // 显示诗句的函数
-        function showPoem() {
-            // 显示诗句容器
-            poemContainer.style.display = 'block';
-            poemContainer.style.animation = 'showPoemContainer 1s forwards';
-            
-            // 逐行显示诗句，每行间隔1秒
-            poemLines.forEach((line, index) => {
-                setTimeout(() => {
-                    line.style.animation = 'fadeInLine 1s forwards';
-                }, index * 2500);
-            });
-        }
-
-        // 初始化显示第一句
-        prefix.textContent = prefixes[0];
-        typedQuotes.textContent = suffixes[0];
-        
-        // 设置定时器，每6秒切换一次文字
-        quoteInterval = setInterval(updateQuote, 3000);
+        // 页面加载完成后加载所有模块
+        document.addEventListener('DOMContentLoaded', () => {
+            loadModule('text-section', 'text');
+            loadModule('gallery-section', 'gallery');
+            loadModule('dynamic-section', 'dynamic');
+            loadModule('misc-section', 'misc');
+        });
     </script>
 </body>
 </html>
