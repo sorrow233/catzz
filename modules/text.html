@@ -2,6 +2,7 @@
     /* 引入 Noto Serif SC 字体 */
     @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
 
+    /* 全局变量定义 */
     :root {
         --primary-color: #2c3e50;
         --secondary-color: #3498db;
@@ -11,6 +12,7 @@
         --transition: all 0.3s ease;
     }
 
+    /* 基础样式重置 */
     body {
         margin: 0;
         padding: 0;
@@ -29,6 +31,7 @@
         padding: 0;
     }
 
+    /* 通用section样式 */
     section {
         padding: 80px 20px;
         text-align: center;
@@ -37,25 +40,28 @@
         width: 100%;
     }
 
+    /* 主文本区域样式 - 全屏高度的flex布局 */
     .text-section {
         background-color: #ffffff;
         height: 100vh;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start; /* 改为从顶部开始布局 */
+        justify-content: flex-start;
         align-items: center;
         padding: 0;
     }
 
+    /* 主标题样式 - 大号字体带有字间距 */
     .text-section h1 {
         font-size: 3rem;
         font-weight: 300;
         letter-spacing: 0.2em;
         margin-bottom: 20px;
         opacity: 0.8;
-        margin-top: 20vh; /* 添加顶部边距 */
+        margin-top: 20vh;
     }
 
+    /* 标语容器样式 - 用于显示动态切换的文本 */
     .slogon {
         font-size: 1rem;
         letter-spacing: 0.1em;
@@ -66,6 +72,7 @@
         height: 1.5em;
     }
 
+    /* 前缀文本样式 - 带有左侧滑入动画 */
     .prefix {
         display: inline-block;
         margin-right: 5px;
@@ -74,6 +81,7 @@
         animation: melancholyFadeInPrefix 1.2s ease-in-out forwards;
     }
 
+    /* 引用文本样式 - 带有右侧滑入动画 */
     .typed-quotes {
         display: inline-block;
         opacity: 0;
@@ -81,12 +89,14 @@
         animation: melancholyFadeInQuotes 1.2s ease-in-out 0.3s forwards;
     }
 
+    /* 诗句容器样式 - 初始隐藏 */
     .poem-container {
         margin-top: 40px;
         opacity: 0;
         display: none;
     }
 
+    /* 单行诗句样式 - 带有上浮动画 */
     .poem-line {
         font-size: 1rem;
         margin: 10px 0;
@@ -94,6 +104,7 @@
         transform: translateY(20px);
     }
 
+    /* 滚动指示器样式 - 带有弹跳动画 */
     .scroll-indicator {
         position: absolute;
         bottom: 40px;
@@ -112,6 +123,7 @@
         fill: var(--text-color);
     }
 
+    /* 弹跳动画定义 */
     @keyframes bounce {
         0%, 20%, 50%, 80%, 100% {
             transform: translateY(0);
@@ -124,6 +136,7 @@
         }
     }
 
+    /* 诗句淡入动画定义 */
     @keyframes fadeInLine {
         from {
             opacity: 0;
@@ -135,6 +148,7 @@
         }
     }
 
+    /* 诗句容器显示动画定义 */
     @keyframes showPoemContainer {
         from {
             opacity: 0;
@@ -144,6 +158,7 @@
         }
     }
 
+    /* 前缀文本淡入动画定义 */
     @keyframes melancholyFadeInPrefix {
         0% {
             opacity: 0;
@@ -155,6 +170,7 @@
         }
     }
 
+    /* 引用文本淡入动画定义 */
     @keyframes melancholyFadeInQuotes {
         0% {
             opacity: 0;
@@ -166,6 +182,7 @@
         }
     }
 
+    /* 文本淡出动画定义 */
     @keyframes melancholyFadeOut {
         0% {
             opacity: 0.7;
@@ -178,13 +195,14 @@
         }
     }
 
+    /* 底部文本样式 */
     .bottom-text {
         position: absolute;
         bottom: 80px;
         left: 0;
         right: 0;
         margin: 0 auto;
-        font-size: 1rem;
+        font-size: 0.8rem;
         opacity: 0.6;
         white-space: nowrap;
         letter-spacing: 0.05em;
@@ -204,10 +222,10 @@
     </p>
     <div class="poem-container">
         <p class="poem-line">人应阳光向上，但原谅时而脆弱</p>
-        <p class="poem-line">雨水是否协同音律，夜色或否夹杂酒精，杯中水又为何五味杂陈……</p>
-        <p class="poem-line">忧郁的梦没有终点，她又以何种姿态存在着？</p>
+        <p class="poem-line">雨水是否协同音律，夜色或否夹杂酒精</p>
+        <p class="poem-line">忧郁的梦没有终点，她又以何种姿态存在着</p>
     </div>
-    <div class="bottom-text">Catzz</div>
+    <div class="bottom-text">雨夜、忧郁、少女</div>
     <div class="scroll-indicator">
         <svg viewBox="0 0 24 24">
             <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
@@ -216,25 +234,31 @@
 </section>
 
 <script>
+    // 定义文本切换的内容数组
     const prefixes = ["清凉雨夜", "脆弱雨伞", "街边电话", "路旁雨滩"];
     const suffixes = ["温暖过谁的心", "保护了谁前行", "少女心伤忧郁", "天空触手可及"];
     
+    // 初始化计数器和控制变量
     let currentIndex = 0;
     let cycleCount = 0;
     const maxCycles = 1;
     let quoteInterval;
     
+    // 获取DOM元素
     const prefix = document.querySelector('.prefix');
     const typedQuotes = document.querySelector('.typed-quotes');
     const poemContainer = document.querySelector('.poem-container');
     const poemLines = document.querySelectorAll('.poem-line');
     const scrollIndicator = document.querySelector('.scroll-indicator');
     
+    // 更新引用文本的函数 - 实现文本切换动画效果
     function updateQuote() {
+        // 淡出当前文本
         prefix.style.animation = 'melancholyFadeOut 1.2s ease-in-out forwards';
         typedQuotes.style.animation = 'melancholyFadeOut 1.2s ease-in-out forwards';
         
         setTimeout(() => {
+            // 更新文本内容并播放淡入动画
             currentIndex = (currentIndex + 1) % prefixes.length;
             
             prefix.textContent = prefixes[currentIndex];
@@ -243,6 +267,7 @@
             prefix.style.animation = 'melancholyFadeInPrefix 0.6s ease-in-out forwards';
             typedQuotes.style.animation = 'melancholyFadeInQuotes 0.6s ease-in-out 0.3s forwards';
 
+            // 检查是否完成一个循环，显示诗句
             if (currentIndex === prefixes.length - 1) {
                 cycleCount++;
                 if (cycleCount >= maxCycles) {
@@ -250,6 +275,7 @@
                     setTimeout(() => {
                         showPoem();
                         setTimeout(() => {
+                            // 重置计数器并重新开始循环
                             cycleCount = 0;
                             currentIndex = -1;
                             updateQuote();
@@ -261,6 +287,7 @@
         }, 1200);
     }
 
+    // 显示诗句的函数 - 实现逐行淡入效果
     function showPoem() {
         poemContainer.style.display = 'block';
         poemContainer.style.animation = 'showPoemContainer 1s forwards';
@@ -272,12 +299,14 @@
         });
     }
 
+    // 初始化显示第一组文本
     prefix.textContent = prefixes[0];
     typedQuotes.textContent = suffixes[0];
     
+    // 启动文本切换定时器
     quoteInterval = setInterval(updateQuote, 3000);
 
-    // 添加滚动指示器点击事件
+    // 滚动指示器点击事件 - 平滑滚动到下一屏
     scrollIndicator.addEventListener('click', () => {
         window.scrollTo({
             top: window.innerHeight,
