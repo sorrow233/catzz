@@ -1,225 +1,219 @@
 <style>
-    .dynamic-section {
-        background: linear-gradient(135deg, #3498db, #2980b9);
+    /* 视频部分的主容器样式 */
+    .video-section {
+        background: #f8f9fa;
         min-height: 100vh;
-        color: white;
         padding: 40px 20px;
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        justify-content: center;
     }
 
-    .dynamic-container {
-        max-width: 800px;
+    /* 限制视频容器的最大宽度 */
+    .video-container {
+        max-width: 1200px;
         width: 100%;
-        margin: 0 auto;
+        padding: 0 80px; /* 从120px减小到80px */
     }
 
-    .dynamic-header {
-        text-align: center;
-        margin-bottom: 40px;
-    }
-
-    .dynamic-header h2 {
-        font-size: 2.5em;
-        margin-bottom: 15px;
-        color: white;
-    }
-
-    .dynamic-content {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 15px;
-        padding: 20px;
-        margin-bottom: 20px;
-        transition: transform 0.3s ease;
-        animation: fadeInUp 0.5s ease-out;
-    }
-
-    .dynamic-item {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 20px 0;
+    /* 视频列表的布局样式 */
+    .video-list {
         display: flex;
-        align-items: flex-start;
-        gap: 20px;
+        flex-direction: column;
+        gap: 40px;
+        position: relative;
+        padding: 20px 0;
     }
 
-    .dynamic-item:last-child {
-        border-bottom: none;
+    /* 时间线的垂直线条样式 */
+    .video-list::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #eee;
+        transform: translateX(-50%);
     }
 
-    .dynamic-timestamp {
-        font-size: 0.9em;
-        color: rgba(255, 255, 255, 0.7);
-        min-width: 100px;
+    /* 单个视频项目的卡片样式 */
+    .video-item {
+        width: calc(50% - 50px);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 4px; /* 减小间距从8px到4px */
+        position: relative;
+        text-align: left;
     }
 
-    .dynamic-message {
-        flex: 1;
-        line-height: 1.6;
+    /* 偶数项靠右显示 */
+    .video-item:nth-child(even) {
+        margin-left: auto;
     }
 
-    .dynamic-tag {
-        display: inline-block;
-        padding: 3px 8px;
-        border-radius: 12px;
-        font-size: 0.8em;
-        margin-right: 8px;
-        background: rgba(255, 255, 255, 0.2);
+    /* 时间线上的横线样式 */
+    .video-item::before {
+        content: '';
+        position: absolute;
+        top: 140px;
+        width: 40px;
+        height: 2px;
+        background: #999;
     }
 
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    /* 左侧项目的连接线 */
+    .video-item:nth-child(odd)::before {
+        right: -40px;
     }
 
-    @keyframes pulse {
-        0% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.05);
-        }
-        100% {
-            transform: scale(1);
-        }
+    /* 右侧项目的连接线 */
+    .video-item:nth-child(even)::before {
+        left: -40px;
     }
 
-    .dynamic-content:hover {
+    /* 鼠标悬停时的位移动画 */
+    .video-item:hover {
         transform: translateY(-5px);
+        transition: transform 0.3s ease;
     }
 
-    .loading {
-        text-align: center;
-        padding: 20px;
-        color: rgba(255, 255, 255, 0.7);
+    /* 视频缩略图容器样式 */
+    .video-thumbnail {
+        width: 100%;
+        height: 196px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        margin: 0;
     }
 
-    .loading-spinner {
-        display: inline-block;
-        width: 30px;
-        height: 30px;
-        border: 3px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        border-top-color: white;
-        animation: spin 1s ease-in-out infinite;
+    /* 缩略图图片样式 */
+    .video-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
-    @keyframes spin {
-        to {
-            transform: rotate(360deg);
+    /* 视频信息容器样式 */
+    .video-info {
+        padding: 0;
+        margin-left: 0;
+    }
+
+    /* 视频标题样式 */
+    .video-title {
+        font-size: 0.84rem;
+        margin-bottom: 0;
+        font-weight: 500;
+        text-align: left;
+        line-height: 1.2; /* 添加行高控制 */
+    }
+
+    /* 视频日期样式 */
+    .video-date {
+        font-size: 0.63rem;
+        color: #666;
+        text-align: left;
+        margin-top: 0; /* 移除负margin */
+        line-height: 1.2; /* 添加行高控制 */
+    }
+
+    /* 移动端适配 */
+    @media screen and (max-width: 768px) {
+        .video-container {
+            padding: 0 20px;
+        }
+
+        .video-list::before {
+            left: 20px;
+        }
+
+        .video-item {
+            width: calc(100% - 40px);
+            margin-left: 40px !important;
+        }
+
+        .video-item::before {
+            left: -20px !important;
+            width: 20px;
+            top: 100px;
+        }
+
+        .video-thumbnail {
+            height: 160px;
+        }
+
+        .video-title {
+            font-size: 0.8rem;
+        }
+
+        .video-date {
+            font-size: 0.6rem;
+        }
+    }
+
+    /* 更小屏幕的适配 */
+    @media screen and (max-width: 480px) {
+        .video-container {
+            padding: 0 10px;
+        }
+
+        .video-list {
+            gap: 30px;
+        }
+
+        .video-thumbnail {
+            height: 140px;
         }
     }
 </style>
 
-<section class="dynamic-section">
-    <div class="dynamic-container">
-        <div class="dynamic-header">
-            <h2>实时动态</h2>
-        </div>
-        <div id="dynamic-feed"></div>
-        <div class="loading">
-            <div class="loading-spinner"></div>
-        </div>
+<section class="video-section">
+    <div class="video-container">
+        <div class="video-list" id="videoList"></div>
     </div>
 </section>
 
 <script>
-    // 模拟动态数据
-    const dynamicData = [
+    // 视频数据数组，包含标题、缩略图、日期和链接
+    const videos = [
         {
-            timestamp: "2024-01-15 14:30",
-            message: "今天的阳光真好，窗台上的猫咪懒洋洋地晒着太阳",
-            tags: ["日常", "猫咪"]
+            title: "-The Waiting- 绘画过程",
+            thumbnail: "https://pic.k-on.live/file/1735115804878_screenshot-225.795.png",
+            date: "2024-06-11",
+            url: "https://www.bilibili.com/video/BV1ss421u7Bg/"
         },
         {
-            timestamp: "2024-01-15 12:15",
-            message: "完成了一幅新的水彩画，记录下午后的温柔时光",
-            tags: ["创作", "艺术"]
-        },
-        {
-            timestamp: "2024-01-15 10:00",
-            message: "清晨的雨滴打在窗户上，整个世界都安静下来",
-            tags: ["感悟", "生活"]
+            title: "【创作】深夜画画时光",
+            thumbnail: "", 
+            date: "2024-01-10",
+            url: ""
         }
     ];
 
-    // 渲染动态内容
-    function renderDynamicContent() {
-        const feed = document.getElementById('dynamic-feed');
-        feed.innerHTML = ''; // 清空现有内容
-
-        dynamicData.forEach((item, index) => {
-            const dynamicContent = document.createElement('div');
-            dynamicContent.className = 'dynamic-content';
-            dynamicContent.style.animationDelay = `${index * 0.2}s`;
-
-            const dynamicItem = document.createElement('div');
-            dynamicItem.className = 'dynamic-item';
-
-            const timestamp = document.createElement('div');
-            timestamp.className = 'dynamic-timestamp';
-            timestamp.textContent = item.timestamp;
-
-            const message = document.createElement('div');
-            message.className = 'dynamic-message';
-
-            const tags = item.tags.map(tag => 
-                `<span class="dynamic-tag">#${tag}</span>`
-            ).join('');
-
-            message.innerHTML = `
-                ${tags}
-                <p>${item.message}</p>
+    // 渲染视频列表的函数
+    function renderVideos() {
+        const list = document.getElementById('videoList');
+        // 遍历视频数组，为每个视频创建HTML元素
+        videos.forEach(video => {
+            const videoElement = `
+                <div class="video-item">
+                    <div class="video-info">
+                        <h3 class="video-title">${video.title}</h3>
+                        <span class="video-date">${video.date}</span>
+                    </div>
+                    <div class="video-thumbnail">
+                        <img src="${video.thumbnail}" alt="${video.title}">
+                    </div>
+                </div>
             `;
-
-            dynamicItem.appendChild(timestamp);
-            dynamicItem.appendChild(message);
-            dynamicContent.appendChild(dynamicItem);
-            feed.appendChild(dynamicContent);
+            // 将创建的HTML元素插入到列表末尾
+            list.insertAdjacentHTML('beforeend', videoElement);
         });
     }
 
-    // 模拟实时更新
-    function simulateRealtimeUpdates() {
-        const newMessages = [
-            "夜深人静，思绪万千",
-            "城市的霓虹映照着雨后的街道",
-            "又是一个适合创作的下午"
-        ];
-
-        setInterval(() => {
-            if (Math.random() > 0.7) { // 30%的概率添加新动态
-                const newMessage = {
-                    timestamp: new Date().toLocaleString(),
-                    message: newMessages[Math.floor(Math.random() * newMessages.length)],
-                    tags: ["实时", "更新"]
-                };
-                dynamicData.unshift(newMessage);
-                if (dynamicData.length > 5) {
-                    dynamicData.pop();
-                }
-                renderDynamicContent();
-            }
-        }, 5000);
-    }
-
-    // 初始化
-    document.addEventListener('DOMContentLoaded', () => {
-        renderDynamicContent();
-        simulateRealtimeUpdates();
-    });
-
-    // 添加页面可见性检测
-    document.addEventListener('visibilitychange', () => {
-        if (!document.hidden) {
-            renderDynamicContent(); // 页面重新可见时更新内容
-        }
-    });
-</script> 
+    // 页面加载时初始化渲染视频列表
+    renderVideos();
+</script>

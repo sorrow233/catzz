@@ -3,50 +3,51 @@
     .gallery-section {
         background-color: var(--bg-light);
         min-height: 100vh;
-        padding: 40px 20px;
+        padding: 80px 40px; /* 增加上下内边距到80px,左右到40px */
         display: flex;
         flex-direction: column;
         align-items: center;
     }
 
-    /* 画廊网格布局 */
+    /* 画廊网格布局 - 使用CSS Grid创建响应式的三列布局 */
     .gallery-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr); /* 三列布局 */
         gap: 40px;
-        max-width: 1200px;
+        max-width: 1000px; /* 减小最大宽度,让内容更集中 */
         width: 100%;
-        padding: 20px;
+        padding: 40px; /* 增加内边距 */
     }
 
-    /* 单个画廊项目样式 */
+    /* 单个画廊项目样式 - 使用flex布局垂直排列图片和文字 */
     .gallery-item {
         display: flex;
         flex-direction: column;
         gap: 20px;
     }
 
-    /* 图片容器样式 */
+    /* 图片容器样式 - 使用aspect-ratio保持固定的16:9宽高比 */
     .gallery-image-container {
         width: 100%;
-        aspect-ratio: 16 / 9; /* 保持16:9的宽高比 */
+        aspect-ratio: 16 / 9;
         border-radius: 12px;
         overflow: hidden;
     }
 
-    /* 图片样式 */
+    /* 图片样式 - 使用object-fit:cover确保图片填充容器且不变形 */
     .gallery-image-container img {
         width: 100%;
         height: 100%;
-        object-fit: cover; /* 确保图片填充容器且不变形 */
+        object-fit: cover;
     }
 
-    /* 文本内容容器 */
+    /* 文本内容容器样式 - 使用flex布局垂直排列标题和描述 */
     .gallery-text {
         display: flex;
         flex-direction: column;
         gap: 6px;
         text-align: left;
+        padding: 0 10px; /* 添加文本内容的左右内边距 */
     }
 
     /* 标题文本样式 */
@@ -64,18 +65,23 @@
         margin: 0;
     }
 
-    /* 响应式布局：屏幕宽度小于768px时改变网格布局 */
+    /* 响应式布局 - 在移动端自动调整为单列布局 */
     @media (max-width: 768px) {
         .gallery-grid {
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
+            padding: 20px; /* 移动端减小内边距 */
+        }
+        
+        .gallery-section {
+            padding: 40px 20px; /* 移动端减小内边距 */
         }
     }
 </style>
 
 <section class="gallery-section">
     <div class="gallery-grid">
-        <!-- 画廊项目1 -->
+        <!-- 画廊项目1 - 展示猫咪日记主题图片和描述 -->
         <div class="gallery-item">
             <div class="gallery-image-container">
                 <img src="https://pic.k-on.live/file/1735037730200_image.png" alt="Gallery Image 1">
@@ -85,7 +91,7 @@
                 <p class="gallery-text-description">慵懒午后的时光</p>
             </div>
         </div>
-        <!-- 画廊项目2 -->
+        <!-- 画廊项目2 - 展示街角遇见主题图片和描述 -->
         <div class="gallery-item">
             <div class="gallery-image-container">
                 <img src="https://source.unsplash.com/random/400x400?cat,2" alt="Gallery Image 2">
@@ -95,7 +101,7 @@
                 <p class="gallery-text-description">城市中的小确幸</p>
             </div>
         </div>
-        <!-- 画廊项目3 -->
+        <!-- 画廊项目3 - 展示雨天私语主题图片和描述 -->
         <div class="gallery-item">
             <div class="gallery-image-container">
                 <img src="https://source.unsplash.com/random/400x400?cat,3" alt="Gallery Image 3">
@@ -105,7 +111,7 @@
                 <p class="gallery-text-description">温暖的避风港</p>
             </div>
         </div>
-        <!-- 画廊项目4 -->
+        <!-- 画廊项目4 - 展示阳光漫步主题图片和描述 -->
         <div class="gallery-item">
             <div class="gallery-image-container">
                 <img src="https://source.unsplash.com/random/400x400?cat,4" alt="Gallery Image 4">
@@ -119,19 +125,21 @@
 </section>
 
 <script>
-    // 图片加载优化：当图片加载完成时设置透明度为1
+    // 图片加载优化功能
+    // 1. 当图片加载完成时设置透明度为1实现淡入效果
+    // 2. 图片加载失败时显示占位图
     document.querySelectorAll('.gallery-item img').forEach(img => {
         img.addEventListener('load', () => {
             img.style.opacity = 1;
         });
         
-        // 图片加载失败时显示占位图
         img.addEventListener('error', () => {
             img.src = 'https://via.placeholder.com/400x400?text=Image+Not+Found';
         });
     });
 
-    // 图片懒加载配置
+    // 图片懒加载功能配置
+    // 使用Intersection Observer API实现图片懒加载
     const observerOptions = {
         root: null,          // 使用视口作为根元素
         rootMargin: '50px',  // 提前50px开始加载
@@ -139,6 +147,7 @@
     };
 
     // 创建交叉观察器实现懒加载
+    // 当图片进入视口时才加载真实图片源
     const imageObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -152,19 +161,20 @@
         });
     }, observerOptions);
 
-    // 为所有带data-src属性的图片添加懒加载
+    // 为所有带data-src属性的图片添加懒加载观察
     document.querySelectorAll('.gallery-item img[data-src]').forEach(img => {
         imageObserver.observe(img);
     });
 
-    // 为每个画廊项目添加点击放大功能
+    // 图片点击放大功能
+    // 点击图片时创建模态框显示大图
     document.querySelectorAll('.gallery-item').forEach(item => {
         item.addEventListener('click', () => {
             const img = item.querySelector('img');
             const title = item.querySelector('.gallery-title').textContent;
             const description = item.querySelector('.gallery-description').textContent;
             
-            // 创建模态框容器
+            // 创建模态框容器 - 设置全屏半透明黑色背景
             const modal = document.createElement('div');
             modal.style.cssText = `
                 position: fixed;
@@ -180,7 +190,7 @@
                 cursor: pointer;
             `;
             
-            // 创建放大后的图片元素
+            // 创建放大后的图片元素 - 限制最大尺寸并保持比例
             const modalImg = document.createElement('img');
             modalImg.src = img.src;
             modalImg.style.cssText = `
@@ -195,7 +205,7 @@
             const modalDescription = document.createElement('p');
             modalDescription.textContent = description;
             
-            // 组装模态框
+            // 组装模态框并添加到页面
             modal.appendChild(modalImg);
             modal.appendChild(modalTitle);
             modal.appendChild(modalDescription);
