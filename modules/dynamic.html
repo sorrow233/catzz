@@ -196,10 +196,9 @@
     // 渲染视频列表的函数
     function renderVideos() {
         const list = document.getElementById('videoList');
-        // 遍历视频数组，为每个视频创建HTML元素
         videos.forEach(video => {
             const videoElement = `
-                <div class="video-item">
+                <div class="video-item" onclick="window.open('${video.url}', '_blank')" style="cursor: pointer;">
                     <div class="video-info">
                         <h3 class="video-title">${video.title}</h3>
                         <span class="video-date">${video.date}</span>
@@ -209,7 +208,6 @@
                     </div>
                 </div>
             `;
-            // 将创建的HTML元素插入到列表末尾
             list.insertAdjacentHTML('beforeend', videoElement);
         });
     }
