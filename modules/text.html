@@ -2,6 +2,15 @@
     /* 引入 Noto Serif SC 字体 */
     @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
 
+    /* 引入自定义字体 */
+    @font-face {
+        font-family: 'LXGWWenKai';
+        src: url('https://pic.k-on.live/file/1738659053141_LXGWWenKai-Regular.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
     /* 全局变量定义 */
     :root {
         --primary-color: #2c3e50;
@@ -102,6 +111,7 @@
         margin: 10px 0;
         opacity: 0;
         transform: translateY(20px);
+        font-family: 'LXGWWenKai', 'Noto Serif SC', serif;
     }
 
     /* 滚动指示器样式 - 带有弹跳动画 */
@@ -209,7 +219,7 @@
         text-align: center;
         color: #8e8e8e;
         font-weight: 300;
-        font-family: 'Noto Serif SC', serif;
+        font-family: 'LXGWWenKai', 'Noto Serif SC', serif;
         width: 100%;
     }
 </style>
