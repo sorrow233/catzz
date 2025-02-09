@@ -80,51 +80,61 @@
 </style>
 
 <section class="gallery-section">
-    <div class="gallery-grid">
-        <!-- 画廊项目1 - 展示猫咪日记主题图片和描述 -->
-        <div class="gallery-item">
-            <div class="gallery-image-container">
-                <img src="https://pic.k-on.live/file/1735037730200_image.png" alt="Gallery Image 1">
-            </div>
-            <div class="gallery-text">
-                <h3 class="gallery-text-title">猫咪日记</h3>
-                <p class="gallery-text-description">慵懒午后的时光</p>
-            </div>
-        </div>
-        <!-- 画廊项目2 - 展示街角遇见主题图片和描述 -->
-        <div class="gallery-item">
-            <div class="gallery-image-container">
-                <img src="https://source.unsplash.com/random/400x400?cat,2" alt="Gallery Image 2">
-            </div>
-            <div class="gallery-text">
-                <h3 class="gallery-text-title">街角遇见</h3>
-                <p class="gallery-text-description">城市中的小确幸</p>
-            </div>
-        </div>
-        <!-- 画廊项目3 - 展示雨天私语主题图片和描述 -->
-        <div class="gallery-item">
-            <div class="gallery-image-container">
-                <img src="https://source.unsplash.com/random/400x400?cat,3" alt="Gallery Image 3">
-            </div>
-            <div class="gallery-text">
-                <h3 class="gallery-text-title">雨天私语</h3>
-                <p class="gallery-text-description">温暖的避风港</p>
-            </div>
-        </div>
-        <!-- 画廊项目4 - 展示阳光漫步主题图片和描述 -->
-        <div class="gallery-item">
-            <div class="gallery-image-container">
-                <img src="https://source.unsplash.com/random/400x400?cat,4" alt="Gallery Image 4">
-            </div>
-            <div class="gallery-text">
-                <h3 class="gallery-text-title">阳光漫步</h3>
-                <p class="gallery-text-description">慢节奏的生活</p>
-            </div>
-        </div>
+    <div class="gallery-grid" id="galleryGrid">
+        <!-- 画廊内容将通过 JavaScript 动态生成 -->
     </div>
 </section>
 
 <script>
+    // 定义画廊数据
+    const galleryData = [
+        {
+            image: 'https://pic.k-on.live/file/1735037730200_image.png',
+            title: '猫咪日记',
+            description: '慵懒午后的时光'
+        },
+        {
+            image: 'https://source.unsplash.com/random/400x400?cat,2',
+            title: '街角遇见',
+            description: '城市中的小确幸'
+        },
+        {
+            image: 'https://source.unsplash.com/random/400x400?cat,3',
+            title: '雨天私语',
+            description: '温暖的避风港'
+        },
+        {
+            image: 'https://source.unsplash.com/random/400x400?cat,4',
+            title: '阳光漫步',
+            description: '慢节奏的生活'
+        }
+    ];
+
+    // 生成画廊项目的函数
+    function createGalleryItems() {
+        const galleryGrid = document.getElementById('galleryGrid');
+        
+        galleryData.forEach(item => {
+            const galleryItem = document.createElement('div');
+            galleryItem.className = 'gallery-item';
+            
+            galleryItem.innerHTML = `
+                <div class="gallery-image-container">
+                    <img src="${item.image}" alt="${item.title}">
+                </div>
+                <div class="gallery-text">
+                    <h3 class="gallery-text-title">${item.title}</h3>
+                    <p class="gallery-text-description">${item.description}</p>
+                </div>
+            `;
+            
+            galleryGrid.appendChild(galleryItem);
+        });
+    }
+
+    // 初始化画廊
+    createGalleryItems();
+
     // 图片加载优化功能
     // 1. 当图片加载完成时设置透明度为1实现淡入效果
     // 2. 图片加载失败时显示占位图
@@ -171,8 +181,8 @@
     document.querySelectorAll('.gallery-item').forEach(item => {
         item.addEventListener('click', () => {
             const img = item.querySelector('img');
-            const title = item.querySelector('.gallery-title').textContent;
-            const description = item.querySelector('.gallery-description').textContent;
+            const title = item.querySelector('.gallery-text-title').textContent;
+            const description = item.querySelector('.gallery-text-description').textContent;
             
             // 创建模态框容器 - 设置全屏半透明黑色背景
             const modal = document.createElement('div');
