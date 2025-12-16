@@ -3,80 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="单页设计，四模块布局">
+    <meta name="description" content="Catzz - 雨夜、忧郁、少女">
     <title>Catzz</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom Font: LXGW WenKai -->
     <style>
-        /* 只包含基础样式 */
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --text-color: #2c3e50;
-            --bg-light: #f8f9fa;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            min-width: 100vw;
-            overflow-x: hidden;
-        }
-
-        .container {
-            width: 100%;
-            margin: 0;
-            padding: 0;
+        @font-face {
+            font-family: 'LXGWWenKai';
+            src: url('https://pic.k-on.live/file/1738659053141_LXGWWenKai-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
         }
     </style>
-</head>
-<body>
-    <div class="container">
-        <div id="text-section"></div>
-        <div id="gallery-section"></div>
-        <div id="dynamic-section"></div>
-        <div id="misc-section"></div>
-    </div>
 
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // 加载模块的函数
-        async function loadModule(elementId, fileName) {
-            try {
-                const response = await fetch(`modules/${fileName}.html`);
-                const html = await response.text();
-                
-                // 创建一个临时容器来解析HTML
-                const temp = document.createElement('div');
-                temp.innerHTML = html;
-
-                // 提取并添加样式
-                const styles = temp.querySelector('style');
-                if (styles) {
-                    document.head.appendChild(styles);
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3e50',
+                        secondary: '#3498db',
+                        accent: '#e74c3c',
+                        text: '#2c3e50',
+                        bg: '#f8f9fa',
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif SC"', 'serif'],
+                        hand: ['"LXGWWenKai"', '"Noto Serif SC"', 'serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
+                    }
                 }
-
-                // 提取并添加内容
-                const content = temp.querySelector('section');
-                document.getElementById(elementId).appendChild(content);
-
-                // 提取并执行脚本
-                const scripts = temp.querySelector('script');
-                if (scripts) {
-                    const newScript = document.createElement('script');
-                    newScript.textContent = scripts.textContent;
-                    document.body.appendChild(newScript);
-                }
-            } catch (error) {
-                console.error(`Error loading ${fileName}:`, error);
             }
         }
-
-        // 页面加载完成后加载所有模块
-        document.addEventListener('DOMContentLoaded', () => {
-            loadModule('text-section', 'text');
-            loadModule('gallery-section', 'gallery');
-            loadModule('dynamic-section', 'dynamic');
-            loadModule('misc-section', 'misc');
-        });
     </script>
+    
+    <!-- Custom Animations -->
+    <link rel="stylesheet" href="src/styles/animations.css">
+</head>
+<body class="bg-[#f8f9fa] text-primary font-serif selection:bg-gray-200 selection:text-gray-900 overflow-x-hidden p-0 m-0">
+    <div id="app" class="w-full min-h-screen">
+        <!-- Content will be injected here -->
+        <main id="main-content"></main>
+    </div>
+
+    <script type="module" src="src/main.js"></script>
 </body>
 </html>
