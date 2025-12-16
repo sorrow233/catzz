@@ -1,34 +1,31 @@
 import HeroSection from './components/HeroSection.js';
-import GallerySection from './components/GallerySection.js';
+import CarouselSection from './components/CarouselSection.js';
 import TimelineSection from './components/TimelineSection.js';
+import GallerySection from './components/GallerySection.js';
 import FooterSection from './components/FooterSection.js';
 
-class App {
-    constructor() {
-        this.appContainer = document.getElementById('main-content');
-        this.init();
-    }
+document.addEventListener('DOMContentLoaded', async () => {
+    const app = document.getElementById('app');
 
-    init() {
-        // Render all sections in order
-        this.renderSection(new HeroSection());
-        this.renderSection(new GallerySection());
-        this.renderSection(new TimelineSection());
-        this.renderSection(new FooterSection());
-    }
+    // Initialize components
+    const hero = new HeroSection();
+    const carousel = new CarouselSection();
+    const timeline = new TimelineSection();
+    const gallery = new GallerySection();
+    const footer = new FooterSection();
 
-    renderSection(component) {
-        const sectionElement = component.render(); // All components must implement render() returning an HTMLElement
-        this.appContainer.appendChild(sectionElement);
-        
-        // Call mount if available (for effects/listeners)
-        if (component.mount) {
-            component.mount();
-        }
-    }
-}
+    // Render components
+    // Render components
+    app.appendChild(hero.render());
+    app.appendChild(carousel.render());
+    app.appendChild(gallery.render());
+    app.appendChild(timeline.render());
+    app.appendChild(footer.render());
 
-// Initialize the App when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    new App();
+    // Mount/Hydrate components (animations, events)
+    if (hero.mount) hero.mount();
+    if (carousel.mount) carousel.mount();
+    if (timeline.mount) timeline.mount();
+    if (gallery.mount) gallery.mount();
+    if (footer.mount) footer.mount();
 });
