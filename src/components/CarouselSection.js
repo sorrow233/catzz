@@ -69,9 +69,9 @@ export default class CarouselSection {
                      
                      <div class="flex flex-col items-start gap-3">
                         <!-- Dynamic Text -->
-                        <div class="h-10 relative w-full max-w-2xl">
+                        <div class="h-10 relative w-full max-w-4xl">
                              ${this.slides.map((slide, index) => `
-                                <p class="absolute left-0 top-0 text-gray-700 font-serif-sc text-xs md:text-sm tracking-[0.4em] leading-relaxed text-reveal ${index === 0 ? 'text-active' : 'text-inactive'}" data-index="${index}">
+                                <p class="absolute left-0 top-0 text-gray-500 font-serif-sc font-thin text-[11px] tracking-[0.3em] whitespace-nowrap text-reveal ${index === 0 ? 'text-active' : 'text-inactive'}" data-index="${index}">
                                     ${slide.text}
                                 </p>
                             `).join('')}
@@ -79,7 +79,7 @@ export default class CarouselSection {
                      </div>
 
                      <!-- Pagination / Index (Artistic style: 01 / 03) -->
-                     <div class="flex items-center gap-4 text-[10px] tracking-[0.2em] font-serif-sc text-gray-400">
+                     <div class="flex items-center gap-4 text-[10px] tracking-[0.2em] font-serif-sc text-gray-400 font-thin">
                         <span id="current-index">01</span>
                         <div class="w-12 h-[1px] bg-gray-200 relative overflow-hidden">
                              <div id="progress-indicator" class="absolute left-0 top-0 h-full bg-gray-400 w-0"></div>
