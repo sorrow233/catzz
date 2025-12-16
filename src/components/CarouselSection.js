@@ -2,7 +2,7 @@ export default class CarouselSection {
     constructor() {
         this.slides = [
             {
-                image: "pixiv_data/images/138045922_感觉有点冷可以开始放寒假了吗.jpg",
+                image: "pixiv_data/images/1-1.png",
                 text: "人应阳光向上，但原谅时而脆弱"
             },
             {
@@ -20,51 +20,72 @@ export default class CarouselSection {
 
     render() {
         this.element = document.createElement('section');
-        this.element.className = 'w-full bg-white py-20 flex flex-col items-center overflow-hidden';
+        this.element.className = 'w-full bg-white py-24 flex flex-col items-center overflow-hidden';
 
-        // P2 Reference style: Large image area, text below.
-        // Using "delicate" animation style (cross-fade + subtle scale)
         this.element.innerHTML = `
             <style>
-                .font-art { font-family: 'LXGWWenKai', 'Noto Serif SC', serif; }
+                .font-serif-sc { font-family: 'Noto Serif SC', serif; }
+                
+                /* Snappier, more "film-like" transition */
+                .carousel-slide { 
+                    transition: opacity 1.2s cubic-bezier(0.45, 0, 0.55, 1), transform 1.4s cubic-bezier(0.25, 1, 0.5, 1); 
+                }
+                
+                .text-reveal {
+                    transition: opacity 1.0s ease-out, transform 1.0s cubic-bezier(0.2, 0.8, 0.2, 1);
+                }
+                
                 .slide-active { opacity: 1; z-index: 10; transform: scale(1); }
-                .slide-next { opacity: 0; z-index: 1; transform: scale(1.05); } 
-                /* Note: tailwind scale defaults are good, but we want custom timing */
-                .carousel-slide { transition: opacity 1.5s ease-in-out, transform 1.5s ease-out; }
+                .slide-inactive { opacity: 0; z-index: 0; transform: scale(1.03); } /* Subtle zoom out on exit */
+                
+                .text-active { opacity: 1; transform: translateY(0); }
+                .text-inactive { opacity: 0; transform: translateY(10px); }
+                
+                .progress-bar { transition: width 6000ms linear; }
             </style>
 
-            <div class="w-full max-w-[95vw] md:max-w-[85vw] lg:max-w-6xl px-4">
+            <!-- Main Content Container: Cinematic Width -->
+            <div class="w-full max-w-[95vw] md:max-w-[85vw] lg:max-w-7xl px-4 flex flex-col items-start">
                 
-                 <!-- Main Image Container -->
-                <div class="relative w-full aspect-video md:aspect-[2/1] rounded-xl overflow-hidden shadow-lg group cursor-pointer" id="carousel-container">
-                    <!-- Slides (Absolute Positioning for Cross-fade) -->
+                 <!-- Image Container -->
+                <div class="relative w-full aspect-video md:aspect-[2.35/1] rounded-sm overflow-hidden shadow-sm group cursor-pointer" id="carousel-container">
+                    <!-- Slides -->
                     ${this.slides.map((slide, index) => `
-                        <div class="absolute inset-0 w-full h-full carousel-slide ${index === 0 ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-105 z-0'}" data-index="${index}">
+                        <div class="absolute inset-0 w-full h-full carousel-slide ${index === 0 ? 'slide-active' : 'slide-inactive'}" data-index="${index}">
                             <img src="${slide.image}" class="w-full h-full object-cover" alt="Art ${index}">
-                            <!-- Subtle overlay for depth, optional -->
-                            <div class="absolute inset-0 bg-black/10"></div>
+                            <!-- Extremely subtle grain/overlay for texture -->
+                            <div class="absolute inset-0 bg-black/5 mix-blend-multiply"></div>
                         </div>
                     `).join('')}
 
-                    <!-- Navigation Hits (Invisible but clickable areas for L/R) -->
-                    <div class="absolute inset-y-0 left-0 w-1/4 z-30 cursor-pointer" id="prev-area"></div>
-                    <div class="absolute inset-y-0 right-0 w-1/4 z-30 cursor-pointer" id="next-area"></div>
-
-                    <!-- Dot Indicators (Overlaid at bottom) -->
-                    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-3 z-40">
-                         ${this.slides.map((_, index) => `
-                            <button class="w-1.5 h-1.5 rounded-full transition-all duration-500 nav-dot ${index === 0 ? 'bg-white w-6' : 'bg-white/50 hover:bg-white/80'}" data-index="${index}"></button>
-                        `).join('')}
-                    </div>
+                    <!-- Navigation Zones -->
+                    <div class="absolute inset-y-0 left-0 w-1/5 z-20 cursor-w-resize" id="prev-area"></div>
+                    <div class="absolute inset-y-0 right-0 w-1/5 z-20 cursor-e-resize" id="next-area"></div>
                 </div>
 
-                <!-- Text Area (Below Image - Artistic & Delicate) -->
-                <div class="mt-8 text-center h-16 relative">
-                     ${this.slides.map((slide, index) => `
-                        <p class="absolute inset-x-0 top-0 text-gray-600 font-art text-sm md:text-base tracking-[0.15em] transition-all duration-1000 slide-caption ${index === 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}" data-index="${index}">
-                            ${slide.text}
-                        </p>
-                    `).join('')}
+                <!-- Artistic Info Section (Below Left) -->
+                <!-- Layout: Index Number + Text separated by line -->
+                <div class="mt-8 w-full flex items-start justify-between relative pl-1">
+                     
+                     <div class="flex flex-col items-start gap-3">
+                        <!-- Dynamic Text -->
+                        <div class="h-10 relative w-full max-w-2xl">
+                             ${this.slides.map((slide, index) => `
+                                <p class="absolute left-0 top-0 text-gray-700 font-serif-sc text-xs md:text-sm tracking-[0.4em] leading-relaxed text-reveal ${index === 0 ? 'text-active' : 'text-inactive'}" data-index="${index}">
+                                    ${slide.text}
+                                </p>
+                            `).join('')}
+                        </div>
+                     </div>
+
+                     <!-- Pagination / Index (Artistic style: 01 / 03) -->
+                     <div class="flex items-center gap-4 text-[10px] tracking-[0.2em] font-serif-sc text-gray-400">
+                        <span id="current-index">01</span>
+                        <div class="w-12 h-[1px] bg-gray-200 relative overflow-hidden">
+                             <div id="progress-indicator" class="absolute left-0 top-0 h-full bg-gray-400 w-0"></div>
+                        </div>
+                        <span>0${this.slides.length}</span>
+                     </div>
                 </div>
 
             </div>
@@ -75,67 +96,75 @@ export default class CarouselSection {
 
     mount() {
         const slides = this.element.querySelectorAll('.carousel-slide');
-        const captions = this.element.querySelectorAll('.slide-caption');
-        const dots = this.element.querySelectorAll('.nav-dot');
+        const captions = this.element.querySelectorAll('.text-reveal');
+        const currentIndexDisplay = this.element.querySelector('#current-index');
+        const progressIndicator = this.element.querySelector('#progress-indicator');
         const container = this.element.querySelector('#carousel-container');
         const prevArea = this.element.querySelector('#prev-area');
         const nextArea = this.element.querySelector('#next-area');
+
+        // Reset progress bar animation
+        const resetProgress = () => {
+            progressIndicator.style.transition = 'none';
+            progressIndicator.style.width = '0%';
+            setTimeout(() => {
+                progressIndicator.style.transition = 'width 6000ms linear';
+                progressIndicator.style.width = '100%';
+            }, 50);
+        };
 
         const updateCarousel = (index) => {
             if (index < 0) index = this.slides.length - 1;
             if (index >= this.slides.length) index = 0;
 
-            // Fade Out/In Slides
+            // Slides
             slides.forEach(slide => {
                 const i = parseInt(slide.dataset.index);
                 if (i === index) {
-                    slide.classList.remove('opacity-0', 'scale-105', 'z-0');
-                    slide.classList.add('opacity-100', 'scale-100', 'z-10');
+                    slide.classList.remove('slide-inactive');
+                    slide.classList.add('slide-active');
                 } else {
-                    slide.classList.remove('opacity-100', 'scale-100', 'z-10');
-                    slide.classList.add('opacity-0', 'scale-105', 'z-0');
+                    slide.classList.remove('slide-active');
+                    slide.classList.add('slide-inactive');
                 }
             });
 
-            // Fade Text
+            // Text
             captions.forEach(caption => {
                 const i = parseInt(caption.dataset.index);
                 if (i === index) {
-                    caption.classList.remove('opacity-0', 'translate-y-4');
-                    caption.classList.add('opacity-100', 'translate-y-0');
+                    caption.classList.remove('text-inactive');
+                    caption.classList.add('text-active');
                 } else {
-                    caption.classList.remove('opacity-100', 'translate-y-0');
-                    caption.classList.add('opacity-0', 'translate-y-4');
+                    caption.classList.remove('text-active');
+                    caption.classList.add('text-inactive');
                 }
             });
 
-            // Update Dots
-            dots.forEach((dot, i) => {
-                if (i === index) {
-                    dot.classList.remove('bg-white/50', 'w-1.5');
-                    dot.classList.add('bg-white', 'w-6');
-                } else {
-                    dot.classList.add('bg-white/50', 'w-1.5');
-                    dot.classList.remove('bg-white', 'w-6');
-                }
-            });
+            // Index Number
+            currentIndexDisplay.textContent = `0${index + 1}`;
 
             this.currentIndex = index;
+            resetProgress();
         };
 
         const startAutoPlay = () => {
+            resetProgress();
             this.interval = setInterval(() => {
                 updateCarousel(this.currentIndex + 1);
-            }, 6000); // Slower, more relaxed interval
+            }, 6000);
         };
 
         const stopAutoPlay = () => {
             if (this.interval) clearInterval(this.interval);
+            progressIndicator.style.transition = 'none';
+            progressIndicator.style.width = '0%';
         };
 
+        // Start
         startAutoPlay();
 
-        // Interaction
+        // Interactions
         prevArea.addEventListener('click', () => {
             stopAutoPlay();
             updateCarousel(this.currentIndex - 1);
@@ -146,14 +175,6 @@ export default class CarouselSection {
             stopAutoPlay();
             updateCarousel(this.currentIndex + 1);
             startAutoPlay();
-        });
-
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                stopAutoPlay();
-                updateCarousel(index);
-                startAutoPlay();
-            });
         });
 
         container.addEventListener('mouseenter', stopAutoPlay);
