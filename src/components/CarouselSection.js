@@ -2,15 +2,15 @@ export default class CarouselSection {
     constructor() {
         this.slides = [
             {
-                image: "pixiv_data/images/1-1.png",
+                image: "https://blog.catzz.work/file/1765900357798_1-1.png",
                 text: "人应阳光向上，但原谅时而脆弱"
             },
             {
-                image: "pixiv_data/images/72668704_PAIN.jpg",
+                image: "https://blog.catzz.work/file/1765900363060_72668704_PAIN.jpg",
                 text: "雨水是否协同音律，夜色或否夹杂酒精"
             },
             {
-                image: "pixiv_data/images/137779301_Solitude.jpg",
+                image: "https://blog.catzz.work/file/1765900369016_137779301_Solitude.jpg",
                 text: "忧郁的梦没有终点，她又以何种姿态存在着"
             }
         ];

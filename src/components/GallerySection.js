@@ -64,7 +64,7 @@ export default class GallerySection {
 
     async fetchData() {
         try {
-            const response = await fetch('pixiv_data/metadata.json');
+            const response = await fetch('src/data/gallery_data.json');
             if (!response.ok) throw new Error('Failed to load metadata');
 
             const data = await response.json();
@@ -75,7 +75,7 @@ export default class GallerySection {
         } catch (error) {
             console.error('Error loading gallery data:', error);
             const grid = this.element.querySelector('#gallery-grid');
-            grid.innerHTML = `<p class="text-center text-gray-400 font-serif border border-gray-200 p-8">Failed to load artworks.<br>Please ensure pixiv_data is linked correctly.</p>`;
+            grid.innerHTML = `<p class="text-center text-gray-400 font-serif border border-gray-200 p-8">Failed to load artworks.</p>`;
         }
     }
 
@@ -84,8 +84,8 @@ export default class GallerySection {
 
         // Generate HTML
         grid.innerHTML = this.galleryData.map((item, index) => {
-            // Fix path: prepend 'pixiv_data/' to local_path (which is 'images/...')
-            const imagePath = `pixiv_data/${item.local_path}`;
+            // Use remote url if available, otherwise local path (though local path expects pixiv_data prefix, the new JSON includes it in 'url' if remote is missing)
+            const imagePath = item.url;
             const date = new Date(item.created_at).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: '2-digit',
@@ -136,7 +136,7 @@ export default class GallerySection {
             item.addEventListener('click', () => {
                 const index = item.dataset.index;
                 const data = this.galleryData[index];
-                const imagePath = `pixiv_data/${data.local_path}`;
+                const imagePath = data.url;
 
                 lightboxImg.src = imagePath;
                 lightboxTitle.textContent = data.title;
