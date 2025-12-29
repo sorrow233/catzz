@@ -83,7 +83,7 @@ export default class TimelineSection {
                     id: item.id,
                     title: item.title,
                     date: `${year}.${month}.${day}`,
-                    thumbnail: item.thumbnail_url || `pixiv_data/${item.local_path}`,
+                    thumbnail: item.url,
                     url: url,
                     desc: cleanDesc.slice(0, 100) + (cleanDesc.length > 100 ? '...' : '')
                 };
