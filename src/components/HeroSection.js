@@ -125,47 +125,62 @@ export default class HeroSection {
                 nextSection.scrollIntoView({ behavior: 'smooth' });
             }
         });
+
+        // Intersection Observer for Performance
+        this.observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.startRain();
+                } else {
+                    this.stopRain();
+                }
+            });
+        }, { threshold: 0.1 });
+
+        this.observer.observe(this.element);
     }
 
     initRain() {
-        const canvas = this.element.querySelector('#rain-canvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
+        this.canvas = this.element.querySelector('#rain-canvas');
+        if (!this.canvas) return;
+        this.ctx = this.canvas.getContext('2d');
 
         // Handle Retina
-        const dpr = window.devicePixelRatio || 1;
-        let width = window.innerWidth;
-        let height = window.innerHeight;
+        this.dpr = window.devicePixelRatio || 1;
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
 
         const resize = () => {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width * dpr;
-            canvas.height = height * dpr;
-            ctx.scale(dpr, dpr);
-            canvas.style.width = width + 'px';
-            canvas.style.height = height + 'px';
+            this.width = window.innerWidth;
+            this.height = window.innerHeight;
+            this.canvas.width = this.width * this.dpr;
+            this.canvas.height = this.height * this.dpr;
+            this.ctx.scale(this.dpr, this.dpr);
+            this.canvas.style.width = this.width + 'px';
+            this.canvas.style.height = this.height + 'px';
         };
         resize();
 
-        const raindrops = [];
+        this.raindrops = [];
         const count = 60; // Sparse rain for airy feel
 
         class Raindrop {
-            constructor() {
+            constructor(width, height) {
+                this.parentWidth = width;
+                this.parentHeight = height;
                 this.reset();
                 this.y = Math.random() * height; // Start spread out
             }
 
             reset() {
-                this.x = Math.random() * width;
+                this.x = Math.random() * this.parentWidth;
                 this.y = -20;
                 this.length = Math.random() * 15 + 5;
                 this.speed = Math.random() * 3 + 2; // Slower
                 this.opacity = Math.random() * 0.2 + 0.05; // Very faint
             }
 
-            draw() {
+            draw(ctx) {
                 ctx.beginPath();
                 ctx.moveTo(this.x, this.y);
                 ctx.lineTo(this.x, this.y + this.length);
@@ -175,7 +190,7 @@ export default class HeroSection {
                 ctx.stroke();
             }
 
-            update() {
+            update(height) {
                 this.y += this.speed;
                 if (this.y > height) {
                     this.reset();
@@ -184,19 +199,37 @@ export default class HeroSection {
         }
 
         for (let i = 0; i < count; i++) {
-            raindrops.push(new Raindrop());
+            this.raindrops.push(new Raindrop(this.width, this.height));
         }
 
+        window.addEventListener('resize', () => {
+            resize();
+            // Update drops bounds
+            this.raindrops.forEach(drop => {
+                drop.parentWidth = this.width;
+                drop.parentHeight = this.height;
+            });
+        });
+    }
+
+    startRain() {
+        if (this.rainAnimationId) return; // Already running
+
         const animate = () => {
-            ctx.clearRect(0, 0, width, height);
-            raindrops.forEach(drop => {
-                drop.update();
-                drop.draw();
+            this.ctx.clearRect(0, 0, this.width, this.height);
+            this.raindrops.forEach(drop => {
+                drop.update(this.height);
+                drop.draw(this.ctx);
             });
             this.rainAnimationId = requestAnimationFrame(animate);
         };
-
         animate();
-        window.addEventListener('resize', resize);
+    }
+
+    stopRain() {
+        if (this.rainAnimationId) {
+            cancelAnimationFrame(this.rainAnimationId);
+            this.rainAnimationId = null;
+        }
     }
 }

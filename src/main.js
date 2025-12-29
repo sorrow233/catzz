@@ -1,3 +1,4 @@
+import './styles/main.css';
 import HeroSection from './components/HeroSection.js';
 import CarouselSection from './components/CarouselSection.js';
 import TimelineSection from './components/TimelineSection.js';

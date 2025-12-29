@@ -180,4 +180,11 @@ export default class CarouselSection {
         container.addEventListener('mouseenter', stopAutoPlay);
         container.addEventListener('mouseleave', startAutoPlay);
     }
+    destroy() {
+        this.stopAutoPlay();
+        // Remove event listeners if necessary, but here likely handled by garbage collection if elements are removed.
+        // However, explicitly removing them is good practice if we stored references.
+        // Since we didn't store named references for listeners in constructor, we just rely on element removal for listeners attached to children.
+        // But the interval MUST be cleared.
+    }
 }

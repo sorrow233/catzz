@@ -1,6 +1,8 @@
 export default class GallerySection {
     constructor() {
         this.galleryData = [];
+        this.visibleCount = 0;
+        this.BATCH_SIZE = 20;
     }
 
     render() {
@@ -23,12 +25,14 @@ export default class GallerySection {
 
                 <!-- Masonry Grid -->
                 <div id="gallery-grid" class="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
-                    <!-- Loading State -->
-                    <div class="animate-pulse flex flex-col gap-8">
-                        <div class="h-64 bg-gray-200 rounded-sm"></div>
-                        <div class="h-96 bg-gray-200 rounded-sm"></div>
-                        <div class="h-48 bg-gray-200 rounded-sm"></div>
-                    </div>
+                </div>
+
+                <!-- Load More Button -->
+                <div id="load-more-container" class="mt-20 text-center hidden">
+                    <button id="load-more-btn" class="px-8 py-3 bg-white border border-gray-200 hover:border-black text-gray-500 hover:text-black font-serif tracking-widest text-sm transition-all duration-300 uppercase">
+                        Load More
+                    </button>
+                    <p class="mt-2 text-[10px] text-gray-400 font-mono tracking-widest hidden" id="all-loaded-text">End of Collection</p>
                 </div>
             </div>
             
@@ -64,14 +68,14 @@ export default class GallerySection {
 
     async fetchData() {
         try {
-            const response = await fetch('src/data/gallery_data.json');
+            const response = await fetch('src/data/gallery.json');
             if (!response.ok) throw new Error('Failed to load metadata');
 
             const data = await response.json();
             // Sort by date (newest first)
             this.galleryData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-            this.renderItems();
+            this.renderMoreItems();
         } catch (error) {
             console.error('Error loading gallery data:', error);
             const grid = this.element.querySelector('#gallery-grid');
@@ -79,12 +83,23 @@ export default class GallerySection {
         }
     }
 
-    renderItems() {
+    renderMoreItems() {
         const grid = this.element.querySelector('#gallery-grid');
+        const loadMoreContainer = this.element.querySelector('#load-more-container');
+        const loadMoreBtn = this.element.querySelector('#load-more-btn');
+        const allLoadedText = this.element.querySelector('#all-loaded-text');
 
-        // Generate HTML
-        grid.innerHTML = this.galleryData.map((item, index) => {
-            // Use remote url if available, otherwise local path (though local path expects pixiv_data prefix, the new JSON includes it in 'url' if remote is missing)
+        const nextBatch = this.galleryData.slice(this.visibleCount, this.visibleCount + this.BATCH_SIZE);
+
+        if (nextBatch.length === 0) {
+            loadMoreBtn.classList.add('hidden');
+            allLoadedText.classList.remove('hidden');
+            return;
+        }
+
+        const html = nextBatch.map((item, index) => {
+            const globalIndex = this.visibleCount + index;
+            // Use remote url if available, otherwise local path
             const imagePath = item.url;
             const date = new Date(item.created_at).toLocaleDateString('en-US', {
                 year: 'numeric',
@@ -93,7 +108,7 @@ export default class GallerySection {
             }).replace(/\//g, '.');
 
             return `
-                <div class="gallery-item break-inside-avoid mb-12 group cursor-zoom-in" data-index="${index}">
+                <div class="gallery-item break-inside-avoid mb-12 group cursor-zoom-in" data-index="${globalIndex}">
                     <div class="relative overflow-hidden bg-gray-100 mb-3 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] transition-shadow duration-500 group-hover:shadow-[0_8px_30px_-8px_rgba(0,0,0,0.1)]">
                         <img 
                             src="${imagePath}" 
@@ -120,23 +135,43 @@ export default class GallerySection {
             `;
         }).join('');
 
-        // Re-bind click events for new items
-        this.bindItemEvents();
+        grid.insertAdjacentHTML('beforeend', html);
+        this.visibleCount += nextBatch.length;
+
+        // Toggle Load More Display
+        loadMoreContainer.classList.remove('hidden');
+        if (this.visibleCount >= this.galleryData.length) {
+            loadMoreBtn.classList.add('hidden');
+            allLoadedText.classList.remove('hidden');
+        } else {
+            loadMoreBtn.classList.remove('hidden');
+            allLoadedText.classList.add('hidden');
+        }
     }
 
-    bindItemEvents() {
-        const items = this.element.querySelectorAll('.gallery-item');
+    bindEvents() {
         const lightbox = this.element.querySelector('#lightbox');
         const lightboxImg = this.element.querySelector('#lightbox-img');
         const lightboxTitle = this.element.querySelector('#lightbox-title');
         const lightboxDesc = this.element.querySelector('#lightbox-desc');
         const lightboxLink = this.element.querySelector('#lightbox-link');
+        const grid = this.element.querySelector('#gallery-grid');
+        const loadMoreBtn = this.element.querySelector('#load-more-btn');
 
-        items.forEach(item => {
-            item.addEventListener('click', () => {
+        // Load More Click
+        loadMoreBtn.addEventListener('click', () => {
+            this.renderMoreItems();
+        });
+
+        // Event Delegation for Gallery Items (Lightbox Open)
+        grid.addEventListener('click', (e) => {
+            const item = e.target.closest('.gallery-item');
+            if (item) {
                 const index = item.dataset.index;
                 const data = this.galleryData[index];
-                const imagePath = data.url;
+                if (!data) return;
+
+                const imagePath = data.original_url_display || data.url;
 
                 lightboxImg.src = imagePath;
                 lightboxTitle.textContent = data.title;
@@ -152,14 +187,8 @@ export default class GallerySection {
                     lightboxImg.classList.remove('scale-95');
                     lightboxImg.classList.add('scale-100');
                 });
-            });
+            }
         });
-    }
-
-    bindEvents() {
-        const lightbox = this.element.querySelector('#lightbox');
-        const lightboxImg = this.element.querySelector('#lightbox-img');
-        const lightboxLink = this.element.querySelector('#lightbox-link');
 
         // Close when clicking background
         lightbox.addEventListener('click', (e) => {
