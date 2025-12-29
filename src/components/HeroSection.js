@@ -197,25 +197,20 @@ export default class HeroSection {
         window.addEventListener('resize', resize);
 
         this.raindrops = [];
-        const count = 180; // Balanced density (more than 40, less than 500)
+        const count = 80; // Scaled relative to original 40 for full screen coverage without changing density feel
         class Raindrop {
             constructor(w, h) { this.w = w; this.h = h; this.reset(); this.y = Math.random() * h; }
             reset() {
                 this.x = Math.random() * this.w;
                 this.y = -20;
-                // Back to subtle, shorter drops
-                this.length = Math.random() * 15 + 8;
-                this.speed = Math.random() * 2 + 2;
-                // Lower opacity for "air feel", but ensuring it's not invisible
+                this.length = Math.random() * 15 + 5;
+                this.speed = Math.random() * 2 + 1.5;
                 this.opacity = Math.random() * 0.2 + 0.1;
             }
             update(h) { this.y += this.speed; if (this.y > h) this.reset(); }
             draw(ctx) {
                 ctx.beginPath(); ctx.moveTo(this.x, this.y); ctx.lineTo(this.x, this.y + this.length);
-                // Original Slate-400 color, thinner line
-                ctx.strokeStyle = `rgba(148, 163, 184, ${this.opacity})`;
-                ctx.lineWidth = 1;
-                ctx.stroke();
+                ctx.strokeStyle = `rgba(148, 163, 184, ${this.opacity})`; ctx.lineWidth = 1; ctx.stroke();
             }
         }
         for (let i = 0; i < count; i++) this.raindrops.push(new Raindrop(this.width, this.height));
