@@ -1,14 +1,9 @@
-
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const fs = require('fs');
+const path = require('path');
 
 const BASE_URL = 'https://catzz.work';
 const GALLERY_PATH = path.join(__dirname, '../public/gallery.json');
-const OUTPUT_PATH = path.join(__dirname, '../public/sitemap.xml'); // Or dist/sitemap.xml if running post-build
+const OUTPUT_PATH = path.join(__dirname, '../public/sitemap.xml'); // Note: dirname is scripts/
 
 async function generateSitemap() {
     try {
@@ -24,20 +19,9 @@ async function generateSitemap() {
   </url>
 `;
 
-        // Add images to the homepage entry (since it's a single page gallery)
-        // Or add individual entries if we had individual pages.
-        // Strategy: Enhance the main page entry with image extensions
-
-        // We can also list the images as separate URLs if they were accessible pages, 
-        // but here we are telling Google "these images are on this page".
-        // Actually, let's create a robust "image sitemap" attached to the main URL 
-        // OR separate URLs if we want to deep link (but SPA deep linking needs care).
-        // Safest bet for now: Associate all images with the root URL.
-
-        sitemap = sitemap.replace('</url>', ''); // Re-open the root url tag
+        sitemap = sitemap.replace('</url>', '');
 
         galleryData.forEach(item => {
-            // Use remote_url or original_url_display
             const imgUrl = item.remote_url || item.url || item.original_url_display;
             if (imgUrl) {
                 sitemap += `
