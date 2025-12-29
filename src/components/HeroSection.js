@@ -170,47 +170,45 @@ export default class HeroSection {
         if (!this.canvas) return;
         this.ctx = this.canvas.getContext('2d');
 
-        const parent = this.canvas.parentElement;
-        this.dpr = window.devicePixelRatio || 1;
-
+        // Use Window dimensions directly for the Hero Section to ensure full coverage
         const resize = () => {
             if (!this.canvas) return;
-            // Use parent dimensions as it is absolute
-            const rect = parent.getBoundingClientRect();
-            // On initial load, rect might be 0 if display:none, but typically ok.
-            // Fallback to wrapper logic if needed.
-            this.width = rect.width || parent.clientWidth;
-            this.height = rect.height || parent.clientHeight;
+
+            this.width = window.innerWidth;
+            this.height = window.innerHeight;
 
             this.canvas.width = this.width * this.dpr;
             this.canvas.height = this.height * this.dpr;
             this.ctx.scale(this.dpr, this.dpr);
             this.canvas.style.width = this.width + 'px';
             this.canvas.style.height = this.height + 'px';
+
+            // Force update existing drops' width limits immediately so they can spawn in new area
+            if (this.raindrops) {
+                this.raindrops.forEach(d => d.w = this.width);
+            }
         };
 
         // Initial resize
         resize();
 
-        // Use ResizeObserver for more robust resizing of the panel
-        this.resizeObserver = new ResizeObserver(() => resize());
-        this.resizeObserver.observe(parent);
+        window.addEventListener('resize', resize);
 
         this.raindrops = [];
-        const count = 40; // Fewer drops for smaller area
+        const count = 500; // Even more drops for a heavy rain feel
         class Raindrop {
             constructor(w, h) { this.w = w; this.h = h; this.reset(); this.y = Math.random() * h; }
             reset() {
                 this.x = Math.random() * this.w;
                 this.y = -20;
-                this.length = Math.random() * 15 + 5;
-                this.speed = Math.random() * 2 + 1.5;
-                this.opacity = Math.random() * 0.2 + 0.1;
+                this.length = Math.random() * 25 + 10;
+                this.speed = Math.random() * 3 + 2;
+                this.opacity = Math.random() * 0.4 + 0.2; // Brighter: 0.2 - 0.6
             }
             update(h) { this.y += this.speed; if (this.y > h) this.reset(); }
             draw(ctx) {
                 ctx.beginPath(); ctx.moveTo(this.x, this.y); ctx.lineTo(this.x, this.y + this.length);
-                ctx.strokeStyle = `rgba(148, 163, 184, ${this.opacity})`; ctx.lineWidth = 1; ctx.stroke();
+                ctx.strokeStyle = `rgba(180, 200, 225, ${this.opacity})`; ctx.lineWidth = 1.5; ctx.stroke();
             }
         }
         for (let i = 0; i < count; i++) this.raindrops.push(new Raindrop(this.width, this.height));
