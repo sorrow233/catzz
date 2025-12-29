@@ -2,12 +2,15 @@ import { i18n } from '../utils/i18n.js';
 
 export default class GallerySection {
     constructor() {
-        this.galleryData = [];
+        this.allData = [];
+        this.filteredData = [];
         this.visibleCount = 0;
-        this.BATCH_SIZE = 20;
+        this.BATCH_SIZE = 15;
+        this.currentTag = 'All';
+        this.observer = null;
+
         window.addEventListener('languageChanged', () => {
             this.updateLabels();
-            this.renderVisibleItems(); // Re-render current batch to update static text if needed
         });
     }
 
@@ -15,76 +18,80 @@ export default class GallerySection {
         if (!this.element) return;
         const title = this.element.querySelector('h2');
         const subtitle = this.element.querySelector('p.font-mono');
-        const loadMoreBtn = this.element.querySelector('#load-more-btn');
-        const allLoadedText = this.element.querySelector('#all-loaded-text');
-        const viewOriginal = this.element.querySelector('#lightbox-link');
+        const viewOriginalLinks = this.element.querySelectorAll('.view-original-text');
 
         if (title) title.textContent = i18n.t('gallery.title');
         if (subtitle) subtitle.textContent = i18n.t('gallery.subtitle');
-        if (loadMoreBtn) loadMoreBtn.textContent = i18n.t('gallery.loadMore');
-        if (allLoadedText) allLoadedText.textContent = i18n.t('gallery.allLoaded');
-        if (viewOriginal) viewOriginal.textContent = i18n.t('gallery.viewOriginal');
-    }
-
-    renderVisibleItems() {
-        // This is a bit complex as we have masonry. 
-        // For simplicity, let's just update the specific text elements in the grid if needed.
-        // Actually, titles are NOT translated, so the only thing that might change in items is the "original_url_display" or labels.
-        // But the prompt says "Gallery names original", which I interpreted as item titles.
-        // Let's just update the static labels for now.
+        // Update lightbox link if open
+        const lightboxLink = document.getElementById('lightbox-link');
+        if (lightboxLink) lightboxLink.textContent = i18n.t('gallery.viewOriginal');
     }
 
     render() {
         this.element = document.createElement('section');
-        this.element.className = 'w-full min-h-screen bg-[#f9f9f9] py-24 px-4 sm:px-8 flex flex-col items-center relative';
+        this.element.className = 'w-full min-h-screen bg-[#f8f9fa] py-24 px-4 sm:px-8 relative';
 
-        // Magazine-style Decorations
         this.element.innerHTML = `
-            <!-- Background Grids/Lines -->
-            <div class="absolute inset-0 pointer-events-none opacity-[0.03]" 
-                 style="background-image: linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px); background-size: 40px 40px;">
-            </div>
-            
-            <div class="w-full max-w-[1400px] relative z-10">
-                <!-- Section Header -->
-                <div class="mb-16 pl-2 md:pl-4 border-l-2 border-primary/20">
-                    <h2 class="text-3xl md:text-4xl font-serif font-light tracking-widest text-primary mb-2">${i18n.t('gallery.title')}</h2>
-                    <p class="text-xs md:text-sm font-mono text-gray-400 tracking-[0.2em] uppercase">${i18n.t('gallery.subtitle')}</p>
+            <div class="max-w-[1600px] mx-auto relative z-10">
+                <!-- Header & Filter -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8 sticky top-0 bg-[#f8f9fa]/90 backdrop-blur-md z-30 py-4 -mx-4 px-4 md:mx-0 md:px-0 transition-all duration-300" id="gallery-header">
+                    <div>
+                        <h2 class="text-4xl md:text-5xl font-serif font-light text-primary mb-2">${i18n.t('gallery.title')}</h2>
+                        <p class="text-xs font-mono text-gray-400 tracking-[0.3em] uppercase">${i18n.t('gallery.subtitle')}</p>
+                    </div>
+
+                    <!-- Filter Tags -->
+                    <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide max-w-full md:max-w-2xl mask-linear-fade" id="tag-filters">
+                        <!-- Tags injected here -->
+                    </div>
                 </div>
 
                 <!-- Masonry Grid -->
-                <div id="gallery-grid" class="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
+                <div id="gallery-grid" class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6 min-h-[50vh]">
+                    <!-- Items injected here -->
                 </div>
 
-                <!-- Load More Button -->
-                <div id="load-more-container" class="mt-20 text-center hidden">
-                    <button id="load-more-btn" class="px-8 py-3 bg-white border border-gray-200 hover:border-black text-gray-500 hover:text-black font-serif tracking-widest text-sm transition-all duration-300 uppercase">
-                        ${i18n.t('gallery.loadMore')}
-                    </button>
-                    <p class="mt-2 text-[10px] text-gray-400 font-mono tracking-widest hidden" id="all-loaded-text">${i18n.t('gallery.allLoaded')}</p>
+                <!-- Loading Sentinel -->
+                <div id="gallery-sentinel" class="w-full h-20 flex justify-center items-center mt-12 opacity-0 transition-opacity duration-300">
+                    <div class="flex gap-1">
+                        <div class="w-2 h-2 bg-primary/40 rounded-full animate-bounce" style="animation-delay: 0s"></div>
+                        <div class="w-2 h-2 bg-primary/40 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                        <div class="w-2 h-2 bg-primary/40 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                    </div>
                 </div>
             </div>
             
             <!-- Lightbox Modal -->
-            <div id="lightbox" class="fixed inset-0 bg-[#f9f9f9]/95 hidden z-[100] flex justify-center items-center opacity-0 transition-opacity duration-500 cursor-zoom-out">
-                <div class="relative w-full h-full flex flex-col justify-center items-center p-4 md:p-10" id="lightbox-content">
-                    <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[80vh] object-contain shadow-2xl transition-transform duration-500 scale-95">
-                    
-                    <div class="absolute bottom-10 left-0 right-0 text-center pointer-events-none">
-                        <h3 id="lightbox-title" class="text-xl md:text-2xl font-serif text-primary tracking-widest mb-2"></h3>
-                        <p id="lightbox-desc" class="text-xs font-mono text-gray-500 tracking-wider bg-white/50 inline-block px-2 py-1 rounded"></p>
-                        <a id="lightbox-link" href="#" target="_blank" class="pointer-events-auto mt-4 inline-block text-xs uppercase tracking-[0.2em] text-primary border-b border-primary hover:opacity-50 transition-opacity pb-0.5">${i18n.t('gallery.viewOriginal')}</a>
+            <div id="lightbox" class="fixed inset-0 bg-white/95 backdrop-blur-xl hidden z-[100] transition-opacity duration-300 opacity-0">
+                <div class="absolute inset-0 flex flex-col justify-center items-center p-4 md:p-8">
+                    <!-- Image Container -->
+                    <div class="relative max-w-full max-h-[85vh] shadow-2xl rounded-sm overflow-hidden transform scale-95 transition-transform duration-500" id="lightbox-img-container">
+                        <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[85vh] object-contain block">
+                    </div>
+
+                    <!-- Info Bar -->
+                    <div class="absolute bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-gray-100 p-6 transform translate-y-full transition-transform duration-300 flex justify-between items-center" id="lightbox-info">
+                        <div>
+                            <h3 id="lightbox-title" class="text-xl font-serif text-primary mb-1"></h3>
+                            <p id="lightbox-tags" class="text-xs font-mono text-gray-500 uppercase tracking-wider"></p>
+                        </div>
+                        <a id="lightbox-link" href="#" target="_blank" class="px-6 py-2 bg-primary text-white text-xs font-bold tracking-widest uppercase hover:bg-secondary transition-colors duration-300 rounded-full">
+                            ${i18n.t('gallery.viewOriginal')}
+                        </a>
                     </div>
 
                     <!-- Close Button -->
-                    <button class="absolute top-8 right-8 text-primary hover:opacity-50 transition-opacity p-2">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="square">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
+                    <button id="lightbox-close" class="absolute top-6 right-6 p-4 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors text-primary z-50">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
             </div>
+
+            <style>
+                .scrollbar-hide::-webkit-scrollbar { display: none; }
+                .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+                .mask-linear-fade { -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%); mask-image: linear-gradient(to right, black 85%, transparent 100%); }
+            </style>
         `;
 
         return this.element;
@@ -93,6 +100,7 @@ export default class GallerySection {
     mount() {
         this.fetchData();
         this.bindEvents();
+        this.setupIntersectionObserver();
     }
 
     async fetchData() {
@@ -102,62 +110,132 @@ export default class GallerySection {
 
             const data = await response.json();
             // Sort by date (newest first)
-            this.galleryData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            this.allData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-            this.renderMoreItems();
+            this.setupFilters();
+            this.filterData('All');
         } catch (error) {
             console.error('Error loading gallery data:', error);
             const grid = this.element.querySelector('#gallery-grid');
-            grid.innerHTML = `<p class="text-center text-gray-400 font-serif border border-gray-200 p-8">${i18n.t('gallery.failed')}</p>`;
+            if (grid) grid.innerHTML = `<p class="text-center text-gray-400 font-serif w-full col-span-full py-20">${i18n.t('gallery.failed')}</p>`;
         }
+    }
+
+    setupFilters() {
+        const uniqueTags = new Set();
+        this.allData.forEach(item => {
+            if (item.tags) item.tags.forEach(tag => uniqueTags.add(tag));
+        });
+
+        const sortedTags = ['All', ...Array.from(uniqueTags).sort()];
+        const filterContainer = this.element.querySelector('#tag-filters');
+
+        filterContainer.innerHTML = sortedTags.map(tag => `
+            <button class="filter-btn px-5 py-2 rounded-full text-xs font-medium tracking-wide border transition-all duration-300 whitespace-nowrap
+                ${tag === 'All' ? 'bg-primary text-white border-primary' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'}"
+                data-tag="${tag}">
+                #${tag}
+            </button>
+        `).join('');
+
+        filterContainer.addEventListener('click', (e) => {
+            const btn = e.target.closest('.filter-btn');
+            if (btn) {
+                // Update text color
+                this.element.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('bg-primary', 'text-white', 'border-primary');
+                    b.classList.add('bg-white', 'text-gray-500', 'border-gray-200');
+                });
+                btn.classList.remove('bg-white', 'text-gray-500', 'border-gray-200');
+                btn.classList.add('bg-primary', 'text-white', 'border-primary');
+
+                this.filterData(btn.dataset.tag);
+            }
+        });
+    }
+
+    filterData(tag) {
+        this.currentTag = tag;
+        this.visibleCount = 0;
+
+        if (tag === 'All') {
+            this.filteredData = this.allData;
+        } else {
+            this.filteredData = this.allData.filter(item => item.tags && item.tags.includes(tag));
+        }
+
+        const grid = this.element.querySelector('#gallery-grid');
+        grid.innerHTML = ''; // Clear grid
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // Optional: reset scroll? Maybe not for better UX if sticking header.
+        // Actually, let's keep scroll position if header is sticky, or scroll to top of grid
+
+        this.renderMoreItems();
+    }
+
+    setupIntersectionObserver() {
+        const options = {
+            root: null,
+            rootMargin: '200px',
+            threshold: 0.1
+        };
+
+        this.observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.renderMoreItems();
+                }
+            });
+        }, options);
+
+        const sentinel = this.element.querySelector('#gallery-sentinel');
+        if (sentinel) this.observer.observe(sentinel);
     }
 
     renderMoreItems() {
         const grid = this.element.querySelector('#gallery-grid');
-        const loadMoreContainer = this.element.querySelector('#load-more-container');
-        const loadMoreBtn = this.element.querySelector('#load-more-btn');
-        const allLoadedText = this.element.querySelector('#all-loaded-text');
+        const sentinel = this.element.querySelector('#gallery-sentinel');
 
-        const nextBatch = this.galleryData.slice(this.visibleCount, this.visibleCount + this.BATCH_SIZE);
-
-        if (nextBatch.length === 0) {
-            loadMoreBtn.classList.add('hidden');
-            allLoadedText.classList.remove('hidden');
+        if (this.visibleCount >= this.filteredData.length) {
+            sentinel.classList.add('hidden'); // Hide loader if all done
             return;
+        } else {
+            sentinel.classList.remove('hidden');
         }
+
+        // Show loader animation
+        sentinel.classList.remove('opacity-0');
+
+        const nextBatch = this.filteredData.slice(this.visibleCount, this.visibleCount + this.BATCH_SIZE);
+
+        // Small delay to simulate loading or just ensure smoothness
+        // Actually direct render is better for perf, animation handles visual smoothness
 
         const html = nextBatch.map((item, index) => {
             const globalIndex = this.visibleCount + index;
-            // Use remote url (ignore local thumbnail_url as it may not exist on server)
+            // Use remote url
             const imagePath = item.url;
-            const date = new Date(item.created_at).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit'
-            }).replace(/\//g, '.');
 
             return `
-                <div class="gallery-item break-inside-avoid mb-12 group cursor-zoom-in" data-index="${globalIndex}">
-                    <div class="relative overflow-hidden bg-gray-100 mb-3 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] transition-shadow duration-500 group-hover:shadow-[0_8px_30px_-8px_rgba(0,0,0,0.1)]">
+                <div class="gallery-item break-inside-avoid mb-6 opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                     data-index="${globalIndex}" 
+                     style="transition-delay: ${index * 50}ms">
+                     
+                    <div class="relative rounded-2xl overflow-hidden group cursor-zoom-in bg-gray-100 shadow-sm hover:shadow-xl transition-shadow duration-500">
                         <img 
                             src="${imagePath}" 
                             alt="${item.title}"
                             loading="lazy"
-                            class="w-full h-auto block transform transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-[1.02]"
-                            onerror="this.parentElement.style.display='none'"
+                            class="w-full h-auto block transform transition-transform duration-700 group-hover:scale-105"
+                            onload="this.parentElement.parentElement.classList.remove('opacity-0', 'translate-y-8')"
+                            onerror="this.parentElement.parentElement.style.display='none'"
                         >
                         
-                        <!-- Overlay on hover -->
-                        <div class="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-300"></div>
-                    </div>
-                    
-                    <div class="flex flex-col items-start px-1">
-                        <div class="flex items-baseline justify-between w-full border-b border-gray-100 pb-2 mb-2">
-                            <h3 class="text-sm font-serif text-primary tracking-wide leading-relaxed group-hover:text-[#3498db] transition-colors">${item.title}</h3>
-                            <span class="text-[10px] font-mono text-gray-400 ml-2 tracking-wider shrink-0">${date}</span>
-                        </div>
-                        <div class="text-[10px] text-gray-400 font-light line-clamp-2 leading-relaxed tracking-wide opacity-0 transform -translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                            ${item.tags.slice(0, 3).join(' / ')}
+                        <!-- Hover Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                            <h3 class="text-white font-serif text-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">${item.title}</h3>
+                            <div class="text-white/80 text-xs font-mono mt-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">
+                                ${item.tags.slice(0, 2).join(' / ')}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -167,73 +245,84 @@ export default class GallerySection {
         grid.insertAdjacentHTML('beforeend', html);
         this.visibleCount += nextBatch.length;
 
-        // Toggle Load More Display
-        loadMoreContainer.classList.remove('hidden');
-        if (this.visibleCount >= this.galleryData.length) {
-            loadMoreBtn.classList.add('hidden');
-            allLoadedText.classList.remove('hidden');
-        } else {
-            loadMoreBtn.classList.remove('hidden');
-            allLoadedText.classList.add('hidden');
+        if (this.visibleCount >= this.filteredData.length) {
+            sentinel.classList.add('opacity-0');
         }
     }
 
     bindEvents() {
         const lightbox = this.element.querySelector('#lightbox');
         const lightboxImg = this.element.querySelector('#lightbox-img');
-        const lightboxTitle = this.element.querySelector('#lightbox-title');
-        const lightboxDesc = this.element.querySelector('#lightbox-desc');
         const lightboxLink = this.element.querySelector('#lightbox-link');
+        const lightboxTitle = this.element.querySelector('#lightbox-title');
+        const lightboxTags = this.element.querySelector('#lightbox-tags');
+        const lightboxInfo = this.element.querySelector('#lightbox-info');
+        const lightboxImgContainer = this.element.querySelector('#lightbox-img-container');
         const grid = this.element.querySelector('#gallery-grid');
-        const loadMoreBtn = this.element.querySelector('#load-more-btn');
+        const closeBtn = this.element.querySelector('#lightbox-close');
 
-        // Load More Click
-        loadMoreBtn.addEventListener('click', () => {
-            this.renderMoreItems();
-        });
-
-        // Event Delegation for Gallery Items (Lightbox Open)
+        // Open Lightbox
         grid.addEventListener('click', (e) => {
             const item = e.target.closest('.gallery-item');
             if (item) {
                 const index = item.dataset.index;
-                const data = this.galleryData[index];
-                if (!data) return;
+                // Note: We need to use filteredData here because indices map to the current view
+                const data = this.filteredData[index - (this.visibleCount - this.element.querySelectorAll('.gallery-item').length)];
+                // Wait, logic above is flawed if using append. 
+                // Simplest: store ID or look up in filteredData by some attribute? 
+                // Actually, render order matches filteredData order.
+                // But `index` in loop starts at 0 for start of BATCH.
+                // Global index is correct. 
+                // But `filteredData` changes on filter. 
+                // Let's rely on mapping DOM index to `filteredData`.
 
-                const imagePath = data.original_url_display || data.url;
+                // Let's simplify: Get all current items, find index of clicked item.
+                const allItems = Array.from(grid.querySelectorAll('.gallery-item'));
+                const clickedIndex = allItems.indexOf(item);
+                const itemData = this.filteredData[clickedIndex];
+
+                if (!itemData) return;
+
+                const imagePath = itemData.original_url_display || itemData.url;
 
                 lightboxImg.src = imagePath;
-                lightboxTitle.textContent = data.title;
-                lightboxDesc.textContent = data.tags.join('   ');
-                lightboxLink.href = data.pixiv_url;
+                lightboxTitle.textContent = itemData.title;
+                lightboxTags.textContent = itemData.tags.join(' / ');
+                lightboxLink.href = itemData.pixiv_url;
 
                 lightbox.classList.remove('hidden');
                 document.body.style.overflow = 'hidden';
 
+                // Intro Animation
                 requestAnimationFrame(() => {
                     lightbox.classList.remove('opacity-0');
-                    lightbox.classList.add('opacity-100');
-                    lightboxImg.classList.remove('scale-95');
-                    lightboxImg.classList.add('scale-100');
+                    lightboxImgContainer.classList.remove('scale-95');
+                    lightboxInfo.classList.remove('translate-y-full');
                 });
             }
         });
 
-        // Close when clicking background
+        // Close functions
+        const closeLightbox = () => {
+            lightbox.classList.add('opacity-0');
+            lightboxImgContainer.classList.add('scale-95');
+            lightboxInfo.classList.add('translate-y-full');
+            document.body.style.overflow = '';
+
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                lightboxImg.src = '';
+            }, 300);
+        };
+
+        closeBtn.addEventListener('click', closeLightbox);
+
         lightbox.addEventListener('click', (e) => {
-            if (e.target !== lightboxImg && e.target !== lightboxLink && !lightboxLink.contains(e.target)) {
-                lightbox.classList.remove('opacity-100');
-                lightbox.classList.add('opacity-0');
-                lightboxImg.classList.remove('scale-100');
-                lightboxImg.classList.add('scale-95');
+            if (e.target === lightbox) closeLightbox();
+        });
 
-                document.body.style.overflow = '';
-
-                setTimeout(() => {
-                    lightbox.classList.add('hidden');
-                    lightboxImg.src = ''; // Clear source
-                }, 500);
-            }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) closeLightbox();
         });
     }
 }
