@@ -2,11 +2,9 @@ import { i18n } from '../utils/i18n.js';
 
 export default class GallerySection {
     constructor() {
-        this.allData = [];
-        this.filteredData = [];
+        this.galleryData = [];
         this.visibleCount = 0;
         this.BATCH_SIZE = 15;
-        this.currentTag = 'All';
         this.observer = null;
 
         window.addEventListener('languageChanged', () => {
@@ -18,7 +16,6 @@ export default class GallerySection {
         if (!this.element) return;
         const title = this.element.querySelector('h2');
         const subtitle = this.element.querySelector('p.font-mono');
-        const viewOriginalLinks = this.element.querySelectorAll('.view-original-text');
 
         if (title) title.textContent = i18n.t('gallery.title');
         if (subtitle) subtitle.textContent = i18n.t('gallery.subtitle');
@@ -33,17 +30,10 @@ export default class GallerySection {
 
         this.element.innerHTML = `
             <div class="max-w-[1600px] mx-auto relative z-10">
-                <!-- Header & Filter -->
-                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8 sticky top-0 bg-[#f8f9fa]/90 backdrop-blur-md z-30 py-4 -mx-4 px-4 md:mx-0 md:px-0 transition-all duration-300" id="gallery-header">
-                    <div>
-                        <h2 class="text-4xl md:text-5xl font-serif font-light text-primary mb-2">${i18n.t('gallery.title')}</h2>
-                        <p class="text-xs font-mono text-gray-400 tracking-[0.3em] uppercase">${i18n.t('gallery.subtitle')}</p>
-                    </div>
-
-                    <!-- Filter Tags -->
-                    <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide max-w-full md:max-w-2xl mask-linear-fade" id="tag-filters">
-                        <!-- Tags injected here -->
-                    </div>
+                <!-- Header -->
+                <div class="mb-12 sticky top-0 bg-[#f8f9fa]/90 backdrop-blur-md z-30 py-4 -mx-4 px-4 md:mx-0 md:px-0 transition-all duration-300" id="gallery-header">
+                    <h2 class="text-4xl md:text-5xl font-serif font-light text-primary mb-2">${i18n.t('gallery.title')}</h2>
+                    <p class="text-xs font-mono text-gray-400 tracking-[0.3em] uppercase">${i18n.t('gallery.subtitle')}</p>
                 </div>
 
                 <!-- Masonry Grid -->
@@ -90,7 +80,6 @@ export default class GallerySection {
             <style>
                 .scrollbar-hide::-webkit-scrollbar { display: none; }
                 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-                .mask-linear-fade { -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%); mask-image: linear-gradient(to right, black 85%, transparent 100%); }
             </style>
         `;
 
@@ -110,66 +99,14 @@ export default class GallerySection {
 
             const data = await response.json();
             // Sort by date (newest first)
-            this.allData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            this.galleryData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-            this.setupFilters();
-            this.filterData('All');
+            this.renderMoreItems();
         } catch (error) {
             console.error('Error loading gallery data:', error);
             const grid = this.element.querySelector('#gallery-grid');
             if (grid) grid.innerHTML = `<p class="text-center text-gray-400 font-serif w-full col-span-full py-20">${i18n.t('gallery.failed')}</p>`;
         }
-    }
-
-    setupFilters() {
-        const uniqueTags = new Set();
-        this.allData.forEach(item => {
-            if (item.tags) item.tags.forEach(tag => uniqueTags.add(tag));
-        });
-
-        const sortedTags = ['All', ...Array.from(uniqueTags).sort()];
-        const filterContainer = this.element.querySelector('#tag-filters');
-
-        filterContainer.innerHTML = sortedTags.map(tag => `
-            <button class="filter-btn px-5 py-2 rounded-full text-xs font-medium tracking-wide border transition-all duration-300 whitespace-nowrap
-                ${tag === 'All' ? 'bg-primary text-white border-primary' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'}"
-                data-tag="${tag}">
-                #${tag}
-            </button>
-        `).join('');
-
-        filterContainer.addEventListener('click', (e) => {
-            const btn = e.target.closest('.filter-btn');
-            if (btn) {
-                // Update text color
-                this.element.querySelectorAll('.filter-btn').forEach(b => {
-                    b.classList.remove('bg-primary', 'text-white', 'border-primary');
-                    b.classList.add('bg-white', 'text-gray-500', 'border-gray-200');
-                });
-                btn.classList.remove('bg-white', 'text-gray-500', 'border-gray-200');
-                btn.classList.add('bg-primary', 'text-white', 'border-primary');
-
-                this.filterData(btn.dataset.tag);
-            }
-        });
-    }
-
-    filterData(tag) {
-        this.currentTag = tag;
-        this.visibleCount = 0;
-
-        if (tag === 'All') {
-            this.filteredData = this.allData;
-        } else {
-            this.filteredData = this.allData.filter(item => item.tags && item.tags.includes(tag));
-        }
-
-        const grid = this.element.querySelector('#gallery-grid');
-        grid.innerHTML = ''; // Clear grid
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // Optional: reset scroll? Maybe not for better UX if sticking header.
-        // Actually, let's keep scroll position if header is sticky, or scroll to top of grid
-
-        this.renderMoreItems();
     }
 
     setupIntersectionObserver() {
@@ -195,7 +132,7 @@ export default class GallerySection {
         const grid = this.element.querySelector('#gallery-grid');
         const sentinel = this.element.querySelector('#gallery-sentinel');
 
-        if (this.visibleCount >= this.filteredData.length) {
+        if (this.visibleCount >= this.galleryData.length) {
             sentinel.classList.add('hidden'); // Hide loader if all done
             return;
         } else {
@@ -205,7 +142,7 @@ export default class GallerySection {
         // Show loader animation
         sentinel.classList.remove('opacity-0');
 
-        const nextBatch = this.filteredData.slice(this.visibleCount, this.visibleCount + this.BATCH_SIZE);
+        const nextBatch = this.galleryData.slice(this.visibleCount, this.visibleCount + this.BATCH_SIZE);
 
         // Small delay to simulate loading or just ensure smoothness
         // Actually direct render is better for perf, animation handles visual smoothness
@@ -245,7 +182,7 @@ export default class GallerySection {
         grid.insertAdjacentHTML('beforeend', html);
         this.visibleCount += nextBatch.length;
 
-        if (this.visibleCount >= this.filteredData.length) {
+        if (this.visibleCount >= this.galleryData.length) {
             sentinel.classList.add('opacity-0');
         }
     }
@@ -265,21 +202,10 @@ export default class GallerySection {
         grid.addEventListener('click', (e) => {
             const item = e.target.closest('.gallery-item');
             if (item) {
-                const index = item.dataset.index;
-                // Note: We need to use filteredData here because indices map to the current view
-                const data = this.filteredData[index - (this.visibleCount - this.element.querySelectorAll('.gallery-item').length)];
-                // Wait, logic above is flawed if using append. 
-                // Simplest: store ID or look up in filteredData by some attribute? 
-                // Actually, render order matches filteredData order.
-                // But `index` in loop starts at 0 for start of BATCH.
-                // Global index is correct. 
-                // But `filteredData` changes on filter. 
-                // Let's rely on mapping DOM index to `filteredData`.
-
-                // Let's simplify: Get all current items, find index of clicked item.
+                // Get all current items, find index of clicked item
                 const allItems = Array.from(grid.querySelectorAll('.gallery-item'));
                 const clickedIndex = allItems.indexOf(item);
-                const itemData = this.filteredData[clickedIndex];
+                const itemData = this.galleryData[clickedIndex];
 
                 if (!itemData) return;
 
