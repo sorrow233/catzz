@@ -170,6 +170,8 @@ export default class HeroSection {
         if (!this.canvas) return;
         this.ctx = this.canvas.getContext('2d');
 
+        this.dpr = window.devicePixelRatio || 1;
+
         // Use Window dimensions directly for the Hero Section to ensure full coverage
         const resize = () => {
             if (!this.canvas) return;
@@ -195,7 +197,7 @@ export default class HeroSection {
         window.addEventListener('resize', resize);
 
         this.raindrops = [];
-        const count = 500; // Even more drops for a heavy rain feel
+        const count = 120; // Balanced count for performance + visibility
         class Raindrop {
             constructor(w, h) { this.w = w; this.h = h; this.reset(); this.y = Math.random() * h; }
             reset() {
