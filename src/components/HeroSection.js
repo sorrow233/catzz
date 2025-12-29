@@ -39,14 +39,7 @@ export default class HeroSection {
             typedQuotes.textContent = this.suffixes[this.currentQuoteIndex];
         }
 
-        // Update Lang Switcher UI
-        const btns = this.element.querySelectorAll('.lang-btn');
-        btns.forEach(btn => {
-            if (btn.textContent === 'CN' && i18n.currentLanguage === 'zh') btn.classList.add('active');
-            else if (btn.textContent === 'EN' && i18n.currentLanguage === 'en') btn.classList.add('active');
-            else if (btn.textContent === 'JP' && i18n.currentLanguage === 'ja') btn.classList.add('active');
-            else btn.classList.remove('active');
-        });
+
     }
 
     updateCarouselCaptions() {
@@ -81,9 +74,7 @@ export default class HeroSection {
             
             .icon-hover:hover { transform: translateY(-3px); color: #000; }
             
-            /* Language Switcher */
-            .lang-switcher { cursor: pointer; transition: color 0.3s; }
-            .lang-btn:hover, .lang-btn.active { color: #1f2937; font-weight: 500; }
+
 
             /* Carousel Transitions */
             .carousel-slide { transition: opacity 1.2s cubic-bezier(0.45, 0, 0.55, 1), transform 1.4s cubic-bezier(0.25, 1, 0.5, 1); }
@@ -104,12 +95,7 @@ export default class HeroSection {
                 
                 <!-- Content -->
                 <div class="relative z-10 flex flex-col items-center text-center w-full">
-                     <!-- Language Switcher (Top Left of Panel) -->
-                    <div class="absolute top-[-20vh] md:top-[-30vh] left-0 w-full flex justify-center gap-4 text-xs tracking-widest text-gray-400 hero-font-sc">
-                        <span class="lang-btn ${i18n.currentLanguage === 'zh' ? 'active' : ''}" onclick="i18n.setLanguage('zh')">CN</span>
-                        <span class="lang-btn ${i18n.currentLanguage === 'en' ? 'active' : ''}" onclick="i18n.setLanguage('en')">EN</span>
-                        <span class="lang-btn ${i18n.currentLanguage === 'ja' ? 'active' : ''}" onclick="i18n.setLanguage('ja')">JP</span>
-                    </div>
+
 
                     <h1 class="text-4xl md:text-6xl font-thin tracking-[0.2em] mb-10 text-gray-800 hero-font-sc opacity-90">Catzz</h1>
                     
