@@ -5,41 +5,75 @@ export default class TimelineSection {
         this.timelineData = [];
         window.addEventListener('languageChanged', () => {
             this.updateLabels();
-            this.renderItems(); // Re-render to update desc and title if needed (though they are data-driven)
+            this.renderItems();
         });
     }
 
     updateLabels() {
         if (!this.element) return;
         const title = this.element.querySelector('h2');
-        const loading = this.element.querySelector('.animate-pulse');
+        const loading = this.element.querySelector('.loading-text');
         if (title) title.textContent = i18n.t('timeline.title');
         if (loading) loading.textContent = i18n.t('timeline.loading');
     }
 
     render() {
         this.element = document.createElement('section');
-        this.element.className = 'w-full min-h-screen bg-[#f9f9f9] py-24 px-4 flex justify-center relative overflow-hidden';
+        this.element.className = 'w-full py-20 bg-gradient-to-b from-[#f9f9f9] to-white relative overflow-hidden';
 
-        // Background decoration
         this.element.innerHTML = `
-            <div class="absolute right-0 top-0 w-1/3 h-full bg-gray-50 -z-0 transform skew-x-12 opacity-50 pointer-events-none"></div>
-            
-            <div class="video-container max-w-5xl w-full px-4 md:px-10 relative z-10">
-                <div class="mb-16 text-center">
-                   <h2 class="text-2xl font-serif font-light tracking-widest text-primary mb-2">${i18n.t('timeline.title')}</h2>
-                   <div class="w-10 h-0.5 bg-primary/20 mx-auto"></div>
+            <div class="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
+                <div class="mb-12 flex items-end justify-between px-2">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-serif font-light text-primary mb-2">${i18n.t('timeline.title')}</h2>
+                        <div class="w-16 h-0.5 bg-primary/20"></div>
+                    </div>
+                    
+                    <!-- Navigation Buttons -->
+                    <div class="hidden md:flex gap-2">
+                        <button id="scroll-left" class="p-3 rounded-full bg-white border border-gray-100 shadow-sm hover:shadow-md hover:bg-gray-50 transition-all duration-300 text-primary disabled:opacity-30 disabled:cursor-not-allowed">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                        <button id="scroll-right" class="p-3 rounded-full bg-white border border-gray-100 shadow-sm hover:shadow-md hover:bg-gray-50 transition-all duration-300 text-primary disabled:opacity-30 disabled:cursor-not-allowed">
+                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="video-list relative flex flex-col gap-16 py-5" id="timeline-list">
-                    <!-- Vertical Line -->
-                    <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gray-300 transform md:-translate-x-1/2"></div>
-                    
+                <!-- Scroll Container -->
+                <div id="timeline-scroll-container" class="flex gap-6 overflow-x-auto pb-12 pt-4 px-2 snap-x snap-mandatory scrollbar-hide -mx-4 md:mx-0 px-4 md:px-0">
                     <!-- Loading State -->
-                     <div class="animate-pulse w-full text-center text-gray-300 font-mono text-sm tracking-wider">${i18n.t('timeline.loading')}</div>
+                    <div class="loading-text w-full text-center text-gray-300 font-mono text-sm tracking-wider py-20">${i18n.t('timeline.loading')}</div>
                 </div>
             </div>
+            
+            <style>
+                .scrollbar-hide::-webkit-scrollbar {
+                    display: none;
+                }
+                .scrollbar-hide {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+            </style>
         `;
+
+        // Setup scroll buttons
+        setTimeout(() => {
+            const container = this.element.querySelector('#timeline-scroll-container');
+            const leftBtn = this.element.querySelector('#scroll-left');
+            const rightBtn = this.element.querySelector('#scroll-right');
+
+            if (leftBtn && rightBtn && container) {
+                leftBtn.addEventListener('click', () => {
+                    container.scrollBy({ left: -400, behavior: 'smooth' });
+                });
+                rightBtn.addEventListener('click', () => {
+                    container.scrollBy({ left: 400, behavior: 'smooth' });
+                });
+            }
+        }, 0);
+
         return this.element;
     }
 
@@ -92,53 +126,54 @@ export default class TimelineSection {
             this.renderItems();
         } catch (e) {
             console.error(e);
-            this.element.querySelector('#timeline-list').innerHTML = `<div class="text-center text-gray-400">${i18n.t('timeline.failed')}</div>`;
+            const container = this.element.querySelector('#timeline-scroll-container');
+            if (container) container.innerHTML = `<div class="text-center text-gray-400 w-full">${i18n.t('timeline.failed')}</div>`;
         }
     }
 
     renderItems() {
-        const list = this.element.querySelector('#timeline-list');
+        const container = this.element.querySelector('#timeline-scroll-container');
+        if (!container) return;
 
         // If no videos found, clear list
         if (this.timelineData.length === 0) {
-            list.innerHTML = `<div class="text-center text-gray-400">${i18n.t('timeline.empty')}</div>`;
+            container.innerHTML = `<div class="text-center text-gray-400 w-full">${i18n.t('timeline.empty')}</div>`;
             return;
         }
 
-        list.innerHTML = `
-            <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gray-300 transform md:-translate-x-1/2"></div>
-            ${this.timelineData.map((item, index) => {
-            const isLeft = index % 2 === 0;
-            // Mobile: Always left aligned content (timeline at left)
-            // Desktop: Alternating
-
-            return `
-                <div class="relative w-full md:w-[calc(50%-40px)] ml-14 md:mx-0 ${isLeft ? 'md:mr-auto md:pr-10 md:text-right' : 'md:ml-auto md:pl-10 md:text-left'} flex flex-col gap-2 group">
+        container.innerHTML = this.timelineData.map(item => `
+            <div class="snap-start shrink-0 w-[85vw] md:w-[400px] bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group cursor-pointer flex flex-col h-full" onclick="window.open('${item.url}', '_blank')">
+                <!-- Thumbnail -->
+                <div class="relative h-48 md:h-56 overflow-hidden">
+                    <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300 z-10"></div>
+                    <img src="${item.thumbnail}" alt="${item.title}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
                     
-                    <!-- Dot on timeline -->
-                    <div class="absolute top-0 w-3 h-3 bg-white border-2 border-gray-400 rounded-full z-10 
-                        left-[-38px] md:left-auto ${isLeft ? 'md:right-[-46px]' : 'md:left-[-46px]'} 
-                        group-hover:border-secondary group-hover:scale-125 transition-all duration-300">
+                    <!-- Play Icon Overlay -->
+                    <div class="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg">
+                            <svg class="w-5 h-5 text-primary ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
                     </div>
-
-                    <!-- Date & Title Header -->
-            <div class="flex items-center gap-4 mb-2">
-                <div class="w-3 h-3 rounded-full bg-secondary ring-4 ring-blue-50/50 shrink-0"></div> <!-- Dot -->
-                <div>
-                     <span class="text-sm font-bold text-gray-400 font-mono block leading-none mb-1">${item.date}</span>
-                     <h3 class="text-xl md:text-2xl font-serif text-[#2c3e50] group-hover:text-secondary transition-colors duration-300 cursor-pointer" onclick="window.open('${item.url}', '_blank')">${item.title}</h3>
+                </div>
+                
+                <!-- Content -->
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-baseline gap-3 mb-2">
+                         <span class="text-xs font-bold text-secondary font-mono bg-secondary/5 px-2 py-1 rounded-md">${item.date}</span>
+                    </div>
+                    
+                    <h3 class="text-lg font-serif text-[#2c3e50] group-hover:text-primary transition-colors duration-300 mb-3 line-clamp-2">${item.title}</h3>
+                    
+                    <p class="text-sm text-gray-500 font-light leading-relaxed line-clamp-3 mb-4 flex-grow">
+                        ${item.desc}
+                    </p>
+                    
+                    <div class="pt-4 border-t border-gray-50 flex items-center text-xs font-medium text-gray-400 group-hover:text-secondary transition-colors duration-300 uppercase tracking-widest mt-auto">
+                        <span>Watch Video</span>
+                        <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </div>
                 </div>
             </div>
-                        <p class="text-xs text-gray-500 font-light mt-2 opacity-80 line-clamp-2 max-w-md">
-                            ${item.desc}
-                        </p>
-
-                    <div class="w-full h-40 md:h-48 mt-3 rounded-sm overflow-hidden shadow-sm transition-all duration-500 group-hover:shadow-lg cursor-pointer grayscale group-hover:grayscale-0" onclick="window.open('${item.url}', '_blank')">
-                        <img src="${item.thumbnail}" alt="${item.title}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
-                    </div>
-                </div>
-                `;
-        }).join('')}
-        `;
+        `).join('');
     }
 }

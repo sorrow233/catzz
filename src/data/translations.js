@@ -80,7 +80,7 @@ export const translations = {
             empty: "動画が見つかりませんでした。"
         },
         gallery: {
-            title: "作品集",
+            title: "ギャラリー",
             subtitle: "イラスト集",
             loadMore: "もっと見る",
             allLoaded: "これ以上はありません",
