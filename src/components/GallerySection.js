@@ -216,9 +216,9 @@ export default class GallerySection {
             const imagePath = item.url;
 
             return `
-                <div class="gallery-item break-inside-avoid mb-6 opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+                <div class="gallery-item break-inside-avoid mb-6 opacity-0 transition-opacity duration-500 ease-out" 
                      data-index="${globalIndex}" 
-                     style="transition-delay: ${index * 50}ms">
+                     style="transition-delay: ${index * 30}ms">
                      
                     <div class="relative rounded-2xl overflow-hidden group cursor-zoom-in bg-gray-100 shadow-sm hover:shadow-xl transition-shadow duration-500">
                         <img 
@@ -226,7 +226,7 @@ export default class GallerySection {
                             alt="${item.title}"
                             loading="lazy"
                             class="w-full h-auto block transform transition-transform duration-700 group-hover:scale-105"
-                            onload="this.parentElement.parentElement.classList.remove('opacity-0', 'translate-y-8')"
+                            onload="this.parentElement.parentElement.classList.remove('opacity-0')"
                             onerror="this.parentElement.parentElement.style.display='none'"
                         >
                         
