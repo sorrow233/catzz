@@ -1,8 +1,37 @@
+import { i18n } from '../utils/i18n.js';
+
 export default class GallerySection {
     constructor() {
         this.galleryData = [];
         this.visibleCount = 0;
         this.BATCH_SIZE = 20;
+        window.addEventListener('languageChanged', () => {
+            this.updateLabels();
+            this.renderVisibleItems(); // Re-render current batch to update static text if needed
+        });
+    }
+
+    updateLabels() {
+        if (!this.element) return;
+        const title = this.element.querySelector('h2');
+        const subtitle = this.element.querySelector('p.font-mono');
+        const loadMoreBtn = this.element.querySelector('#load-more-btn');
+        const allLoadedText = this.element.querySelector('#all-loaded-text');
+        const viewOriginal = this.element.querySelector('#lightbox-link');
+
+        if (title) title.textContent = i18n.t('gallery.title');
+        if (subtitle) subtitle.textContent = i18n.t('gallery.subtitle');
+        if (loadMoreBtn) loadMoreBtn.textContent = i18n.t('gallery.loadMore');
+        if (allLoadedText) allLoadedText.textContent = i18n.t('gallery.allLoaded');
+        if (viewOriginal) viewOriginal.textContent = i18n.t('gallery.viewOriginal');
+    }
+
+    renderVisibleItems() {
+        // This is a bit complex as we have masonry. 
+        // For simplicity, let's just update the specific text elements in the grid if needed.
+        // Actually, titles are NOT translated, so the only thing that might change in items is the "original_url_display" or labels.
+        // But the prompt says "Gallery names original", which I interpreted as item titles.
+        // Let's just update the static labels for now.
     }
 
     render() {
@@ -19,8 +48,8 @@ export default class GallerySection {
             <div class="w-full max-w-[1400px] relative z-10">
                 <!-- Section Header -->
                 <div class="mb-16 pl-2 md:pl-4 border-l-2 border-primary/20">
-                    <h2 class="text-3xl md:text-4xl font-serif font-light tracking-widest text-primary mb-2">WORKS</h2>
-                    <p class="text-xs md:text-sm font-mono text-gray-400 tracking-[0.2em] uppercase">Collection of illustrations</p>
+                    <h2 class="text-3xl md:text-4xl font-serif font-light tracking-widest text-primary mb-2">${i18n.t('gallery.title')}</h2>
+                    <p class="text-xs md:text-sm font-mono text-gray-400 tracking-[0.2em] uppercase">${i18n.t('gallery.subtitle')}</p>
                 </div>
 
                 <!-- Masonry Grid -->
@@ -30,9 +59,9 @@ export default class GallerySection {
                 <!-- Load More Button -->
                 <div id="load-more-container" class="mt-20 text-center hidden">
                     <button id="load-more-btn" class="px-8 py-3 bg-white border border-gray-200 hover:border-black text-gray-500 hover:text-black font-serif tracking-widest text-sm transition-all duration-300 uppercase">
-                        Load More
+                        ${i18n.t('gallery.loadMore')}
                     </button>
-                    <p class="mt-2 text-[10px] text-gray-400 font-mono tracking-widest hidden" id="all-loaded-text">End of Collection</p>
+                    <p class="mt-2 text-[10px] text-gray-400 font-mono tracking-widest hidden" id="all-loaded-text">${i18n.t('gallery.allLoaded')}</p>
                 </div>
             </div>
             
@@ -44,7 +73,7 @@ export default class GallerySection {
                     <div class="absolute bottom-10 left-0 right-0 text-center pointer-events-none">
                         <h3 id="lightbox-title" class="text-xl md:text-2xl font-serif text-primary tracking-widest mb-2"></h3>
                         <p id="lightbox-desc" class="text-xs font-mono text-gray-500 tracking-wider bg-white/50 inline-block px-2 py-1 rounded"></p>
-                        <a id="lightbox-link" href="#" target="_blank" class="pointer-events-auto mt-4 inline-block text-xs uppercase tracking-[0.2em] text-primary border-b border-primary hover:opacity-50 transition-opacity pb-0.5">View Original</a>
+                        <a id="lightbox-link" href="#" target="_blank" class="pointer-events-auto mt-4 inline-block text-xs uppercase tracking-[0.2em] text-primary border-b border-primary hover:opacity-50 transition-opacity pb-0.5">${i18n.t('gallery.viewOriginal')}</a>
                     </div>
 
                     <!-- Close Button -->
@@ -79,7 +108,7 @@ export default class GallerySection {
         } catch (error) {
             console.error('Error loading gallery data:', error);
             const grid = this.element.querySelector('#gallery-grid');
-            grid.innerHTML = `<p class="text-center text-gray-400 font-serif border border-gray-200 p-8">Failed to load artworks.</p>`;
+            grid.innerHTML = `<p class="text-center text-gray-400 font-serif border border-gray-200 p-8">${i18n.t('gallery.failed')}</p>`;
         }
     }
 

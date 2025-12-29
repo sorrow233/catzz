@@ -1,10 +1,31 @@
+import { i18n } from '../utils/i18n.js';
+
 export default class HeroSection {
     constructor() {
-        this.prefixes = ["清凉雨夜", "脆弱雨伞", "街边电话", "路旁雨滩"];
-        this.suffixes = ["温暖过谁的心", "保护了谁前行", "少女心伤忧郁", "天空触手可及"];
+        this.updateQuotes();
         this.currentIndex = 0;
         this.quoteInterval = null;
         this.rainAnimationId = null;
+
+        // Listen for language changes
+        window.addEventListener('languageChanged', () => {
+            this.updateQuotes();
+            this.updateDOM();
+        });
+    }
+
+    updateQuotes() {
+        this.prefixes = i18n.t('hero.prefixes');
+        this.suffixes = i18n.t('hero.suffixes');
+    }
+
+    updateDOM() {
+        const prefix = this.element.querySelector('.prefix');
+        const typedQuotes = this.element.querySelector('.typed-quotes');
+        if (prefix && typedQuotes) {
+            prefix.textContent = this.prefixes[this.currentIndex];
+            typedQuotes.textContent = this.suffixes[this.currentIndex];
+        }
     }
 
     render() {
@@ -25,10 +46,33 @@ export default class HeroSection {
             .text-out { animation: softFadeOut 1.2s ease-in forwards; }
             
             .icon-hover:hover { transform: translateY(-3px); color: #000; }
+            
+            /* Simple Language Switcher */
+            .lang-switcher {
+                position: absolute;
+                top: 2rem;
+                right: 2rem;
+                display: flex;
+                gap: 1rem;
+                z-index: 50;
+                font-size: 0.75rem;
+                letter-spacing: 0.1em;
+                color: #9ca3af;
+                font-family: 'Noto Serif SC', serif;
+            }
+            .lang-btn { cursor: pointer; transition: color 0.3s; }
+            .lang-btn:hover, .lang-btn.active { color: #1f2937; font-weight: 500; }
         `;
         this.element.appendChild(style);
 
         this.element.innerHTML += `
+             <!-- Language Switcher -->
+            <div class="lang-switcher">
+                <span class="lang-btn ${i18n.currentLanguage === 'zh' ? 'active' : ''}" onclick="i18n.setLanguage('zh')">CN</span>
+                <span class="lang-btn ${i18n.currentLanguage === 'en' ? 'active' : ''}" onclick="i18n.setLanguage('en')">EN</span>
+                <span class="lang-btn ${i18n.currentLanguage === 'ja' ? 'active' : ''}" onclick="i18n.setLanguage('ja')">JP</span>
+            </div>
+
              <!-- Rain Canvas -->
             <canvas id="rain-canvas" class="absolute inset-0 z-0 pointer-events-none w-full h-full opacity-60"></canvas>
 

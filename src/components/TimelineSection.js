@@ -1,6 +1,20 @@
+import { i18n } from '../utils/i18n.js';
+
 export default class TimelineSection {
     constructor() {
         this.timelineData = [];
+        window.addEventListener('languageChanged', () => {
+            this.updateLabels();
+            this.renderItems(); // Re-render to update desc and title if needed (though they are data-driven)
+        });
+    }
+
+    updateLabels() {
+        if (!this.element) return;
+        const title = this.element.querySelector('h2');
+        const loading = this.element.querySelector('.animate-pulse');
+        if (title) title.textContent = i18n.t('timeline.title');
+        if (loading) loading.textContent = i18n.t('timeline.loading');
     }
 
     render() {
@@ -13,7 +27,7 @@ export default class TimelineSection {
             
             <div class="video-container max-w-5xl w-full px-4 md:px-10 relative z-10">
                 <div class="mb-16 text-center">
-                   <h2 class="text-2xl font-serif font-light tracking-widest text-primary mb-2">TIMELINE</h2>
+                   <h2 class="text-2xl font-serif font-light tracking-widest text-primary mb-2">${i18n.t('timeline.title')}</h2>
                    <div class="w-10 h-0.5 bg-primary/20 mx-auto"></div>
                 </div>
 
@@ -22,7 +36,7 @@ export default class TimelineSection {
                     <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gray-300 transform md:-translate-x-1/2"></div>
                     
                     <!-- Loading State -->
-                     <div class="animate-pulse w-full text-center text-gray-300 font-mono text-sm tracking-wider">Loading history...</div>
+                     <div class="animate-pulse w-full text-center text-gray-300 font-mono text-sm tracking-wider">${i18n.t('timeline.loading')}</div>
                 </div>
             </div>
         `;
@@ -78,7 +92,7 @@ export default class TimelineSection {
             this.renderItems();
         } catch (e) {
             console.error(e);
-            this.element.querySelector('#timeline-list').innerHTML = `<div class="text-center text-gray-400">Failed to load timeline.</div>`;
+            this.element.querySelector('#timeline-list').innerHTML = `<div class="text-center text-gray-400">${i18n.t('timeline.failed')}</div>`;
         }
     }
 
@@ -87,7 +101,7 @@ export default class TimelineSection {
 
         // If no videos found, clear list
         if (this.timelineData.length === 0) {
-            list.innerHTML = `<div class="text-center text-gray-400">No video entries found in metadata.</div>`;
+            list.innerHTML = `<div class="text-center text-gray-400">${i18n.t('timeline.empty')}</div>`;
             return;
         }
 

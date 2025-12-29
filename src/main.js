@@ -4,29 +4,51 @@ import CarouselSection from './components/CarouselSection.js';
 import TimelineSection from './components/TimelineSection.js';
 import GallerySection from './components/GallerySection.js';
 import FooterSection from './components/FooterSection.js';
+import { i18n } from './utils/i18n.js';
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const app = document.getElementById('app');
+class App {
+    constructor() {
+        this.mainContent = document.getElementById('app'); // Changed from 'main-content' to 'app' to match original HTML context
+        this.sections = [];
+        this.init();
+    }
 
-    // Initialize components
-    const hero = new HeroSection();
-    const carousel = new CarouselSection();
-    const timeline = new TimelineSection();
-    const gallery = new GallerySection();
-    const footer = new FooterSection();
+    init() {
+        // Initialize i18n global state and update DOM
+        i18n.updateDOM();
 
-    // Render components
-    // Render components
-    app.appendChild(hero.render());
-    app.appendChild(carousel.render());
-    app.appendChild(gallery.render());
-    app.appendChild(timeline.render());
-    app.appendChild(footer.render());
+        // Instantiate components
+        this.sections = [
+            new HeroSection(),
+            new CarouselSection(),
+            new TimelineSection(),
+            new GallerySection(),
+            new FooterSection()
+        ];
 
-    // Mount/Hydrate components (animations, events)
-    if (hero.mount) hero.mount();
-    if (carousel.mount) carousel.mount();
-    if (timeline.mount) timeline.mount();
-    if (gallery.mount) gallery.mount();
-    if (footer.mount) footer.mount();
+        this.render();
+    }
+
+    render() {
+        // Render components
+        this.sections.forEach(section => {
+            if (section.render) {
+                this.mainContent.appendChild(section.render());
+            }
+        });
+    }
+
+    mount() {
+        // Mount/Hydrate components (animations, events)
+        this.sections.forEach(section => {
+            if (section.mount) {
+                section.mount();
+            }
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const app = new App();
+    app.mount();
 });

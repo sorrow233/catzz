@@ -1,21 +1,33 @@
+import { i18n } from '../utils/i18n.js';
+
 export default class CarouselSection {
     constructor() {
         this.slides = [
             {
-                image: "https://blog.catzz.work/file/1765900357798_1-1.png",
-                text: "人应阳光向上，但原谅时而脆弱"
+                image: "https://blog.catzz.work/file/1765900357798_1-1.png"
             },
             {
-                image: "https://blog.catzz.work/file/1765900363060_72668704_PAIN.jpg",
-                text: "雨水是否协同音律，夜色或否夹杂酒精"
+                image: "https://blog.catzz.work/file/1765900363060_72668704_PAIN.jpg"
             },
             {
-                image: "https://blog.catzz.work/file/1765900369016_137779301_Solitude.jpg",
-                text: "忧郁的梦没有终点，她又以何种姿态存在着"
+                image: "https://blog.catzz.work/file/1765900369016_137779301_Solitude.jpg"
             }
         ];
         this.currentIndex = 0;
         this.interval = null;
+
+        window.addEventListener('languageChanged', () => {
+            this.updateCaptions();
+        });
+    }
+
+    updateCaptions() {
+        if (!this.element) return;
+        const captions = i18n.t('carousel.slides');
+        const captionElements = this.element.querySelectorAll('.text-reveal');
+        captionElements.forEach((el, index) => {
+            el.textContent = captions[index];
+        });
     }
 
     render() {
@@ -72,7 +84,7 @@ export default class CarouselSection {
                         <div class="h-10 relative w-full max-w-4xl">
                              ${this.slides.map((slide, index) => `
                                 <p class="absolute left-0 top-0 text-gray-500 font-serif-sc font-thin text-[11px] tracking-[0.3em] whitespace-nowrap text-reveal ${index === 0 ? 'text-active' : 'text-inactive'}" data-index="${index}">
-                                    ${slide.text}
+                                    ${i18n.t('carousel.slides')[index]}
                                 </p>
                             `).join('')}
                         </div>

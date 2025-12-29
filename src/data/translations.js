@@ -1,0 +1,101 @@
+export const translations = {
+    zh: {
+        meta: {
+            description: "Catzz - 雨夜、忧郁、少女"
+        },
+        hero: {
+            prefixes: ["清凉雨夜", "脆弱雨伞", "街边电话", "路旁雨滩"],
+            suffixes: ["温暖过谁的心", "保护了谁前行", "少女心伤忧郁", "天空触手可及"]
+        },
+        timeline: {
+            title: "TIMELINE",
+            loading: "正在加载历史...",
+            failed: "加载时间轴失败。",
+            empty: "未在元数据中发现视频条目。"
+        },
+        gallery: {
+            title: "WORKS",
+            subtitle: "插图集",
+            loadMore: "加载更多",
+            allLoaded: "已加载全部作品",
+            failed: "加载作品失败。",
+            viewOriginal: "查看原图"
+        },
+        carousel: {
+            slides: [
+                "人应阳光向上，但原谅时而脆弱",
+                "雨水是否协同音律，夜色或否夹杂酒精",
+                "忧郁的梦没有终点，她又以何种姿态存在着"
+            ]
+        },
+        footer: {
+            rights: "版权所有。"
+        }
+    },
+    en: {
+        meta: {
+            description: "Catzz - Rainy Night, Melancholy, Maiden"
+        },
+        hero: {
+            prefixes: ["Cool Rainy Night", "Fragile Umbrella", "Street Phone", "Roadside Puddle"],
+            suffixes: ["Whose heart was warmed", "Who was protected ahead", "Melancholy maiden's heart", "The sky is within reach"]
+        },
+        timeline: {
+            title: "TIMELINE",
+            loading: "Loading history...",
+            failed: "Failed to load timeline.",
+            empty: "No video entries found in metadata."
+        },
+        gallery: {
+            title: "WORKS",
+            subtitle: "Collection of illustrations",
+            loadMore: "Load More",
+            allLoaded: "End of Collection",
+            failed: "Failed to load artworks.",
+            viewOriginal: "View Original"
+        },
+        carousel: {
+            slides: [
+                "One should be sunny, but forgive the occasional fragility",
+                "Does rain harmonize with rhythm, does night mix with alcohol",
+                "Melancholy dreams have no end, in what form does she exist"
+            ]
+        },
+        footer: {
+            rights: "All rights reserved."
+        }
+    },
+    ja: {
+        meta: {
+            description: "Catzz - 雨の夜、憂鬱、少女"
+        },
+        hero: {
+            prefixes: ["涼しい雨の夜", "脆い傘", "街角の電話", "道端の水たまり"],
+            suffixes: ["誰の心を温めたか", "誰の歩みを守ったか", "少女の傷つく憂鬱", "手が届きそうな空"]
+        },
+        timeline: {
+            title: "タイムライン",
+            loading: "履歴を読み込み中...",
+            failed: "タイムラインの読み込みに失敗しました。",
+            empty: "動画が見つかりませんでした。"
+        },
+        gallery: {
+            title: "作品集",
+            subtitle: "イラスト集",
+            loadMore: "もっと見る",
+            allLoaded: "これ以上はありません",
+            failed: "作品の読み込みに失敗しました。",
+            viewOriginal: "オリジナルを見る"
+        },
+        carousel: {
+            slides: [
+                "人は前向きであるべきだが、時折の脆さを許して",
+                "雨は旋律と響き合い、夜はアルコールを孕むのか",
+                "憂鬱な夢に終わりはなく、彼女はどのような姿で存在するのか"
+            ]
+        },
+        footer: {
+            rights: "無断転載禁止"
+        }
+    }
+};
