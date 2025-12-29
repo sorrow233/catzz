@@ -49,7 +49,7 @@ export default class TimelineSection {
 
     async fetchData() {
         try {
-            const response = await fetch('src/data/gallery.json');
+            const response = await fetch('/gallery.json');
             if (!response.ok) throw new Error('Failed to load data');
             const data = await response.json();
 

@@ -97,7 +97,7 @@ export default class GallerySection {
 
     async fetchData() {
         try {
-            const response = await fetch('src/data/gallery.json');
+            const response = await fetch('/gallery.json');
             if (!response.ok) throw new Error('Failed to load metadata');
 
             const data = await response.json();
