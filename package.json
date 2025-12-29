@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/sorrow233/catzz#readme",
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
     "autoprefixer": "^10.4.23",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.18",

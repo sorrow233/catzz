@@ -100,7 +100,7 @@ export default class GallerySection {
         const html = nextBatch.map((item, index) => {
             const globalIndex = this.visibleCount + index;
             // Use remote url if available, otherwise local path
-            const imagePath = item.url;
+            const imagePath = item.thumbnail_url || item.url;
             const date = new Date(item.created_at).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: '2-digit',

@@ -35,7 +35,7 @@ export default class TimelineSection {
 
     async fetchData() {
         try {
-            const response = await fetch('pixiv_data/metadata.json');
+            const response = await fetch('src/data/gallery.json');
             if (!response.ok) throw new Error('Failed to load data');
             const data = await response.json();
 
@@ -69,7 +69,7 @@ export default class TimelineSection {
                     id: item.id,
                     title: item.title,
                     date: `${year}.${month}.${day}`,
-                    thumbnail: `pixiv_data/${item.local_path}`,
+                    thumbnail: item.thumbnail_url || `pixiv_data/${item.local_path}`,
                     url: url,
                     desc: cleanDesc.slice(0, 100) + (cleanDesc.length > 100 ? '...' : '')
                 };
