@@ -1,4 +1,6 @@
 import { i18n } from '../utils/i18n.js';
+import { RainEffect } from './RainEffect.js';
+import { Carousel } from './Carousel.js';
 
 export default class HeroSection {
     constructor() {
@@ -6,22 +8,19 @@ export default class HeroSection {
         this.updateQuotes();
         this.currentQuoteIndex = 0;
         this.quoteInterval = null;
-        this.rainAnimationId = null;
+        this.rainEffect = null;
+        this.carousel = null;
 
-        // Carousel State
         this.slides = [
             { image: "https://blog.catzz.work/file/1765900357798_1-1.png" },
             { image: "https://blog.catzz.work/file/1765900363060_72668704_PAIN.jpg" },
             { image: "https://blog.catzz.work/file/1765900369016_137779301_Solitude.jpg" }
         ];
-        this.currentSlideIndex = 0;
-        this.carouselInterval = null;
 
         // Shared Listeners
         window.addEventListener('languageChanged', () => {
             this.updateQuotes();
             this.updateDOM();
-            this.updateCarouselCaptions();
         });
     }
 
@@ -38,22 +37,6 @@ export default class HeroSection {
             prefix.textContent = this.prefixes[this.currentQuoteIndex];
             typedQuotes.textContent = this.suffixes[this.currentQuoteIndex];
         }
-
-
-    }
-
-    updateCarouselCaptions() {
-        const captions = i18n.t('carousel.slides');
-        const captionElements = this.element.querySelectorAll('.slide-caption');
-        captionElements.forEach((el, index) => {
-            // Using innerHTML to preserve the styling wrapper if needed, or just textContent if selecting the text node.
-            // In render, I wrap text in a span. Let's update the text inside the span.
-            // But wait, in render I do: <p class="slide-caption ..."> ${text} </p>
-            // So I can just set textContent of the p, but I need to make sure styling is okay.
-            // Actually, in render I used: <p class="slide-caption ..."> ${text} </p>
-            // So textContent is fine.
-            el.textContent = captions[index];
-        });
     }
 
     render() {
@@ -61,6 +44,7 @@ export default class HeroSection {
         // Split screen: Column on mobile, Row on Desktop
         this.element.className = 'w-full h-screen flex flex-col md:flex-row bg-white relative overflow-hidden font-serif';
 
+        // Inline styles for specific animations
         const style = document.createElement('style');
         style.textContent = `
             .hero-font-sc { font-family: 'Noto Serif SC', serif; }
@@ -73,8 +57,6 @@ export default class HeroSection {
             .text-out { animation: softFadeOut 1.2s ease-in forwards; }
             
             .icon-hover:hover { transform: translateY(-3px); color: #000; }
-            
-
 
             /* Carousel Transitions */
             .carousel-slide { transition: opacity 1.2s cubic-bezier(0.45, 0, 0.55, 1), transform 1.4s cubic-bezier(0.25, 1, 0.5, 1); }
@@ -87,19 +69,18 @@ export default class HeroSection {
         this.element.appendChild(style);
 
         this.element.innerHTML += `
-            <!-- Rain Canvas (Global Overlay) -->
-            <canvas id="rain-canvas" class="absolute inset-0 z-50 pointer-events-none w-full h-full opacity-60"></canvas>
+            <!-- Left Panel for Rain Effect is implicitly the container itself or a child? 
+                 RainEffect appends #rain-canvas to root element. 
+            -->
 
             <!-- LEFT PANEL: Atmosphere / Data -->
             <div class="relative w-full md:w-5/12 h-1/2 md:h-full flex flex-col items-center justify-center bg-white z-10 px-6 order-2 md:order-1 border-r border-gray-50">
                 
                 <!-- Content -->
                 <div class="relative z-10 flex flex-col items-center text-center w-full">
-
-
                     <h1 class="text-4xl md:text-6xl font-thin tracking-[0.2em] mb-10 text-gray-800 hero-font-sc opacity-90">Catzz</h1>
                     
-                    <!-- Dynamic Text (Preserved 'Street corner phone') -->
+                    <!-- Dynamic Text -->
                     <div class="h-16 flex flex-col items-center justify-center text-xs md:text-sm text-gray-500 font-light tracking-[0.3em] hero-font-sc space-y-2">
                         <span class="prefix inline-block opacity-0"></span>
                         <span class="typed-quotes inline-block opacity-0"></span>
@@ -151,9 +132,11 @@ export default class HeroSection {
     }
 
     mount() {
-        this.initRain();
         this.initQuoteCycling();
-        this.initCarousel();
+
+        // Initialize Modules
+        this.rainEffect = new RainEffect(this.element);
+        this.carousel = new Carousel(this.element, this.slides);
 
         const scrollBtn = this.element.querySelector('#scroll-btn');
         if (scrollBtn) {
@@ -164,70 +147,12 @@ export default class HeroSection {
         }
     }
 
-    // --- Rain Logic (Optimized for Left Panel) ---
-    initRain() {
-        this.canvas = this.element.querySelector('#rain-canvas');
-        if (!this.canvas) return;
-        this.ctx = this.canvas.getContext('2d');
-
-        this.dpr = window.devicePixelRatio || 1;
-
-        // Use Window dimensions directly for the Hero Section to ensure full coverage
-        const resize = () => {
-            if (!this.canvas) return;
-
-            this.width = window.innerWidth;
-            this.height = window.innerHeight;
-
-            this.canvas.width = this.width * this.dpr;
-            this.canvas.height = this.height * this.dpr;
-            this.ctx.scale(this.dpr, this.dpr);
-            this.canvas.style.width = this.width + 'px';
-            this.canvas.style.height = this.height + 'px';
-
-            // Force update existing drops' width limits immediately so they can spawn in new area
-            if (this.raindrops) {
-                this.raindrops.forEach(d => d.w = this.width);
-            }
-        };
-
-        // Initial resize
-        resize();
-
-        window.addEventListener('resize', resize);
-
-        this.raindrops = [];
-        const count = 80; // Scaled relative to original 40 for full screen coverage without changing density feel
-        class Raindrop {
-            constructor(w, h) { this.w = w; this.h = h; this.reset(); this.y = Math.random() * h; }
-            reset() {
-                this.x = Math.random() * this.w;
-                this.y = -20;
-                this.length = Math.random() * 15 + 5;
-                this.speed = Math.random() * 2 + 1.5;
-                this.opacity = Math.random() * 0.2 + 0.1;
-            }
-            update(h) { this.y += this.speed; if (this.y > h) this.reset(); }
-            draw(ctx) {
-                ctx.beginPath(); ctx.moveTo(this.x, this.y); ctx.lineTo(this.x, this.y + this.length);
-                ctx.strokeStyle = `rgba(148, 163, 184, ${this.opacity})`; ctx.lineWidth = 1; ctx.stroke();
-            }
-        }
-        for (let i = 0; i < count; i++) this.raindrops.push(new Raindrop(this.width, this.height));
-
-        const animate = () => {
-            if (!this.ctx) return;
-            this.ctx.clearRect(0, 0, this.width, this.height);
-            this.raindrops.forEach(d => { d.w = this.width; d.update(this.height); d.draw(this.ctx); });
-            this.rainAnimationId = requestAnimationFrame(animate);
-        };
-        animate();
-    }
-
-    // --- Quote Cycling Logic ---
+    // --- Quote Cycling Logic (Keep here as it's simple) ---
     initQuoteCycling() {
         const prefix = this.element.querySelector('.prefix');
         const typedQuotes = this.element.querySelector('.typed-quotes');
+
+        if (!prefix || !typedQuotes) return;
 
         prefix.textContent = this.prefixes[0];
         typedQuotes.textContent = this.suffixes[0];
@@ -255,81 +180,9 @@ export default class HeroSection {
         this.quoteInterval = setInterval(update, 5000);
     }
 
-    // --- Carousel Logic ---
-    initCarousel() {
-        const container = this.element.querySelector('#carousel-container');
-        const slides = this.element.querySelectorAll('.carousel-slide');
-
-        const numDisplay = this.element.querySelector('#current-slide-num');
-        const progress = this.element.querySelector('#slide-progress');
-        const nextArea = this.element.querySelector('#next-area');
-        const prevArea = this.element.querySelector('#prev-area');
-
-        const resetProgress = () => {
-            progress.style.transition = 'none';
-            progress.style.width = '0%';
-            setTimeout(() => {
-                progress.style.transition = 'width 6000ms linear';
-                progress.style.width = '100%';
-            }, 50);
-        };
-
-        const updateSlide = (idx) => {
-            if (idx >= this.slides.length) idx = 0;
-            if (idx < 0) idx = this.slides.length - 1;
-            this.currentSlideIndex = idx;
-
-            slides.forEach(slide => {
-                const i = parseInt(slide.dataset.index);
-                const captionContainer = slide.querySelector('.absolute.bottom-8'); // The caption wrapper
-
-                if (i === idx) {
-                    slide.classList.remove('slide-inactive');
-                    slide.classList.add('slide-active');
-                    if (captionContainer) {
-                        captionContainer.classList.remove('caption-inactive');
-                        captionContainer.classList.add('caption-active');
-                    }
-                } else {
-                    slide.classList.remove('slide-active');
-                    slide.classList.add('slide-inactive');
-                    if (captionContainer) {
-                        captionContainer.classList.remove('caption-active');
-                        captionContainer.classList.add('caption-inactive');
-                    }
-                }
-            });
-
-            numDisplay.textContent = `0${idx + 1}`;
-            resetProgress();
-        };
-
-        const startAuto = () => {
-            resetProgress();
-            this.carouselInterval = setInterval(() => {
-                updateSlide(this.currentSlideIndex + 1);
-            }, 6000);
-        };
-
-        const stopAuto = () => {
-            clearInterval(this.carouselInterval);
-            progress.style.transition = 'none';
-            progress.style.width = '0%';
-        };
-
-        startAuto();
-
-        // Events
-        nextArea.addEventListener('click', () => { stopAuto(); updateSlide(this.currentSlideIndex + 1); startAuto(); });
-        prevArea.addEventListener('click', () => { stopAuto(); updateSlide(this.currentSlideIndex - 1); startAuto(); });
-        container.addEventListener('mouseenter', stopAuto);
-        container.addEventListener('mouseleave', startAuto);
-    }
-
     destroy() {
         if (this.quoteInterval) clearInterval(this.quoteInterval);
-        if (this.carouselInterval) clearInterval(this.carouselInterval);
-        if (this.rainAnimationId) cancelAnimationFrame(this.rainAnimationId);
-        if (this.resizeObserver) this.resizeObserver.disconnect();
+        if (this.rainEffect) this.rainEffect.destroy();
+        if (this.carousel) this.carousel.destroy();
     }
 }
