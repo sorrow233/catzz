@@ -87,11 +87,11 @@ export default class HeroSection {
         this.element.appendChild(style);
 
         this.element.innerHTML += `
+            <!-- Rain Canvas (Global Overlay) -->
+            <canvas id="rain-canvas" class="absolute inset-0 z-50 pointer-events-none w-full h-full opacity-60"></canvas>
+
             <!-- LEFT PANEL: Atmosphere / Data -->
             <div class="relative w-full md:w-5/12 h-1/2 md:h-full flex flex-col items-center justify-center bg-white z-10 px-6 order-2 md:order-1 border-r border-gray-50">
-                
-                <!-- Rain Canvas (Confined to Left Panel for 'Window' effect) -->
-                <canvas id="rain-canvas" class="absolute inset-0 z-0 pointer-events-none w-full h-full opacity-60"></canvas>
                 
                 <!-- Content -->
                 <div class="relative z-10 flex flex-col items-center text-center w-full">
