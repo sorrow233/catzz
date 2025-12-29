@@ -1,6 +1,5 @@
 import './styles/main.css';
 import HeroSection from './components/HeroSection.js';
-import CarouselSection from './components/CarouselSection.js';
 import TimelineSection from './components/TimelineSection.js';
 import GallerySection from './components/GallerySection.js';
 import FooterSection from './components/FooterSection.js';
@@ -20,7 +19,6 @@ class App {
         // Instantiate components
         this.sections = [
             new HeroSection(),
-            new CarouselSection(),
             new TimelineSection(),
             new GallerySection(),
             new FooterSection()
