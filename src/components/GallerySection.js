@@ -12,6 +12,20 @@ export default class GallerySection {
         });
     }
 
+    /**
+     * Generates an optimized image URL using wsrv.nl
+     * @param {string} url - Original image URL
+     * @param {number} width - Target width
+     * @returns {string} Optimized URL
+     */
+    getOptimizedUrl(url, width = 800) {
+        if (!url) return '';
+        // Remove https:// for the proxy path if needed, but wsrv supports full URLs usually.
+        // wsrv.nl syntax: https://wsrv.nl/?url=...&w=...&output=webp
+        const encodedUrl = encodeURIComponent(url);
+        return `https://wsrv.nl/?url=${encodedUrl}&w=${width}&q=80&output=webp`;
+    }
+
     updateLabels() {
         if (!this.element) return;
         const title = this.element.querySelector('h2');
@@ -150,7 +164,18 @@ export default class GallerySection {
         const html = nextBatch.map((item, index) => {
             const globalIndex = this.visibleCount + index;
             // Use remote url
-            const imagePath = item.url;
+            const originalUrl = item.url;
+            // Optimize: Use 600px width for grid items (enough for 1 column mobile and multi-column desktop)
+            // Convert to WebP for better compression
+            const imagePath = this.getOptimizedUrl(originalUrl, 600);
+
+            // Critical for LCP: First 4 items should be eager loaded
+            const isLCPRequest = globalIndex < 4;
+            const loadingAttribute = isLCPRequest ? 'eager' : 'lazy';
+
+            // For eager loaded images, we shouldn't hide them initially with opacity-0 if we want them to paint ASAP,
+            // but the animation requires it. 
+            // Compromise: Keep animation logic but ensure network request starts immediately.
 
             return `
                 <div class="gallery-item break-inside-avoid mb-6 opacity-0 transition-opacity duration-500 ease-out" 
@@ -160,9 +185,12 @@ export default class GallerySection {
                     <div class="relative rounded-2xl overflow-hidden group cursor-zoom-in bg-gray-100 shadow-sm hover:shadow-xl transition-shadow duration-500">
                         <img 
                             src="${imagePath}" 
+                            data-original="${originalUrl}"
                             alt="${item.title}"
-                            loading="lazy"
-                            class="w-full h-auto block transform transition-transform duration-700 group-hover:scale-105"
+                            loading="${loadingAttribute}"
+                            width="600"
+                            height="400" 
+                            class="w-full h-auto block transform transition-transform duration-700 group-hover:scale-105 min-h-[200px] bg-gray-200"
                             onload="this.parentElement.parentElement.classList.remove('opacity-0')"
                             onerror="this.parentElement.parentElement.style.display='none'"
                         >
@@ -209,7 +237,15 @@ export default class GallerySection {
 
                 if (!itemData) return;
 
-                const imagePath = itemData.original_url_display || itemData.url;
+
+
+                // For lightbox, use higher quality but still optimized if possible, or original if preferred.
+                // Let's use a large optimized version for speed, e.g. 1600px width.
+                // Or use the original if the user really wants the raw file.
+                // Given the goal is performance, let's try a high-quality WebP first.
+                // const imagePath = itemData.original_url_display || itemData.url;
+                const originalUrl = itemData.url;
+                const imagePath = this.getOptimizedUrl(originalUrl, 1600); // High res for lightbox
 
                 lightboxImg.src = imagePath;
                 lightboxTitle.textContent = itemData.title;
