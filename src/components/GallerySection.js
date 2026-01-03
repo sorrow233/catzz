@@ -23,7 +23,8 @@ export default class GallerySection {
         // Remove https:// for the proxy path if needed, but wsrv supports full URLs usually.
         // wsrv.nl syntax: https://wsrv.nl/?url=...&w=...&output=webp
         const encodedUrl = encodeURIComponent(url);
-        return `https://wsrv.nl/?url=${encodedUrl}&w=${width}&q=80&output=webp`;
+        // Bump quality to 85 for better thumbnails
+        return `https://wsrv.nl/?url=${encodedUrl}&w=${width}&q=85&output=webp`;
     }
 
     updateLabels() {
@@ -245,7 +246,7 @@ export default class GallerySection {
                 // Given the goal is performance, let's try a high-quality WebP first.
                 // const imagePath = itemData.original_url_display || itemData.url;
                 const originalUrl = itemData.url;
-                const imagePath = this.getOptimizedUrl(originalUrl, 1600); // High res for lightbox
+                const imagePath = originalUrl; // Use direct URL, no proxy for max quality
 
                 lightboxImg.src = imagePath;
                 lightboxTitle.textContent = itemData.title;
