@@ -1,6 +1,7 @@
 export const translations = {
     zh: {
         meta: {
+            title: "Catzz - 雨夜、忧郁、少女",
             description: "Catzz - 雨夜、忧郁、少女"
         },
         hero: {
@@ -34,6 +35,7 @@ export const translations = {
     },
     en: {
         meta: {
+            title: "Catzz - Rain & Solitude",
             description: "Catzz - Rainy Night, Melancholy, Maiden"
         },
         hero: {
@@ -67,6 +69,7 @@ export const translations = {
     },
     ja: {
         meta: {
+            title: "Catzz - 雨の夜、憂鬱、少女",
             description: "Catzz - 雨の夜、憂鬱、少女"
         },
         hero: {
@@ -100,6 +103,7 @@ export const translations = {
     },
     ko: {
         meta: {
+            title: "Catzz - 비 오는 밤, 우울, 소녀",
             description: "Catzz - 비 오는 밤, 우울, 소녀"
         },
         hero: {

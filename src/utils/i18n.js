@@ -62,11 +62,35 @@ class I18n {
     updateDOM() {
         document.documentElement.lang = this.currentLanguage;
 
-        // Update Meta
-        const metaDesc = document.querySelector('meta[name="description"]');
-        if (metaDesc) {
-            metaDesc.setAttribute('content', this.t('meta.description'));
-        }
+        // Helper to set meta content safely
+        const setMeta = (selector, content) => {
+            const el = document.querySelector(selector);
+            if (el) {
+                el.setAttribute('content', content);
+            }
+        };
+
+        const title = this.t('meta.title');
+        const desc = this.t('meta.description');
+
+        // Update Title
+        document.title = title;
+
+        // Update Meta Tags
+        setMeta('meta[name="description"]', desc);
+        setMeta('meta[property="og:title"]', title);
+        setMeta('meta[property="og:description"]', desc);
+        setMeta('meta[name="twitter:title"]', title);
+        setMeta('meta[name="twitter:description"]', desc);
+
+        // Update Locale
+        const localeMap = {
+            'zh': 'zh_CN',
+            'en': 'en_US',
+            'ja': 'ja_JP',
+            'ko': 'ko_KR'
+        };
+        setMeta('meta[property="og:locale"]', localeMap[this.currentLanguage] || 'en_US');
     }
 }
 
