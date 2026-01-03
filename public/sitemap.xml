@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://catzz.work/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-  
-
+    <xhtml:link rel="alternate" hreflang="zh" href="https://catzz.work/?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://catzz.work/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://catzz.work/?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://catzz.work/?lang=ko"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://catzz.work/"/>
     <image:image>
       <image:loc>https://blog.catzz.work/file/1765900371563_138045922_%E6%84%9F%E8%A7%89%E6%9C%89%E7%82%B9%E5%86%B7%E5%8F%AF%E4%BB%A5%E5%BC%80%E5%A7%8B%E6%94%BE%E5%AF%92%E5%81%87%E4%BA%86%E5%90%97.jpg</image:loc>
       <image:title>感觉有点冷可以开始放寒假了吗</image:title>

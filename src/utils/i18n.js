@@ -2,7 +2,7 @@ import { translations } from '../data/translations.js';
 
 class I18n {
     constructor() {
-        this.languages = ['zh', 'en', 'ja'];
+        this.languages = ['zh', 'en', 'ja', 'ko'];
         this.defaultLanguage = 'zh';
         this.currentLanguage = this.detectLanguage();
         this.translations = translations;

@@ -97,5 +97,38 @@ export const translations = {
         footer: {
             rights: "無断転載禁止"
         }
+    },
+    ko: {
+        meta: {
+            description: "Catzz - 비 오는 밤, 우울, 소녀"
+        },
+        hero: {
+            prefixes: ["시원한 비 오는 밤", "깨지기 쉬운 우산", "거리의 전화기", "길가의 물웅덩이"],
+            suffixes: ["누구의 마음을 따뜻하게 했나", "누구의 발걸음을 지켜줬나", "소녀의 상처받은 우울함", "손이 닿을 듯한 하늘"]
+        },
+        timeline: {
+            title: "타임라인",
+            loading: "기록을 불러오는 중...",
+            failed: "타임라인을 불러오지 못했습니다.",
+            empty: "동영상을 찾을 수 없습니다."
+        },
+        gallery: {
+            title: "작품집",
+            subtitle: "일러스트 컬렉션",
+            loadMore: "더 보기",
+            allLoaded: "모든 작품을 불러왔습니다",
+            failed: "작품을 불러오지 못했습니다.",
+            viewOriginal: "원본 보기"
+        },
+        carousel: {
+            slides: [
+                "사람은 밝아야 하지만, 가끔의 연약함을 용서해주세요",
+                "비가 선율과 어우러지고, 밤은 알코올을 품고 있는가",
+                "우울한 꿈에는 끝이 없고, 그녀는 어떤 모습으로 존재하는가"
+            ]
+        },
+        footer: {
+            rights: "무단 전재 금지"
+        }
     }
 };

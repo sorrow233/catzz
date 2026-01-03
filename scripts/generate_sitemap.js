@@ -4,6 +4,7 @@ const path = require('path');
 const BASE_URL = 'https://catzz.work';
 const GALLERY_PATH = path.join(__dirname, '../public/gallery.json');
 const OUTPUT_PATH = path.join(__dirname, '../public/sitemap.xml'); // Note: dirname is scripts/
+const LANGUAGES = ['zh', 'en', 'ja', 'ko'];
 
 async function generateSitemap() {
     try {
@@ -11,30 +12,33 @@ async function generateSitemap() {
 
         let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>${BASE_URL}/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-  </url>
 `;
 
-        sitemap = sitemap.replace('</url>', '');
+        // Add hreflang links for each language
+        LANGUAGES.forEach(lang => {
+            sitemap += `    <xhtml:link rel="alternate" hreflang="${lang}" href="${BASE_URL}/?lang=${lang}"/>\n`;
+        });
+        sitemap += `    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE_URL}/"/>\n`;
 
+        // Add gallery images to the main URL
         galleryData.forEach(item => {
             const imgUrl = item.remote_url || item.url || item.original_url_display;
             if (imgUrl) {
-                sitemap += `
-    <image:image>
-      <image:loc>${imgUrl}</image:loc>
+                sitemap += `    <image:image>
+      <image:loc>${escapeXml(imgUrl)}</image:loc>
       <image:title>${escapeXml(item.title)}</image:title>
       <image:caption>${escapeXml(item.description || item.tags.join(', '))}</image:caption>
-    </image:image>`;
+    </image:image>\n`;
             }
         });
 
-        sitemap += `
-  </url>
+        sitemap += `  </url>
 </urlset>`;
 
         fs.writeFileSync(OUTPUT_PATH, sitemap);
@@ -60,3 +64,4 @@ function escapeXml(unsafe) {
 }
 
 generateSitemap();
+
