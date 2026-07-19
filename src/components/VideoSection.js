@@ -16,10 +16,10 @@ export default class VideoSection {
 
     render() {
         this.element = document.createElement('section');
-        this.element.className = 'w-full py-20 md:py-28 bg-[#e9edef] text-[#172126] overflow-hidden';
+        this.element.className = 'w-full py-24 md:py-36 lg:py-40 bg-[#e9edef] text-[#172126] overflow-hidden';
         this.element.innerHTML = `
             <div class="max-w-[1600px] mx-auto px-5 md:px-10">
-                <div class="flex items-center justify-between gap-6 pb-8 mb-10 md:mb-12 border-b border-[#172126]/10">
+                <div class="flex items-center justify-between gap-6 pb-10 mb-14 md:pb-12 md:mb-16 border-b border-[#172126]/10">
                     <div class="flex items-center gap-4 md:gap-5">
                         <p data-videos-eyebrow class="text-[10px] font-mono tracking-[0.3em] text-[#172126]/55 uppercase">${i18n.t('videos.eyebrow')}</p>
                         <span class="w-8 md:w-12 h-px bg-[#172126]/20"></span>
@@ -28,11 +28,11 @@ export default class VideoSection {
                     <span id="videos-counter" class="font-mono text-[10px] tracking-[0.2em] text-[#172126]/38">00 / 00</span>
                 </div>
 
-                <div id="videos-rail" class="videos-rail flex gap-5 md:gap-8 overflow-x-auto scrollbar-hide">
+                <div id="videos-rail" class="videos-rail flex gap-6 md:gap-10 lg:gap-12 overflow-x-auto scrollbar-hide">
                     <div class="loading-text w-full py-28 text-center text-[#172126]/30 font-mono text-xs tracking-wider">${i18n.t('videos.loading')}</div>
                 </div>
 
-                <div class="flex items-center gap-5 mt-10">
+                <div class="flex items-center gap-5 mt-14 md:mt-20">
                     <div id="videos-progress" class="videos-progress min-w-0 flex-1">
                         <span id="videos-date-label" class="videos-date-label" aria-hidden="true">--.--</span>
                         <input id="videos-scrubber" class="videos-scrubber" type="range" min="0" max="1000" value="0" step="1" aria-label="${i18n.t('videos.progress')}">
