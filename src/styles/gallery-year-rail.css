@@ -1,0 +1,64 @@
+.year-rail {
+    transition: opacity 400ms ease;
+}
+
+.year-rail.year-rail-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.year-rail-button {
+    display: flex;
+    align-items: center;
+    width: 5rem;
+    height: 1.6rem;
+    color: rgba(38, 52, 64, 0.42);
+    cursor: pointer;
+}
+
+.year-rail-line {
+    width: 0.75rem;
+    height: 1px;
+    flex: none;
+    background: currentColor;
+    transition: width 300ms ease, color 300ms ease;
+}
+
+.year-rail-label {
+    margin-left: 0.55rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    opacity: 0;
+    transform: translateX(-0.3rem);
+    transition: opacity 220ms ease, transform 300ms ease, color 300ms ease;
+}
+
+.year-rail-button:hover,
+.year-rail-button:focus-visible,
+.year-rail-button[aria-current="true"] {
+    color: rgba(38, 52, 64, 0.9);
+}
+
+.year-rail-button:hover .year-rail-line,
+.year-rail-button:focus-visible .year-rail-line {
+    width: 1.75rem;
+}
+
+.year-rail-button[aria-current="true"] .year-rail-line {
+    width: 1.35rem;
+}
+
+.year-rail-button:hover .year-rail-label,
+.year-rail-button:focus-visible .year-rail-label {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .year-rail,
+    .year-rail-line,
+    .year-rail-label {
+        transition: none;
+    }
+}

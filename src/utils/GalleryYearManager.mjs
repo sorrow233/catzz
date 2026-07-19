@@ -27,6 +27,10 @@ export default class GalleryYearManager {
         }
     }
 
+    getSection(year) {
+        return this.sections.get(Number(year))?.element || null;
+    }
+
     ensureSection(year, stats) {
         if (this.sections.has(year)) return this.sections.get(year);
 

@@ -1,6 +1,8 @@
 import { i18n } from '../utils/i18n.js';
 import { escapeHtml, safeExternalUrl } from '../utils/html.js';
 import GalleryYearManager, { getArtworkYear } from '../utils/GalleryYearManager.mjs';
+import GalleryYearRail from '../utils/GalleryYearRail.mjs';
+import '../styles/gallery-year-rail.css';
 
 export default class GallerySection {
     constructor() {
@@ -9,6 +11,7 @@ export default class GallerySection {
         this.BATCH_SIZE = 15;
         this.observer = null;
         this.yearManager = null;
+        this.yearRail = null;
         this.yearStats = new Map();
 
         window.addEventListener('languageChanged', () => {
@@ -48,9 +51,11 @@ export default class GallerySection {
 
     render() {
         this.element = document.createElement('section');
-        this.element.className = 'w-full min-h-screen bg-[#f8f9fa] py-24 px-4 sm:px-8 relative';
+        this.element.className = 'w-full min-h-screen bg-[#f8f9fa] py-24 px-4 sm:px-8 xl:pl-28 xl:pr-8 relative';
 
         this.element.innerHTML = `
+            <nav id="gallery-year-rail" aria-label="Artwork years" class="year-rail hidden xl:flex fixed left-7 top-1/2 -translate-y-1/2 z-40 flex-col opacity-0 pointer-events-none"></nav>
+
             <div class="max-w-[1600px] mx-auto relative z-10">
                 <!-- Header -->
                 <div class="mb-12 sticky top-0 bg-[#f8f9fa]/90 backdrop-blur-md z-30 py-4 -mx-4 px-4 md:mx-0 md:px-0 transition-all duration-300" id="gallery-header">
@@ -111,6 +116,7 @@ export default class GallerySection {
                     align-items: start;
                 }
                 .gallery-year-section + .gallery-year-section { margin-top: 5rem; }
+                .gallery-year-section { scroll-margin-top: 8.5rem; }
             </style>
         `;
 
@@ -122,6 +128,12 @@ export default class GallerySection {
             this.element.querySelector('#gallery-years'),
             stats => this.formatStats(stats)
         );
+        this.yearRail = new GalleryYearRail({
+            container: this.element.querySelector('#gallery-year-rail'),
+            galleryElement: this.element,
+            onSelect: year => this.jumpToYear(year)
+        });
+        this.yearRail.connect();
         this.fetchData();
         this.bindEvents();
         this.setupIntersectionObserver();
@@ -144,6 +156,7 @@ export default class GallerySection {
                 stats.postIds.add(item.id);
                 return statsByYear;
             }, new Map());
+            this.yearRail.setYears([...this.yearStats.keys()]);
             this.updateTotalStats();
 
             this.renderMoreItems();
@@ -203,6 +216,7 @@ export default class GallerySection {
         for (const [year, itemHtml] of itemsByYear) {
             const stats = this.yearStats.get(year) || { images: itemHtml.length, postIds: new Set() };
             this.yearManager.append(year, stats, itemHtml.join(''));
+            this.yearRail.registerSection(year, this.yearManager.getSection(year));
         }
 
         this.visibleCount += nextBatch.length;
@@ -210,6 +224,18 @@ export default class GallerySection {
         if (this.visibleCount >= this.galleryData.length) {
             sentinel.classList.add('opacity-0');
         }
+    }
+
+    jumpToYear(year) {
+        while (!this.yearManager.getSection(year) && this.visibleCount < this.galleryData.length) {
+            this.renderMoreItems();
+        }
+
+        const section = this.yearManager.getSection(year);
+        if (!section) return;
+        requestAnimationFrame(() => {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
     }
 
     renderGalleryItem(item, globalIndex, batchIndex) {
