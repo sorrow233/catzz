@@ -1,4 +1,5 @@
 import { i18n } from '../utils/i18n.js';
+import { escapeHtml, safeExternalUrl } from '../utils/html.js';
 
 export default class GallerySection {
     constructor() {
@@ -20,6 +21,7 @@ export default class GallerySection {
      */
     getOptimizedUrl(url, width = 800) {
         if (!url) return '';
+        if (url.startsWith('/')) return url;
         // Remove https:// for the proxy path if needed, but wsrv supports full URLs usually.
         // wsrv.nl syntax: https://wsrv.nl/?url=...&w=...&output=webp
         const encodedUrl = encodeURIComponent(url);
@@ -165,7 +167,7 @@ export default class GallerySection {
         const html = nextBatch.map((item, index) => {
             const globalIndex = this.visibleCount + index;
             // Use remote url
-            const originalUrl = item.url;
+            const originalUrl = String(item.url || '');
             // Optimize: Use 600px width for grid items (enough for 1 column mobile and multi-column desktop)
             // Convert to WebP for better compression
             const imagePath = this.getOptimizedUrl(originalUrl, 600);
@@ -185,9 +187,9 @@ export default class GallerySection {
                      
                     <div class="relative rounded-2xl overflow-hidden group cursor-zoom-in bg-gray-100 shadow-sm hover:shadow-xl transition-shadow duration-500">
                         <img 
-                            src="${imagePath}" 
-                            data-original="${originalUrl}"
-                            alt="${item.title}"
+                            src="${escapeHtml(imagePath)}"
+                            data-original="${escapeHtml(originalUrl)}"
+                            alt="${escapeHtml(item.title)}"
                             loading="${loadingAttribute}"
                             width="600"
                             height="400" 
@@ -198,9 +200,9 @@ export default class GallerySection {
                         
                         <!-- Hover Overlay -->
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                            <h3 class="text-white font-serif text-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">${item.title}</h3>
+                            <h3 class="text-white font-serif text-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">${escapeHtml(item.title)}</h3>
                             <div class="text-white/80 text-xs font-mono mt-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">
-                                ${item.tags.slice(0, 2).join(' / ')}
+                                ${escapeHtml((item.tags || []).slice(0, 2).join(' / '))}
                             </div>
                         </div>
                     </div>
@@ -250,8 +252,8 @@ export default class GallerySection {
 
                 lightboxImg.src = imagePath;
                 lightboxTitle.textContent = itemData.title;
-                lightboxTags.textContent = itemData.tags.join(' / ');
-                lightboxLink.href = itemData.pixiv_url;
+                lightboxTags.textContent = (itemData.tags || []).join(' / ');
+                lightboxLink.href = safeExternalUrl(itemData.pixiv_url);
 
                 lightbox.classList.remove('hidden');
                 document.body.style.overflow = 'hidden';

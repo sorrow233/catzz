@@ -30,10 +30,11 @@ async function generateSitemap() {
         galleryData.forEach(item => {
             const imgUrl = item.remote_url || item.url || item.original_url_display;
             if (imgUrl) {
+                const absoluteImageUrl = new URL(imgUrl, BASE_URL).toString();
                 sitemap += `    <image:image>
-      <image:loc>${escapeXml(imgUrl)}</image:loc>
+      <image:loc>${escapeXml(absoluteImageUrl)}</image:loc>
       <image:title>${escapeXml(item.title)}</image:title>
-      <image:caption>${escapeXml(item.description || item.tags.join(', '))}</image:caption>
+      <image:caption>${escapeXml(item.description || (item.tags || []).join(', '))}</image:caption>
     </image:image>\n`;
             }
         });
@@ -64,4 +65,3 @@ function escapeXml(unsafe) {
 }
 
 generateSitemap();
-

@@ -1,0 +1,70 @@
+name: 自动更新画师作品
+
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: catzz-gallery-update
+  cancel-in-progress: false
+
+jobs:
+  update-gallery:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出 main 分支
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: 配置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: 安装依赖并同步作品
+        run: |
+          npm ci
+          npm ci --prefix backend
+          npm run update:gallery
+          npm run build
+
+      - name: 检查公开资源变化
+        id: changes
+        run: |
+          if git diff --quiet -- public/gallery.json public/artworks public/sitemap.xml; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 提交并推送更新
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "catzz-gallery-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/gallery.json public/artworks public/sitemap.xml
+          git commit -m "chore(画廊): 自动同步 catzz 最新 Pixiv 作品" \
+            -m "自动任务：检查画师 catzz 的最新公开活动。" \
+            -m "修复内容：补充新增作品元数据和压缩图片，并同步站点地图，避免静态画廊长期停留在旧数据。"
+          git push origin HEAD:main
+
+      - name: 部署到 Cloudflare Pages
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: 2a410546f0f0c03d9b93a17c8dbf9f7e
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "未配置 CLOUDFLARE_API_TOKEN，代码已推送，等待 Pages 的 Git 集成部署。"
+          else
+            npx wrangler pages deploy dist \
+              --project-name catzz \
+              --branch main \
+              --commit-message "Automated gallery update"
+          fi

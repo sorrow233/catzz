@@ -1,4 +1,5 @@
 import { i18n } from '../utils/i18n.js';
+import { escapeHtml, safeExternalUrl } from '../utils/html.js';
 
 export default class TimelineSection {
     constructor() {
@@ -142,11 +143,11 @@ export default class TimelineSection {
         }
 
         container.innerHTML = this.timelineData.map(item => `
-            <div class="snap-start shrink-0 w-[85vw] md:w-[400px] bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group cursor-pointer flex flex-col h-full" onclick="window.open('${item.url}', '_blank')">
+            <a class="snap-start shrink-0 w-[85vw] md:w-[400px] bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group cursor-pointer flex flex-col h-full" href="${escapeHtml(safeExternalUrl(item.url))}" target="_blank" rel="noopener noreferrer">
                 <!-- Thumbnail -->
                 <div class="relative h-48 md:h-56 overflow-hidden">
                     <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300 z-10"></div>
-                    <img src="${item.thumbnail}" alt="${item.title}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                    <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title)}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
                     
                     <!-- Play Icon Overlay -->
                     <div class="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -162,10 +163,10 @@ export default class TimelineSection {
                          <span class="text-xs font-bold text-secondary font-mono bg-secondary/5 px-2 py-1 rounded-md">${item.date}</span>
                     </div>
                     
-                    <h3 class="text-lg font-serif text-[#2c3e50] group-hover:text-primary transition-colors duration-300 mb-3 line-clamp-2">${item.title}</h3>
+                    <h3 class="text-lg font-serif text-[#2c3e50] group-hover:text-primary transition-colors duration-300 mb-3 line-clamp-2">${escapeHtml(item.title)}</h3>
                     
                     <p class="text-sm text-gray-500 font-light leading-relaxed line-clamp-3 mb-4 flex-grow">
-                        ${item.desc}
+                        ${escapeHtml(item.desc)}
                     </p>
                     
                     <div class="pt-4 border-t border-gray-50 flex items-center text-xs font-medium text-gray-400 group-hover:text-secondary transition-colors duration-300 uppercase tracking-widest mt-auto">
@@ -173,7 +174,7 @@ export default class TimelineSection {
                         <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                     </div>
                 </div>
-            </div>
+            </a>
         `).join('');
     }
 }
