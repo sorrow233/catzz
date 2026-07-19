@@ -28,13 +28,16 @@ export default class VideoSection {
                     <span id="videos-counter" class="font-mono text-[10px] tracking-[0.2em] text-[#172126]/38">00 / 00</span>
                 </div>
 
-                <div id="videos-rail" class="flex gap-5 md:gap-8 overflow-x-auto scrollbar-hide">
+                <div id="videos-rail" class="videos-rail flex gap-5 md:gap-8 overflow-x-auto scrollbar-hide">
                     <div class="loading-text w-full py-28 text-center text-[#172126]/30 font-mono text-xs tracking-wider">${i18n.t('videos.loading')}</div>
                 </div>
 
                 <div class="flex items-center gap-5 mt-10">
-                    <input id="videos-scrubber" class="videos-scrubber min-w-0 flex-1" type="range" min="0" max="1000" value="0" step="1" aria-label="${i18n.t('videos.progress')}">
-                    <span data-videos-drag class="font-mono text-[9px] tracking-[0.28em] text-[#172126]/32 uppercase">${i18n.t('videos.drag')}</span>
+                    <div id="videos-progress" class="videos-progress min-w-0 flex-1">
+                        <span id="videos-date-label" class="videos-date-label" aria-hidden="true">--.--</span>
+                        <input id="videos-scrubber" class="videos-scrubber" type="range" min="0" max="1000" value="0" step="1" aria-label="${i18n.t('videos.progress')}">
+                    </div>
+                    <span id="videos-edge-date" class="w-10 text-right font-mono text-[9px] tracking-[0.18em] text-[#172126]/32">--.--</span>
                 </div>
             </div>
         `;
@@ -45,7 +48,10 @@ export default class VideoSection {
         this.rail = new HorizontalRail({
             container: this.element.querySelector('#videos-rail'),
             counter: this.element.querySelector('#videos-counter'),
-            scrubber: this.element.querySelector('#videos-scrubber')
+            scrubber: this.element.querySelector('#videos-scrubber'),
+            progress: this.element.querySelector('#videos-progress'),
+            dateLabel: this.element.querySelector('#videos-date-label'),
+            edgeDateLabel: this.element.querySelector('#videos-edge-date')
         });
         this.rail.connect();
         this.fetchData();
@@ -55,7 +61,6 @@ export default class VideoSection {
         if (!this.element) return;
         this.element.querySelector('[data-videos-title]').textContent = i18n.t('videos.title');
         this.element.querySelector('[data-videos-eyebrow]').textContent = i18n.t('videos.eyebrow');
-        this.element.querySelector('[data-videos-drag]').textContent = i18n.t('videos.drag');
         this.element.querySelector('#videos-scrubber').setAttribute('aria-label', i18n.t('videos.progress'));
     }
 
@@ -83,7 +88,7 @@ export default class VideoSection {
         }
 
         container.innerHTML = this.items.map((item, index) => `
-            <a class="rail-item snap-start shrink-0 w-[82vw] sm:w-[52vw] lg:w-[32vw] max-w-[520px] group" href="${escapeHtml(safeExternalUrl(item.videoUrl))}" target="_blank" rel="noopener noreferrer">
+            <a class="rail-item snap-start shrink-0 w-[82vw] sm:w-[52vw] lg:w-[32vw] max-w-[520px] group" data-month="${escapeHtml(item.month)}" href="${escapeHtml(safeExternalUrl(item.videoUrl))}" target="_blank" rel="noopener noreferrer">
                 <div class="relative aspect-video overflow-hidden bg-[#d8dee1] mb-5">
                     <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title)}" loading="lazy" decoding="async" class="w-full h-full object-cover opacity-90 transition-all duration-[1000ms] group-hover:opacity-100 group-hover:scale-[1.02]">
                     <div class="absolute inset-0 bg-[#172126]/8"></div>

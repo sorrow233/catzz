@@ -14,5 +14,6 @@ test('视频前端模型使用 UTC 日期并清理描述空白', async () => {
     });
 
     assert.equal(video.date, '2026.01.01');
+    assert.equal(video.month, '26.01');
     assert.equal(video.description, '第一行 第二行');
 });

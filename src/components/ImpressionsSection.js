@@ -9,7 +9,7 @@ export default class ImpressionsSection {
     constructor() {
         this.items = [];
         this.rail = null;
-        this.MAX_ITEMS = 12;
+        this.MAX_ITEMS = 6;
         window.addEventListener('languageChanged', () => {
             this.updateLabels();
             this.renderItems();

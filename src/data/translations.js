@@ -22,7 +22,6 @@ export const translations = {
             loading: "正在加载视频作品...",
             failed: "加载视频作品失败。",
             empty: "暂时没有视频作品。",
-            drag: "拖动浏览",
             progress: "拖动浏览视频作品"
         },
         gallery: {
@@ -68,7 +67,6 @@ export const translations = {
             loading: "Loading video works...",
             failed: "Failed to load video works.",
             empty: "No video works found.",
-            drag: "Drag to browse",
             progress: "Drag to browse video works"
         },
         gallery: {
@@ -114,7 +112,6 @@ export const translations = {
             loading: "映像作品を読み込み中...",
             failed: "映像作品を読み込めませんでした。",
             empty: "映像作品はありません。",
-            drag: "ドラッグして見る",
             progress: "ドラッグして映像作品を見る"
         },
         gallery: {
@@ -160,7 +157,6 @@ export const translations = {
             loading: "영상 작품을 불러오는 중...",
             failed: "영상 작품을 불러오지 못했습니다.",
             empty: "영상 작품이 없습니다.",
-            drag: "드래그하여 탐색",
             progress: "드래그하여 영상 작품 탐색"
         },
         gallery: {
