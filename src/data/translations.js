@@ -14,7 +14,11 @@ export const translations = {
             failed: "加载时间轴失败。",
             empty: "暂时没有活动记录。",
             watchVideo: "观看视频",
-            viewArtwork: "查看作品"
+            viewArtwork: "查看作品",
+            eyebrow: "近期印象",
+            drag: "横向浏览",
+            previous: "上一项活动",
+            next: "下一项活动"
         },
         gallery: {
             title: "WORKS",
@@ -23,7 +27,8 @@ export const translations = {
             allLoaded: "已加载全部作品",
             failed: "加载作品失败。",
             viewOriginal: "查看原图",
-            yearWorks: "件作品"
+            images: "张插画",
+            posts: "个投稿"
         },
         carousel: {
             slides: [
@@ -51,7 +56,11 @@ export const translations = {
             failed: "Failed to load timeline.",
             empty: "No recent activities found.",
             watchVideo: "Watch Video",
-            viewArtwork: "View Artwork"
+            viewArtwork: "View Artwork",
+            eyebrow: "Recent Impressions",
+            drag: "Drag to explore",
+            previous: "Previous activity",
+            next: "Next activity"
         },
         gallery: {
             title: "WORKS",
@@ -60,7 +69,8 @@ export const translations = {
             allLoaded: "End of Collection",
             failed: "Failed to load artworks.",
             viewOriginal: "View Original",
-            yearWorks: "works"
+            images: "images",
+            posts: "posts"
         },
         carousel: {
             slides: [
@@ -88,7 +98,11 @@ export const translations = {
             failed: "タイムラインの読み込みに失敗しました。",
             empty: "最近の活動はありません。",
             watchVideo: "動画を見る",
-            viewArtwork: "作品を見る"
+            viewArtwork: "作品を見る",
+            eyebrow: "最近の印象",
+            drag: "横にスライド",
+            previous: "前の活動",
+            next: "次の活動"
         },
         gallery: {
             title: "作品集",
@@ -97,7 +111,8 @@ export const translations = {
             allLoaded: "これ以上はありません",
             failed: "作品の読み込みに失敗しました。",
             viewOriginal: "オリジナルを見る",
-            yearWorks: "作品"
+            images: "枚",
+            posts: "投稿"
         },
         carousel: {
             slides: [
@@ -125,7 +140,11 @@ export const translations = {
             failed: "타임라인을 불러오지 못했습니다.",
             empty: "최근 활동이 없습니다.",
             watchVideo: "동영상 보기",
-            viewArtwork: "작품 보기"
+            viewArtwork: "작품 보기",
+            eyebrow: "최근의 인상",
+            drag: "가로로 탐색",
+            previous: "이전 활동",
+            next: "다음 활동"
         },
         gallery: {
             title: "작품집",
@@ -134,7 +153,8 @@ export const translations = {
             allLoaded: "모든 작품을 불러왔습니다",
             failed: "작품을 불러오지 못했습니다.",
             viewOriginal: "원본 보기",
-            yearWorks: "개 작품"
+            images: "장",
+            posts: "개 게시물"
         },
         carousel: {
             slides: [

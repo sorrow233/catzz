@@ -1,6 +1,6 @@
 {
   "name": "catzz-gallery-updater",
-  "version": "1.1.0",
+  "version": "1.2.0-beta.2",
   "private": true,
   "description": "仅供本地和定时任务运行的 Pixiv 画廊更新器",
   "scripts": {

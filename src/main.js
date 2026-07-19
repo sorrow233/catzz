@@ -4,6 +4,7 @@ import TimelineSection from './components/TimelineSection.js';
 import GallerySection from './components/GallerySection.js';
 import FooterSection from './components/FooterSection.js';
 import { i18n } from './utils/i18n.js';
+import { loadDisplayFontWhenIdle } from './utils/displayFont.mjs';
 
 class App {
     constructor() {
@@ -49,4 +50,5 @@ class App {
 document.addEventListener('DOMContentLoaded', () => {
     const app = new App();
     app.mount();
+    loadDisplayFontWhenIdle();
 });

@@ -12,8 +12,8 @@ export default class GalleryYearManager {
         this.sections = new Map();
     }
 
-    append(year, totalCount, html) {
-        const section = this.ensureSection(year, totalCount);
+    append(year, stats, html) {
+        const section = this.ensureSection(year, stats);
         const previousItemCount = section.grid.children.length;
         section.grid.insertAdjacentHTML('beforeend', html);
         const newItems = Array.from(section.grid.children).slice(previousItemCount);
@@ -23,11 +23,11 @@ export default class GalleryYearManager {
     updateLabels(formatCountLabel = this.formatCountLabel) {
         this.formatCountLabel = formatCountLabel;
         for (const section of this.sections.values()) {
-            section.countLabel.textContent = this.formatCountLabel(section.totalCount);
+            section.countLabel.textContent = this.formatCountLabel(section.stats);
         }
     }
 
-    ensureSection(year, totalCount) {
+    ensureSection(year, stats) {
         if (this.sections.has(year)) return this.sections.get(year);
 
         const element = document.createElement('section');
@@ -35,7 +35,7 @@ export default class GalleryYearManager {
         element.dataset.year = String(year);
         element.innerHTML = `
             <div class="flex items-center gap-4 md:gap-6 mb-8 md:mb-10">
-                <h3 class="text-3xl md:text-4xl font-serif font-light text-primary leading-none">${year}</h3>
+                <h3 class="font-art text-4xl md:text-5xl font-normal text-primary leading-none">${year}</h3>
                 <span class="gallery-year-count text-[10px] md:text-xs font-mono text-gray-400 tracking-[0.2em] uppercase whitespace-nowrap"></span>
                 <div class="h-px flex-1 bg-primary/10"></div>
             </div>
@@ -45,8 +45,8 @@ export default class GalleryYearManager {
         const grid = element.querySelector('.gallery-masonry');
         const countLabel = element.querySelector('.gallery-year-count');
         const masonry = new MasonryGrid(grid);
-        const section = { element, grid, countLabel, masonry, totalCount };
-        countLabel.textContent = this.formatCountLabel(totalCount);
+        const section = { element, grid, countLabel, masonry, stats };
+        countLabel.textContent = this.formatCountLabel(stats);
 
         const nextSection = Array.from(this.container.children).find(child => {
             return Number(child.dataset.year) < year;

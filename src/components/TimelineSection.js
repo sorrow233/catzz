@@ -1,11 +1,13 @@
 import { i18n } from '../utils/i18n.js';
 import { escapeHtml, safeExternalUrl } from '../utils/html.js';
 import { extractVideoUrl, selectRecentActivities } from '../utils/activity.mjs';
+import HorizontalRail from '../utils/HorizontalRail.mjs';
 
 export default class TimelineSection {
     constructor() {
         this.timelineData = [];
         this.MAX_ITEMS = 12;
+        this.rail = null;
         window.addEventListener('languageChanged', () => {
             this.updateLabels();
             this.renderItems();
@@ -16,37 +18,51 @@ export default class TimelineSection {
         if (!this.element) return;
         const title = this.element.querySelector('h2');
         const loading = this.element.querySelector('.loading-text');
+        const eyebrow = this.element.querySelector('.timeline-eyebrow');
+        const drag = this.element.querySelector('.timeline-drag');
+        const previous = this.element.querySelector('#scroll-left');
+        const next = this.element.querySelector('#scroll-right');
         if (title) title.textContent = i18n.t('timeline.title');
         if (loading) loading.textContent = i18n.t('timeline.loading');
+        if (eyebrow) eyebrow.textContent = i18n.t('timeline.eyebrow');
+        if (drag) drag.textContent = i18n.t('timeline.drag');
+        if (previous) previous.setAttribute('aria-label', i18n.t('timeline.previous'));
+        if (next) next.setAttribute('aria-label', i18n.t('timeline.next'));
     }
 
     render() {
         this.element = document.createElement('section');
-        this.element.className = 'w-full py-20 bg-gradient-to-b from-[#f9f9f9] to-white relative overflow-hidden';
+        this.element.className = 'w-full py-24 md:py-32 bg-[#10171b] text-white relative overflow-hidden';
 
         this.element.innerHTML = `
-            <div class="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-                <div class="mb-12 flex items-end justify-between px-2">
+            <div class="absolute -top-32 -right-24 w-[520px] h-[520px] rounded-full bg-[#2b5362]/20 blur-3xl pointer-events-none"></div>
+            <div class="max-w-[1600px] mx-auto px-5 md:px-10 relative z-10">
+                <div class="mb-12 md:mb-16 flex items-end justify-between gap-8">
                     <div>
-                        <h2 class="text-3xl md:text-4xl font-serif font-light text-primary mb-2">${i18n.t('timeline.title')}</h2>
-                        <div class="w-16 h-0.5 bg-primary/20"></div>
+                        <p class="timeline-eyebrow text-[10px] md:text-xs font-mono tracking-[0.35em] text-white/40 uppercase mb-4">${i18n.t('timeline.eyebrow')}</p>
+                        <h2 class="font-art text-5xl md:text-7xl lg:text-8xl font-normal tracking-[0.04em] leading-none">${i18n.t('timeline.title')}</h2>
                     </div>
-                    
-                    <!-- Navigation Buttons -->
-                    <div class="hidden md:flex gap-2">
-                        <button id="scroll-left" class="p-3 rounded-full bg-white border border-gray-100 shadow-sm hover:shadow-md hover:bg-gray-50 transition-all duration-300 text-primary disabled:opacity-30 disabled:cursor-not-allowed">
+
+                    <div class="flex items-center gap-3 md:gap-5">
+                        <span id="timeline-counter" class="hidden sm:block font-mono text-xs tracking-[0.2em] text-white/45">00 / 00</span>
+                        <button id="scroll-left" aria-label="${i18n.t('timeline.previous')}" class="p-3 md:p-4 rounded-full border border-white/20 hover:bg-white hover:text-[#10171b] transition-all duration-300 disabled:opacity-20 disabled:cursor-not-allowed">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
                         </button>
-                        <button id="scroll-right" class="p-3 rounded-full bg-white border border-gray-100 shadow-sm hover:shadow-md hover:bg-gray-50 transition-all duration-300 text-primary disabled:opacity-30 disabled:cursor-not-allowed">
+                        <button id="scroll-right" aria-label="${i18n.t('timeline.next')}" class="p-3 md:p-4 rounded-full border border-white/20 hover:bg-white hover:text-[#10171b] transition-all duration-300 disabled:opacity-20 disabled:cursor-not-allowed">
                              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>
                         </button>
                     </div>
                 </div>
 
-                <!-- Scroll Container -->
-                <div id="timeline-scroll-container" class="flex gap-6 overflow-x-auto pb-12 pt-4 px-2 snap-x snap-mandatory scrollbar-hide -mx-4 md:mx-0 px-4 md:px-0">
-                    <!-- Loading State -->
-                    <div class="loading-text w-full text-center text-gray-300 font-mono text-sm tracking-wider py-20">${i18n.t('timeline.loading')}</div>
+                <div id="timeline-scroll-container" class="flex gap-5 md:gap-8 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 md:-mx-10 px-5 md:px-10 pb-8">
+                    <div class="loading-text w-full text-center text-white/30 font-mono text-sm tracking-wider py-32">${i18n.t('timeline.loading')}</div>
+                </div>
+
+                <div class="flex items-center gap-5 mt-2">
+                    <div class="h-px bg-white/15 flex-1 overflow-hidden">
+                        <div id="timeline-progress" class="h-full bg-white origin-left scale-x-0 transition-transform duration-500"></div>
+                    </div>
+                    <span class="timeline-drag font-mono text-[10px] tracking-[0.3em] text-white/35 uppercase">${i18n.t('timeline.drag')}</span>
                 </div>
             </div>
             
@@ -61,26 +77,18 @@ export default class TimelineSection {
             </style>
         `;
 
-        // Setup scroll buttons
-        setTimeout(() => {
-            const container = this.element.querySelector('#timeline-scroll-container');
-            const leftBtn = this.element.querySelector('#scroll-left');
-            const rightBtn = this.element.querySelector('#scroll-right');
-
-            if (leftBtn && rightBtn && container) {
-                leftBtn.addEventListener('click', () => {
-                    container.scrollBy({ left: -400, behavior: 'smooth' });
-                });
-                rightBtn.addEventListener('click', () => {
-                    container.scrollBy({ left: 400, behavior: 'smooth' });
-                });
-            }
-        }, 0);
-
         return this.element;
     }
 
     mount() {
+        this.rail = new HorizontalRail({
+            container: this.element.querySelector('#timeline-scroll-container'),
+            previousButton: this.element.querySelector('#scroll-left'),
+            nextButton: this.element.querySelector('#scroll-right'),
+            counter: this.element.querySelector('#timeline-counter'),
+            progress: this.element.querySelector('#timeline-progress')
+        });
+        this.rail.connect();
         this.fetchData();
     }
 
@@ -104,9 +112,9 @@ export default class TimelineSection {
                     : cleanDesc;
 
                 const dateObj = new Date(item.created_at);
-                const year = dateObj.getFullYear();
-                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-                const day = String(dateObj.getDate()).padStart(2, '0');
+                const year = dateObj.getUTCFullYear();
+                const month = String(dateObj.getUTCMonth() + 1).padStart(2, '0');
+                const day = String(dateObj.getUTCDate()).padStart(2, '0');
 
                 return {
                     id: item.id,
@@ -123,7 +131,7 @@ export default class TimelineSection {
         } catch (e) {
             console.error(e);
             const container = this.element.querySelector('#timeline-scroll-container');
-            if (container) container.innerHTML = `<div class="text-center text-gray-400 w-full">${i18n.t('timeline.failed')}</div>`;
+            if (container) container.innerHTML = `<div class="text-center text-white/40 w-full py-32">${i18n.t('timeline.failed')}</div>`;
         }
     }
 
@@ -131,45 +139,33 @@ export default class TimelineSection {
         const container = this.element.querySelector('#timeline-scroll-container');
         if (!container) return;
 
-        // If no videos found, clear list
         if (this.timelineData.length === 0) {
-            container.innerHTML = `<div class="text-center text-gray-400 w-full">${i18n.t('timeline.empty')}</div>`;
+            container.innerHTML = `<div class="text-center text-white/40 w-full py-32">${i18n.t('timeline.empty')}</div>`;
             return;
         }
 
-        container.innerHTML = this.timelineData.map(item => `
-            <a class="snap-start shrink-0 w-[85vw] md:w-[400px] bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group cursor-pointer flex flex-col h-full" href="${escapeHtml(safeExternalUrl(item.url))}" target="_blank" rel="noopener noreferrer">
-                <!-- Thumbnail -->
-                <div class="relative h-48 md:h-56 overflow-hidden">
-                    <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300 z-10"></div>
-                    <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title)}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
-                    
-                    <!-- Play Icon Overlay -->
-                    <div class="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg">
-                            <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24"><path d="${item.isVideo ? 'M8 5v14l11-7z' : 'M4 5h16v14H4z M6 16l4-5 3 3 2-2 3 4z'}"/></svg>
+        container.innerHTML = this.timelineData.map((item, index) => `
+            <a class="timeline-item snap-center shrink-0 relative w-[88vw] sm:w-[76vw] lg:w-[64vw] max-w-[1080px] aspect-[4/5] sm:aspect-[16/10] lg:aspect-[16/9] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group bg-[#1b2429]" href="${escapeHtml(safeExternalUrl(item.url))}" target="_blank" rel="noopener noreferrer">
+                <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title)}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.035]">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/15 to-black/30"></div>
+                <div class="absolute inset-0 p-6 md:p-10 lg:p-12 flex flex-col justify-between">
+                    <div class="flex items-center justify-between font-mono text-[10px] md:text-xs tracking-[0.22em] text-white/65 uppercase">
+                        <span>${String(index + 1).padStart(2, '0')}</span>
+                        <span>${item.date}</span>
+                    </div>
+                    <div class="max-w-3xl">
+                        <p class="text-[10px] md:text-xs font-mono tracking-[0.25em] text-white/55 uppercase mb-4">${i18n.t(item.isVideo ? 'timeline.watchVideo' : 'timeline.viewArtwork')}</p>
+                        <h3 class="font-art text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.98] tracking-[0.01em] mb-4 md:mb-6">${escapeHtml(item.title)}</h3>
+                        <div class="flex items-end justify-between gap-6">
+                            <p class="hidden sm:block text-sm md:text-base text-white/65 font-light leading-relaxed max-w-2xl line-clamp-2">${escapeHtml(item.desc)}</p>
+                            <span class="shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/35 flex items-center justify-center group-hover:bg-white group-hover:text-[#10171b] transition-all duration-300">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14m-5-5 5 5-5 5"/></svg>
+                            </span>
                         </div>
-                    </div>
-                </div>
-                
-                <!-- Content -->
-                <div class="p-6 flex flex-col flex-grow">
-                    <div class="flex items-baseline gap-3 mb-2">
-                         <span class="text-xs font-bold text-secondary font-mono bg-secondary/5 px-2 py-1 rounded-md">${item.date}</span>
-                    </div>
-                    
-                    <h3 class="text-lg font-serif text-[#2c3e50] group-hover:text-primary transition-colors duration-300 mb-3 line-clamp-2">${escapeHtml(item.title)}</h3>
-                    
-                    <p class="text-sm text-gray-500 font-light leading-relaxed line-clamp-3 mb-4 flex-grow">
-                        ${escapeHtml(item.desc)}
-                    </p>
-                    
-                    <div class="pt-4 border-t border-gray-50 flex items-center text-xs font-medium text-gray-400 group-hover:text-secondary transition-colors duration-300 uppercase tracking-widest mt-auto">
-                        <span>${i18n.t(item.isVideo ? 'timeline.watchVideo' : 'timeline.viewArtwork')}</span>
-                        <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                     </div>
                 </div>
             </a>
         `).join('');
+        this.rail?.refresh();
     }
 }

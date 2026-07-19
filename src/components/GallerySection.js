@@ -9,7 +9,7 @@ export default class GallerySection {
         this.BATCH_SIZE = 15;
         this.observer = null;
         this.yearManager = null;
-        this.yearCounts = new Map();
+        this.yearStats = new Map();
 
         window.addEventListener('languageChanged', () => {
             this.updateLabels();
@@ -34,12 +34,13 @@ export default class GallerySection {
 
     updateLabels() {
         if (!this.element) return;
-        const title = this.element.querySelector('h2');
-        const subtitle = this.element.querySelector('p.font-mono');
+        const title = this.element.querySelector('#gallery-title');
+        const subtitle = this.element.querySelector('#gallery-subtitle');
 
         if (title) title.textContent = i18n.t('gallery.title');
         if (subtitle) subtitle.textContent = i18n.t('gallery.subtitle');
-        this.yearManager?.updateLabels(count => `${count} ${i18n.t('gallery.yearWorks')}`);
+        this.yearManager?.updateLabels(stats => this.formatStats(stats));
+        this.updateTotalStats();
         // Update lightbox link if open
         const lightboxLink = document.getElementById('lightbox-link');
         if (lightboxLink) lightboxLink.textContent = i18n.t('gallery.viewOriginal');
@@ -53,8 +54,11 @@ export default class GallerySection {
             <div class="max-w-[1600px] mx-auto relative z-10">
                 <!-- Header -->
                 <div class="mb-12 sticky top-0 bg-[#f8f9fa]/90 backdrop-blur-md z-30 py-4 -mx-4 px-4 md:mx-0 md:px-0 transition-all duration-300" id="gallery-header">
-                    <h2 class="text-4xl md:text-5xl font-serif font-light text-primary mb-2">${i18n.t('gallery.title')}</h2>
-                    <p class="text-xs font-mono text-gray-400 tracking-[0.3em] uppercase">${i18n.t('gallery.subtitle')}</p>
+                    <h2 id="gallery-title" class="font-art text-5xl md:text-7xl font-normal text-primary mb-3 tracking-[0.04em]">${i18n.t('gallery.title')}</h2>
+                    <p class="text-[10px] md:text-xs font-mono text-gray-400 tracking-[0.25em] uppercase flex flex-wrap gap-x-5 gap-y-1">
+                        <span id="gallery-subtitle">${i18n.t('gallery.subtitle')}</span>
+                        <span id="gallery-total" class="text-primary/45"></span>
+                    </p>
                 </div>
 
                 <!-- Year-grouped Masonry Grids -->
@@ -118,7 +122,7 @@ export default class GallerySection {
     mount() {
         this.yearManager = new GalleryYearManager(
             this.element.querySelector('#gallery-years'),
-            count => `${count} ${i18n.t('gallery.yearWorks')}`
+            stats => this.formatStats(stats)
         );
         this.fetchData();
         this.bindEvents();
@@ -133,11 +137,16 @@ export default class GallerySection {
             const data = await response.json();
             // Sort by date (newest first)
             this.galleryData = [...data].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-            this.yearCounts = this.galleryData.reduce((counts, item) => {
+            this.yearStats = this.galleryData.reduce((statsByYear, item) => {
                 const year = getArtworkYear(item.created_at);
-                if (year !== null) counts.set(year, (counts.get(year) || 0) + 1);
-                return counts;
+                if (year === null) return statsByYear;
+                if (!statsByYear.has(year)) statsByYear.set(year, { images: 0, postIds: new Set() });
+                const stats = statsByYear.get(year);
+                stats.images += 1;
+                stats.postIds.add(item.id);
+                return statsByYear;
             }, new Map());
+            this.updateTotalStats();
 
             this.renderMoreItems();
         } catch (error) {
@@ -194,7 +203,8 @@ export default class GallerySection {
         });
 
         for (const [year, itemHtml] of itemsByYear) {
-            this.yearManager.append(year, this.yearCounts.get(year) || itemHtml.length, itemHtml.join(''));
+            const stats = this.yearStats.get(year) || { images: itemHtml.length, postIds: new Set() };
+            this.yearManager.append(year, stats, itemHtml.join(''));
         }
 
         this.visibleCount += nextBatch.length;
@@ -209,12 +219,17 @@ export default class GallerySection {
         const imagePath = this.getOptimizedUrl(originalUrl, 600);
         const loadingAttribute = globalIndex < 4 ? 'eager' : 'lazy';
 
+        const pageBadge = Number(item.page_count) > 1
+            ? `<span class="absolute top-4 right-4 z-20 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md text-[10px] font-mono tracking-wider text-white/85">P ${String((Number(item.page_index) || 0) + 1).padStart(2, '0')} / ${String(item.page_count).padStart(2, '0')}</span>`
+            : '';
+
         return `
                 <div class="gallery-item opacity-0 transition-opacity duration-500 ease-out"
                      data-index="${globalIndex}" 
                      style="transition-delay: ${batchIndex * 30}ms">
                      
                     <div class="relative rounded-2xl overflow-hidden group cursor-zoom-in bg-gray-100 shadow-sm hover:shadow-xl transition-shadow duration-500">
+                        ${pageBadge}
                         <img 
                             src="${escapeHtml(imagePath)}"
                             data-original="${escapeHtml(originalUrl)}"
@@ -236,6 +251,20 @@ export default class GallerySection {
                     </div>
                 </div>
             `;
+    }
+
+    formatStats(stats) {
+        const postCount = stats?.postIds instanceof Set ? stats.postIds.size : Number(stats?.posts) || 0;
+        return `${stats?.images || 0} ${i18n.t('gallery.images')} · ${postCount} ${i18n.t('gallery.posts')}`;
+    }
+
+    updateTotalStats() {
+        const total = this.element?.querySelector('#gallery-total');
+        if (!total || this.galleryData.length === 0) return;
+        total.textContent = this.formatStats({
+            images: this.galleryData.length,
+            postIds: new Set(this.galleryData.map(item => item.id))
+        });
     }
 
     bindEvents() {

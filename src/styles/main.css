@@ -12,3 +12,11 @@
     --font-hand: "LXGW WenKai TC", "Noto Serif SC", serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
+
+.font-art {
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.display-font-ready .font-art {
+    font-family: "Catzz Italiana", Georgia, "Times New Roman", serif;
+}

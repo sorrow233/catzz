@@ -1,5 +1,6 @@
 const config = require('./config');
-const { GalleryStore, mergeGallery } = require('./lib/gallery-store');
+const { ArtworkSync } = require('./lib/artwork-sync');
+const { GalleryStore, getGalleryId, mergeGallery } = require('./lib/gallery-store');
 const { mapWithConcurrency } = require('./lib/http-client');
 const { ImageStore } = require('./lib/image-store');
 const { PixivClient } = require('./lib/pixiv-client');
@@ -19,45 +20,41 @@ async function main() {
     });
 
     const existingItems = await galleryStore.read();
-    const existingIds = new Set(existingItems.map(item => Number(item.id)));
     const artworkIds = await pixiv.getArtworkIds();
-    const missingIds = artworkIds.filter(id => !existingIds.has(id));
+    const itemsByArtworkId = existingItems.reduce((groups, item) => {
+        const artworkId = Number(item.id);
+        if (!groups.has(artworkId)) groups.set(artworkId, []);
+        groups.get(artworkId).push(item);
+        return groups;
+    }, new Map());
+    const incompleteIds = artworkIds.filter(id => {
+        const items = itemsByArtworkId.get(id) || [];
+        const expectedPageCount = Math.max(...items.map(item => Number(item.page_count) || 1), 1);
+        const uniquePages = new Set(items.map(getGalleryId)).size;
+        return items.length === 0 || items.some(item => !item.page_count) || uniquePages < expectedPageCount;
+    });
+    const targetIds = [...new Set([...artworkIds.slice(0, 12), ...incompleteIds])];
 
-    if (missingIds.length === 0) {
-        console.log('画廊已经是最新状态，没有发现新作品。');
-        return;
-    }
-
-    console.log(`发现 ${missingIds.length} 个新作品，开始并发同步。`);
+    console.log(`检查 ${targetIds.length} 个新增、近期或分页不完整的投稿。`);
+    const artworkSync = new ArtworkSync({ pixiv, imageStore });
     const results = await mapWithConcurrency(
-        missingIds,
+        targetIds,
         config.requestConcurrency,
-        async artworkId => {
-            const artwork = await pixiv.getArtwork(artworkId);
-            const imageBuffer = await pixiv.downloadImage(artwork.original_url, artworkId);
-            const publicImagePath = await imageStore.save(artworkId, imageBuffer);
-
-            return {
-                ...artwork,
-                local_path: publicImagePath.replace(/^\//, ''),
-                remote_url: publicImagePath,
-                url: publicImagePath,
-                original_url_display: publicImagePath
-            };
-        }
+        artworkId => artworkSync.sync(artworkId, existingItems)
     );
 
     const completedItems = results
         .filter(result => result.status === 'fulfilled')
-        .map(result => result.value);
+        .flatMap(result => result.value);
     const failures = results.filter(result => result.status === 'rejected');
 
     if (completedItems.length === 0) {
         throw new AggregateError(failures.map(result => result.reason), '所有新作品均同步失败');
     }
 
-    await galleryStore.write(mergeGallery(existingItems, completedItems));
-    console.log(`已同步 ${completedItems.length} 个作品，画廊现有 ${existingItems.length + completedItems.length} 条记录。`);
+    const mergedItems = mergeGallery(existingItems, completedItems);
+    await galleryStore.write(mergedItems);
+    console.log(`同步完成：${new Set(mergedItems.map(item => item.id)).size} 个投稿，共 ${mergedItems.length} 张图片。`);
 
     for (const failure of failures) {
         console.warn(`部分作品同步失败，将在下次任务重试：${failure.reason.message}`);
