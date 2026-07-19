@@ -2,6 +2,7 @@ import { i18n } from '../utils/i18n.js';
 import { escapeHtml, safeExternalUrl } from '../utils/html.js';
 import { createVideoViewModel } from '../utils/videoView.mjs';
 import HorizontalRail from '../utils/HorizontalRail.mjs';
+import { loadVideoData } from '../utils/contentData.mjs';
 import '../styles/video-rail.css';
 
 export default class VideoSection {
@@ -67,9 +68,7 @@ export default class VideoSection {
     async fetchData() {
         const container = this.element.querySelector('#videos-rail');
         try {
-            const response = await fetch('/videos.json');
-            if (!response.ok) throw new Error('Failed to load video works');
-            const data = await response.json();
+            const data = await loadVideoData();
             this.items = data.map(createVideoViewModel);
             this.renderItems();
         } catch (error) {

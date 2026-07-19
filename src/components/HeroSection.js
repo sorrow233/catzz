@@ -104,7 +104,7 @@ export default class HeroSection {
             <div class="w-full md:w-7/12 h-1/2 md:h-full relative overflow-hidden bg-gray-100 order-1 md:order-2 group cursor-pointer" id="carousel-container">
                 ${this.slides.map((slide, index) => `
                     <div class="absolute inset-0 w-full h-full carousel-slide ${index === 0 ? 'slide-active' : 'slide-inactive'}" data-index="${index}">
-                        <img src="${slide.image}" class="w-full h-full object-cover" alt="Art ${index}">
+                        <img src="${slide.image}" class="w-full h-full object-cover" alt="Art ${index}" width="1920" height="1080" loading="${index === 0 ? 'eager' : 'lazy'}" fetchpriority="${index === 0 ? 'high' : 'low'}" decoding="async">
                         <div class="absolute inset-0 bg-black/10 mix-blend-multiply transition-opacity duration-700 group-hover:opacity-0"></div>
                         
                         <!-- Caption Overlay (Bottom Right) -->

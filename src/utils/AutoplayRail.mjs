@@ -31,8 +31,11 @@ export default class AutoplayRail {
         this.timer = null;
         this.isWrapping = false;
         this.isPointerScrubbing = false;
+        this.isIntersecting = true;
+        this.observer = null;
 
         this.handleVisibility = this.handleVisibility.bind(this);
+        this.handleIntersection = this.handleIntersection.bind(this);
         this.handleTransitionEnd = this.handleTransitionEnd.bind(this);
         this.handleScrubStart = this.handleScrubStart.bind(this);
         this.handleScrubInput = this.handleScrubInput.bind(this);
@@ -48,7 +51,20 @@ export default class AutoplayRail {
         this.scrubber.addEventListener('pointerup', this.handleScrubEnd);
         this.scrubber.addEventListener('pointercancel', this.handleScrubEnd);
         this.progressControl.connect();
+        this.observeVisibility();
         this.refresh();
+    }
+
+    observeVisibility() {
+        if (!('IntersectionObserver' in window)) return;
+        this.observer = new IntersectionObserver(this.handleIntersection);
+        this.observer.observe(this.track);
+    }
+
+    handleIntersection([entry]) {
+        this.isIntersecting = entry.isIntersecting;
+        if (this.isIntersecting) this.scheduleNext();
+        else this.clearTimer();
     }
 
     refresh() {
@@ -145,7 +161,7 @@ export default class AutoplayRail {
 
     scheduleNext() {
         this.clearTimer();
-        if (this.items.length < 2 || document.hidden || this.isPointerScrubbing) return;
+        if (this.items.length < 2 || document.hidden || !this.isIntersecting || this.isPointerScrubbing) return;
         this.timer = window.setTimeout(() => this.advance(), this.intervalMs);
     }
 

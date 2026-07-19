@@ -4,6 +4,7 @@ import GalleryYearManager, { getArtworkYear } from '../utils/GalleryYearManager.
 import GalleryYearRail from '../utils/GalleryYearRail.mjs';
 import YearJumpController from '../utils/YearJumpController.mjs';
 import { getArtworkLayout } from '../utils/artworkLayout.mjs';
+import { loadGalleryData } from '../utils/contentData.mjs';
 import '../styles/gallery-year-rail.css';
 
 export default class GallerySection {
@@ -151,10 +152,7 @@ export default class GallerySection {
 
     async fetchData() {
         try {
-            const response = await fetch('/gallery.json');
-            if (!response.ok) throw new Error('Failed to load metadata');
-
-            const data = await response.json();
+            const data = await loadGalleryData();
             // Sort by date (newest first)
             this.galleryData = [...data].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
             this.yearStats = this.galleryData.reduce((statsByYear, item) => {

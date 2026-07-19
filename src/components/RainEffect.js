@@ -6,6 +6,13 @@ export class RainEffect {
         this.raindrops = [];
         this.animationId = null;
         this.dpr = window.devicePixelRatio || 1;
+        this.isIntersecting = true;
+        this.isPageVisible = !document.hidden;
+        this.observer = null;
+
+        this.resize = this.resize.bind(this);
+        this.animate = this.animate.bind(this);
+        this.handleVisibility = this.handleVisibility.bind(this);
 
         this.init();
     }
@@ -27,12 +34,13 @@ export class RainEffect {
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d');
 
-        this.resize = this.resize.bind(this);
         window.addEventListener('resize', this.resize);
+        document.addEventListener('visibilitychange', this.handleVisibility);
         this.resize();
 
         this.createRaindrops();
-        this.animate();
+        this.observeVisibility();
+        this.syncAnimation();
     }
 
     resize() {
@@ -43,7 +51,7 @@ export class RainEffect {
 
         this.canvas.width = this.width * this.dpr;
         this.canvas.height = this.height * this.dpr;
-        this.ctx.scale(this.dpr, this.dpr);
+        this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
         this.canvas.style.width = this.width + 'px';
         this.canvas.style.height = this.height + 'px';
 
@@ -51,6 +59,31 @@ export class RainEffect {
         if (this.raindrops) {
             this.raindrops.forEach(d => d.w = this.width);
         }
+    }
+
+    observeVisibility() {
+        if (!('IntersectionObserver' in window)) return;
+
+        this.observer = new IntersectionObserver(([entry]) => {
+            this.isIntersecting = entry.isIntersecting;
+            this.syncAnimation();
+        });
+        this.observer.observe(this.container);
+    }
+
+    handleVisibility() {
+        this.isPageVisible = !document.hidden;
+        this.syncAnimation();
+    }
+
+    syncAnimation() {
+        if (this.isIntersecting && this.isPageVisible) {
+            if (this.animationId === null) this.animationId = requestAnimationFrame(this.animate);
+            return;
+        }
+
+        if (this.animationId !== null) cancelAnimationFrame(this.animationId);
+        this.animationId = null;
     }
 
     createRaindrops() {
@@ -79,18 +112,22 @@ export class RainEffect {
     }
 
     animate() {
-        if (!this.ctx) return;
+        this.animationId = null;
+        if (!this.ctx || !this.isIntersecting || !this.isPageVisible) return;
         this.ctx.clearRect(0, 0, this.width, this.height);
         this.raindrops.forEach(d => {
             d.w = this.width;
             d.update(this.height);
             d.draw(this.ctx);
         });
-        this.animationId = requestAnimationFrame(() => this.animate());
+        this.animationId = requestAnimationFrame(this.animate);
     }
 
     destroy() {
-        if (this.animationId) cancelAnimationFrame(this.animationId);
+        if (this.animationId !== null) cancelAnimationFrame(this.animationId);
+        this.animationId = null;
+        this.observer?.disconnect();
         window.removeEventListener('resize', this.resize);
+        document.removeEventListener('visibilitychange', this.handleVisibility);
     }
 }

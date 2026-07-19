@@ -3,6 +3,7 @@ import { escapeHtml, safeExternalUrl } from '../utils/html.js';
 import { selectRecentActivities } from '../utils/activity.mjs';
 import { createActivityViewModel } from '../utils/activityView.mjs';
 import AutoplayRail from '../utils/AutoplayRail.mjs';
+import { loadGalleryData } from '../utils/contentData.mjs';
 import '../styles/impressions.css';
 
 export default class ImpressionsSection {
@@ -69,9 +70,7 @@ export default class ImpressionsSection {
     async fetchData() {
         const container = this.element.querySelector('#impressions-track');
         try {
-            const response = await fetch('/gallery.json');
-            if (!response.ok) throw new Error('Failed to load recent impressions');
-            const data = await response.json();
+            const data = await loadGalleryData();
             this.items = selectRecentActivities(data, this.MAX_ITEMS).map(createActivityViewModel);
             this.renderItems();
         } catch (error) {
