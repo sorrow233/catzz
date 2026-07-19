@@ -28,16 +28,19 @@ jobs:
           cache: npm
 
       - name: 安装依赖并同步作品
+        env:
+          BILIBILI_COOKIE: ${{ secrets.BILIBILI_COOKIE }}
         run: |
           npm ci
           npm ci --prefix backend
           npm run update:gallery
+          npm run update:videos
           npm run build
 
       - name: 检查公开资源变化
         id: changes
         run: |
-          if git diff --quiet -- public/gallery.json public/artworks public/sitemap.xml; then
+          if git diff --quiet -- public/gallery.json public/artworks public/videos.json public/videos public/sitemap.xml; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -48,10 +51,10 @@ jobs:
         run: |
           git config user.name "catzz-gallery-bot"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/gallery.json public/artworks public/sitemap.xml
-          git commit -m "chore(画廊): 自动同步 catzz 最新 Pixiv 作品" \
-            -m "自动任务：检查画师 catzz 的最新公开活动。" \
-            -m "修复内容：补充新增作品元数据和压缩图片，并同步站点地图，避免静态画廊长期停留在旧数据。"
+          git add public/gallery.json public/artworks public/videos.json public/videos public/sitemap.xml
+          git commit -m "chore(内容): 自动同步 catzz 插画与哔哩哔哩视频" \
+            -m "自动任务：检查画师 catzz 的最新 Pixiv 作品和 B 站空间投稿。" \
+            -m "修复内容：补充新增作品、视频元数据和压缩图片，并同步站点地图，避免静态内容长期停留在旧数据。"
           git push origin HEAD:main
 
       - name: 部署到 Cloudflare Pages

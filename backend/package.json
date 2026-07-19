@@ -1,10 +1,11 @@
 {
   "name": "catzz-gallery-updater",
-  "version": "1.2.0-beta.2",
+  "version": "1.2.0-beta.5",
   "private": true,
   "description": "仅供本地和定时任务运行的 Pixiv 画廊更新器",
   "scripts": {
     "update": "node update-gallery.js",
+    "update:videos": "node update-videos.js",
     "test": "node --test test/*.test.js"
   },
   "engines": {

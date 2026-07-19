@@ -1,7 +1,6 @@
 import { i18n } from '../utils/i18n.js';
 import { escapeHtml, safeExternalUrl } from '../utils/html.js';
-import { selectVideoActivities } from '../utils/activity.mjs';
-import { createActivityViewModel } from '../utils/activityView.mjs';
+import { createVideoViewModel } from '../utils/videoView.mjs';
 import HorizontalRail from '../utils/HorizontalRail.mjs';
 
 export default class VideoSection {
@@ -22,7 +21,7 @@ export default class VideoSection {
                 <div class="flex items-end justify-between gap-6 mb-12 md:mb-16">
                     <div>
                         <p data-videos-eyebrow class="text-[10px] md:text-xs font-mono tracking-[0.32em] text-white/38 uppercase mb-4">${i18n.t('videos.eyebrow')}</p>
-                        <h2 data-videos-title class="font-art text-5xl md:text-7xl lg:text-8xl font-normal leading-none tracking-[0.025em]">${i18n.t('videos.title')}</h2>
+                        <h2 data-videos-title class="font-art text-4xl md:text-5xl lg:text-6xl font-normal leading-none tracking-[0.025em]">${i18n.t('videos.title')}</h2>
                     </div>
                     <div class="flex items-center gap-3 md:gap-5">
                         <span id="videos-counter" class="hidden sm:block font-mono text-xs tracking-[0.2em] text-white/40">00 / 00</span>
@@ -74,10 +73,10 @@ export default class VideoSection {
     async fetchData() {
         const container = this.element.querySelector('#videos-rail');
         try {
-            const response = await fetch('/gallery.json');
+            const response = await fetch('/videos.json');
             if (!response.ok) throw new Error('Failed to load video works');
             const data = await response.json();
-            this.items = selectVideoActivities(data).map(createActivityViewModel);
+            this.items = data.map(createVideoViewModel);
             this.renderItems();
         } catch (error) {
             console.error(error);
@@ -99,7 +98,8 @@ export default class VideoSection {
                 <div class="relative aspect-video overflow-hidden bg-white/5 mb-6">
                     <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title)}" loading="lazy" decoding="async" class="w-full h-full object-cover opacity-80 transition-all duration-[1200ms] group-hover:opacity-100 group-hover:scale-[1.025]">
                     <div class="absolute inset-0 bg-black/12"></div>
-                    <span class="absolute top-5 left-5 px-3 py-1.5 border border-white/25 bg-black/20 backdrop-blur-sm text-[9px] font-mono tracking-[0.24em] text-white/75">${item.platform}</span>
+                    <span class="absolute top-5 left-5 px-3 py-1.5 border border-white/25 bg-black/20 backdrop-blur-sm text-[9px] font-mono tracking-[0.24em] text-white/75">BILIBILI</span>
+                    <span class="absolute bottom-5 right-5 px-2.5 py-1 bg-black/55 text-[10px] font-mono tracking-[0.12em] text-white/80">${escapeHtml(item.duration)}</span>
                     <span class="absolute inset-0 m-auto w-14 h-14 md:w-16 md:h-16 rounded-full border border-white/55 bg-black/10 backdrop-blur-sm flex items-center justify-center transition-all group-hover:bg-white group-hover:text-[#111619]">
                         <svg class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                     </span>
@@ -111,7 +111,7 @@ export default class VideoSection {
                             <h3 class="font-art text-2xl md:text-3xl leading-tight">${escapeHtml(item.title)}</h3>
                             <span class="shrink-0 font-mono text-[10px] tracking-[0.15em] text-white/35 pt-2">${item.date}</span>
                         </div>
-                        <p class="text-sm text-white/45 leading-relaxed line-clamp-2">${escapeHtml(item.description)}</p>
+                        ${item.description ? `<p class="text-sm text-white/45 leading-relaxed line-clamp-2">${escapeHtml(item.description)}</p>` : ''}
                     </div>
                 </div>
             </a>
