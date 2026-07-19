@@ -22,3 +22,16 @@ test('年份跳转位置扣除粘性页头与留白并限制为非负值', async
     assert.equal(calculateYearScrollTop({ scrollY: 0, sectionTop: 80, headerHeight: 120 }), 0);
     assert.equal(calculateYearScrollTop({ scrollY: 0, sectionTop: Number.NaN, headerHeight: 120 }), 0);
 });
+
+test('插画集粘性标题跟随越过标题线的当前年份', async () => {
+    const { getActiveGalleryYear } = await import('../../src/utils/GalleryScrollContext.mjs');
+    const sections = [
+        { year: 2026, top: -420 },
+        { year: 2025, top: 132 },
+        { year: 2024, top: 920 }
+    ];
+
+    assert.equal(getActiveGalleryYear(sections, 120), 2026);
+    assert.equal(getActiveGalleryYear(sections, 140), 2025);
+    assert.equal(getActiveGalleryYear([{ year: 2026, top: 240 }], 120), null);
+});

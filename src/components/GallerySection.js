@@ -3,9 +3,11 @@ import { escapeHtml, safeExternalUrl } from '../utils/html.js';
 import GalleryYearManager, { getArtworkYear } from '../utils/GalleryYearManager.mjs';
 import GalleryYearRail from '../utils/GalleryYearRail.mjs';
 import YearJumpController from '../utils/YearJumpController.mjs';
+import GalleryScrollContext from '../utils/GalleryScrollContext.mjs';
 import { getArtworkLayout } from '../utils/artworkLayout.mjs';
 import { loadGalleryData } from '../utils/contentData.mjs';
 import '../styles/gallery-year-rail.css';
+import '../styles/gallery-context.css';
 
 export default class GallerySection {
     constructor() {
@@ -16,7 +18,9 @@ export default class GallerySection {
         this.yearManager = null;
         this.yearRail = null;
         this.yearJump = null;
+        this.scrollContext = null;
         this.yearStats = new Map();
+        this.activeYear = null;
 
         window.addEventListener('languageChanged', () => {
             this.updateLabels();
@@ -41,13 +45,8 @@ export default class GallerySection {
 
     updateLabels() {
         if (!this.element) return;
-        const title = this.element.querySelector('#gallery-title');
-        const subtitle = this.element.querySelector('#gallery-subtitle');
-
-        if (title) title.textContent = i18n.t('gallery.title');
-        if (subtitle) subtitle.textContent = i18n.t('gallery.subtitle');
         this.yearManager?.updateLabels(stats => this.formatStats(stats));
-        this.updateTotalStats();
+        this.updateHeaderContext(this.activeYear, false);
         // Update lightbox link if open
         const lightboxLink = document.getElementById('lightbox-link');
         if (lightboxLink) lightboxLink.textContent = i18n.t('gallery.viewOriginal');
@@ -62,7 +61,7 @@ export default class GallerySection {
 
             <div class="max-w-[1600px] mx-auto relative z-10">
                 <!-- Header -->
-                <div class="mb-12 sticky top-0 bg-[#f8f9fa]/90 backdrop-blur-md z-30 py-4 -mx-4 px-4 md:mx-0 md:px-0 transition-all duration-300" id="gallery-header">
+                <div class="gallery-context-header mb-12 sticky top-0 bg-[#f8f9fa]/90 backdrop-blur-md z-30 py-4 -mx-4 px-4 md:mx-0 md:px-0 transition-all duration-300" id="gallery-header">
                     <h2 id="gallery-title" class="font-art text-5xl md:text-7xl font-normal text-primary mb-3 tracking-[0.04em]">${i18n.t('gallery.title')}</h2>
                     <p class="text-[10px] md:text-xs font-mono text-gray-400 tracking-[0.25em] uppercase flex flex-wrap gap-x-5 gap-y-1">
                         <span id="gallery-subtitle">${i18n.t('gallery.subtitle')}</span>
@@ -145,6 +144,12 @@ export default class GallerySection {
             layoutRoot: this.element.querySelector('#gallery-years'),
             stickyHeader: this.element.querySelector('#gallery-header')
         });
+        this.scrollContext = new GalleryScrollContext({
+            yearsContainer: this.element.querySelector('#gallery-years'),
+            stickyHeader: this.element.querySelector('#gallery-header'),
+            onChange: year => this.updateHeaderContext(year)
+        });
+        this.scrollContext.connect();
         this.fetchData();
         this.bindEvents();
         this.setupIntersectionObserver();
@@ -226,6 +231,7 @@ export default class GallerySection {
             this.yearManager.append(year, stats, itemHtml.join(''));
             this.yearRail.registerSection(year, this.yearManager.getSection(year));
         }
+        this.scrollContext?.refresh();
 
         this.visibleCount += nextBatch.length;
 
@@ -293,11 +299,40 @@ export default class GallerySection {
 
     updateTotalStats() {
         const total = this.element?.querySelector('#gallery-total');
-        if (!total || this.galleryData.length === 0) return;
+        if (!total || this.galleryData.length === 0 || this.activeYear !== null) return;
         total.textContent = this.formatStats({
             images: this.galleryData.length,
             postIds: new Set(this.galleryData.map(item => item.id))
         });
+    }
+
+    updateHeaderContext(year, animate = true) {
+        if (!this.element) return;
+        const normalizedYear = Number.isInteger(Number(year)) && this.yearStats.has(Number(year))
+            ? Number(year)
+            : null;
+        const header = this.element.querySelector('#gallery-header');
+        const title = this.element.querySelector('#gallery-title');
+        const subtitle = this.element.querySelector('#gallery-subtitle');
+        const total = this.element.querySelector('#gallery-total');
+        this.activeYear = normalizedYear;
+
+        if (normalizedYear === null) {
+            title.textContent = i18n.t('gallery.title');
+            subtitle.textContent = i18n.t('gallery.subtitle');
+            total.classList.remove('hidden');
+            this.updateTotalStats();
+        } else {
+            title.textContent = String(normalizedYear);
+            subtitle.textContent = this.formatStats(this.yearStats.get(normalizedYear));
+            total.textContent = '';
+            total.classList.add('hidden');
+        }
+
+        if (!animate || !header) return;
+        header.classList.remove('is-changing');
+        void header.offsetWidth;
+        header.classList.add('is-changing');
     }
 
     bindEvents() {

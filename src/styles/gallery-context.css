@@ -1,0 +1,25 @@
+.gallery-context-header.is-changing #gallery-title,
+.gallery-context-header.is-changing #gallery-subtitle,
+.gallery-context-header.is-changing #gallery-total {
+    animation: gallery-context-breathe 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes gallery-context-breathe {
+    0% {
+        opacity: 0.32;
+        transform: translate3d(0, 5px, 0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gallery-context-header.is-changing #gallery-title,
+    .gallery-context-header.is-changing #gallery-subtitle,
+    .gallery-context-header.is-changing #gallery-total {
+        animation: none;
+    }
+}
