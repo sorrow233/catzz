@@ -7,23 +7,34 @@ export function findClosestItemIndex(itemCenters, viewportCenter) {
     }, 0);
 }
 
+export function clampRailRatio(value) {
+    return Math.min(Math.max(Number(value) || 0, 0), 1);
+}
+
+export function getScrollLeftFromScrubber(value, maximum, maximumScroll) {
+    if (maximum <= 0 || maximumScroll <= 0) return 0;
+    return clampRailRatio(value / maximum) * maximumScroll;
+}
+
+export function getScrubberValue(scrollLeft, maximumScroll, maximum) {
+    if (maximumScroll <= 0 || maximum <= 0) return 0;
+    return Math.round(clampRailRatio(scrollLeft / maximumScroll) * maximum);
+}
+
 export default class HorizontalRail {
-    constructor({ container, previousButton, nextButton, counter, progress, itemSelector = '.rail-item' }) {
+    constructor({ container, counter, scrubber, itemSelector = '.rail-item' }) {
         this.container = container;
-        this.previousButton = previousButton;
-        this.nextButton = nextButton;
         this.counter = counter;
-        this.progress = progress;
+        this.scrubber = scrubber;
         this.itemSelector = itemSelector;
         this.currentIndex = 0;
         this.frameId = null;
     }
 
     connect() {
-        this.previousButton?.addEventListener('click', () => this.move(-1));
-        this.nextButton?.addEventListener('click', () => this.move(1));
         this.container.addEventListener('scroll', () => this.scheduleUpdate(), { passive: true });
         window.addEventListener('resize', () => this.scheduleUpdate(), { passive: true });
+        this.scrubber?.addEventListener('input', event => this.scrubTo(event.currentTarget.value));
         this.refresh();
     }
 
@@ -32,11 +43,13 @@ export default class HorizontalRail {
         this.update();
     }
 
-    move(direction) {
-        if (!this.items?.length) return;
-        const nextIndex = Math.min(Math.max(this.currentIndex + direction, 0), this.items.length - 1);
-        const target = this.items[nextIndex];
-        this.container.scrollTo({ left: target.offsetLeft - this.container.offsetLeft, behavior: 'smooth' });
+    scrubTo(value) {
+        const maximum = Number(this.scrubber?.max) || 1000;
+        const maximumScroll = Math.max(this.container.scrollWidth - this.container.clientWidth, 0);
+        const scrollLeft = getScrollLeftFromScrubber(Number(value), maximum, maximumScroll);
+        this.container.scrollTo({ left: scrollLeft, behavior: 'auto' });
+        this.updateScrubber(Number(value), maximum);
+        this.scheduleUpdate();
     }
 
     scheduleUpdate() {
@@ -50,18 +63,32 @@ export default class HorizontalRail {
     update() {
         if (!this.items?.length) {
             if (this.counter) this.counter.textContent = '00 / 00';
+            if (this.scrubber) this.scrubber.disabled = true;
             return;
         }
 
+        if (this.scrubber) this.scrubber.disabled = false;
         const viewportCenter = this.container.scrollLeft + this.container.clientWidth / 2;
-        const itemCenters = this.items.map(item => item.offsetLeft + item.offsetWidth / 2);
+        const firstOffset = this.items[0].offsetLeft;
+        const itemCenters = this.items.map(item => item.offsetLeft - firstOffset + item.offsetWidth / 2);
         this.currentIndex = findClosestItemIndex(itemCenters, viewportCenter);
         const current = String(this.currentIndex + 1).padStart(2, '0');
         const total = String(this.items.length).padStart(2, '0');
 
         if (this.counter) this.counter.textContent = `${current} / ${total}`;
-        if (this.progress) this.progress.style.transform = `scaleX(${(this.currentIndex + 1) / this.items.length})`;
-        if (this.previousButton) this.previousButton.disabled = this.currentIndex === 0;
-        if (this.nextButton) this.nextButton.disabled = this.currentIndex === this.items.length - 1;
+        if (this.scrubber) {
+            const maximum = Number(this.scrubber.max) || 1000;
+            const maximumScroll = Math.max(this.container.scrollWidth - this.container.clientWidth, 0);
+            const value = getScrubberValue(this.container.scrollLeft, maximumScroll, maximum);
+            this.updateScrubber(value, maximum);
+            this.scrubber.setAttribute('aria-valuetext', `${current} / ${total}`);
+        }
+    }
+
+    updateScrubber(value, maximum) {
+        if (!this.scrubber) return;
+        const position = clampRailRatio(value / maximum) * 100;
+        this.scrubber.value = String(value);
+        this.scrubber.style.setProperty('--position', `${position}%`);
     }
 }

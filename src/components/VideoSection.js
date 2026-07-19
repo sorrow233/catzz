@@ -2,6 +2,7 @@ import { i18n } from '../utils/i18n.js';
 import { escapeHtml, safeExternalUrl } from '../utils/html.js';
 import { createVideoViewModel } from '../utils/videoView.mjs';
 import HorizontalRail from '../utils/HorizontalRail.mjs';
+import '../styles/video-rail.css';
 
 export default class VideoSection {
     constructor() {
@@ -23,25 +24,15 @@ export default class VideoSection {
                         <p data-videos-eyebrow class="text-[10px] font-mono tracking-[0.3em] text-[#172126]/42 uppercase mb-3">${i18n.t('videos.eyebrow')}</p>
                         <h2 data-videos-title class="font-art text-4xl md:text-5xl font-normal leading-none tracking-[0.025em]">${i18n.t('videos.title')}</h2>
                     </div>
-                    <div class="flex items-center gap-3 md:gap-5">
-                        <span id="videos-counter" class="hidden sm:block font-mono text-[10px] tracking-[0.2em] text-[#172126]/38">00 / 00</span>
-                        <button id="videos-previous" aria-label="${i18n.t('videos.previous')}" class="p-3 rounded-full border border-[#172126]/16 hover:bg-[#172126] hover:text-white transition-colors disabled:opacity-20 disabled:cursor-not-allowed">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
-                        </button>
-                        <button id="videos-next" aria-label="${i18n.t('videos.next')}" class="p-3 rounded-full border border-[#172126]/16 hover:bg-[#172126] hover:text-white transition-colors disabled:opacity-20 disabled:cursor-not-allowed">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
-                        </button>
-                    </div>
+                    <span id="videos-counter" class="font-mono text-[10px] tracking-[0.2em] text-[#172126]/38">00 / 00</span>
                 </div>
 
-                <div id="videos-rail" class="flex gap-5 md:gap-8 overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+                <div id="videos-rail" class="flex gap-5 md:gap-8 overflow-x-auto scrollbar-hide">
                     <div class="loading-text w-full py-28 text-center text-[#172126]/30 font-mono text-xs tracking-wider">${i18n.t('videos.loading')}</div>
                 </div>
 
                 <div class="flex items-center gap-5 mt-10">
-                    <div class="h-px bg-[#172126]/12 flex-1 overflow-hidden">
-                        <div id="videos-progress" class="h-full bg-[#172126]/70 origin-left scale-x-0 transition-transform duration-500"></div>
-                    </div>
+                    <input id="videos-scrubber" class="videos-scrubber min-w-0 flex-1" type="range" min="0" max="1000" value="0" step="1" aria-label="${i18n.t('videos.progress')}">
                     <span data-videos-drag class="font-mono text-[9px] tracking-[0.28em] text-[#172126]/32 uppercase">${i18n.t('videos.drag')}</span>
                 </div>
             </div>
@@ -52,10 +43,8 @@ export default class VideoSection {
     mount() {
         this.rail = new HorizontalRail({
             container: this.element.querySelector('#videos-rail'),
-            previousButton: this.element.querySelector('#videos-previous'),
-            nextButton: this.element.querySelector('#videos-next'),
             counter: this.element.querySelector('#videos-counter'),
-            progress: this.element.querySelector('#videos-progress')
+            scrubber: this.element.querySelector('#videos-scrubber')
         });
         this.rail.connect();
         this.fetchData();
@@ -66,8 +55,7 @@ export default class VideoSection {
         this.element.querySelector('[data-videos-title]').textContent = i18n.t('videos.title');
         this.element.querySelector('[data-videos-eyebrow]').textContent = i18n.t('videos.eyebrow');
         this.element.querySelector('[data-videos-drag]').textContent = i18n.t('videos.drag');
-        this.element.querySelector('#videos-previous').setAttribute('aria-label', i18n.t('videos.previous'));
-        this.element.querySelector('#videos-next').setAttribute('aria-label', i18n.t('videos.next'));
+        this.element.querySelector('#videos-scrubber').setAttribute('aria-label', i18n.t('videos.progress'));
     }
 
     async fetchData() {
