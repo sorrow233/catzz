@@ -1,5 +1,6 @@
 import { i18n } from '../utils/i18n.js';
 import { escapeHtml, safeExternalUrl } from '../utils/html.js';
+import GalleryYearManager, { getArtworkYear } from '../utils/GalleryYearManager.mjs';
 
 export default class GallerySection {
     constructor() {
@@ -7,6 +8,8 @@ export default class GallerySection {
         this.visibleCount = 0;
         this.BATCH_SIZE = 15;
         this.observer = null;
+        this.yearManager = null;
+        this.yearCounts = new Map();
 
         window.addEventListener('languageChanged', () => {
             this.updateLabels();
@@ -36,6 +39,7 @@ export default class GallerySection {
 
         if (title) title.textContent = i18n.t('gallery.title');
         if (subtitle) subtitle.textContent = i18n.t('gallery.subtitle');
+        this.yearManager?.updateLabels(count => `${count} ${i18n.t('gallery.yearWorks')}`);
         // Update lightbox link if open
         const lightboxLink = document.getElementById('lightbox-link');
         if (lightboxLink) lightboxLink.textContent = i18n.t('gallery.viewOriginal');
@@ -53,9 +57,9 @@ export default class GallerySection {
                     <p class="text-xs font-mono text-gray-400 tracking-[0.3em] uppercase">${i18n.t('gallery.subtitle')}</p>
                 </div>
 
-                <!-- Masonry Grid -->
-                <div id="gallery-grid" class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6 min-h-[50vh]">
-                    <!-- Items injected here -->
+                <!-- Year-grouped Masonry Grids -->
+                <div id="gallery-years" class="min-h-[50vh]">
+                    <!-- Year sections injected here -->
                 </div>
 
                 <!-- Loading Sentinel -->
@@ -82,7 +86,7 @@ export default class GallerySection {
                             <h3 id="lightbox-title" class="text-xl font-serif text-primary mb-1"></h3>
                             <p id="lightbox-tags" class="text-xs font-mono text-gray-500 uppercase tracking-wider"></p>
                         </div>
-                        <a id="lightbox-link" href="#" target="_blank" class="px-6 py-2 bg-primary text-white text-xs font-bold tracking-widest uppercase hover:bg-secondary transition-colors duration-300 rounded-full">
+                        <a id="lightbox-link" href="#" target="_blank" rel="noopener noreferrer" class="px-6 py-2 bg-primary text-white text-xs font-bold tracking-widest uppercase hover:bg-secondary transition-colors duration-300 rounded-full">
                             ${i18n.t('gallery.viewOriginal')}
                         </a>
                     </div>
@@ -97,6 +101,14 @@ export default class GallerySection {
             <style>
                 .scrollbar-hide::-webkit-scrollbar { display: none; }
                 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+                .gallery-masonry {
+                    display: grid;
+                    grid-auto-rows: 8px;
+                    column-gap: 1.5rem;
+                    row-gap: 1.5rem;
+                    align-items: start;
+                }
+                .gallery-year-section + .gallery-year-section { margin-top: 5rem; }
             </style>
         `;
 
@@ -104,6 +116,10 @@ export default class GallerySection {
     }
 
     mount() {
+        this.yearManager = new GalleryYearManager(
+            this.element.querySelector('#gallery-years'),
+            count => `${count} ${i18n.t('gallery.yearWorks')}`
+        );
         this.fetchData();
         this.bindEvents();
         this.setupIntersectionObserver();
@@ -116,13 +132,18 @@ export default class GallerySection {
 
             const data = await response.json();
             // Sort by date (newest first)
-            this.galleryData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            this.galleryData = [...data].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            this.yearCounts = this.galleryData.reduce((counts, item) => {
+                const year = getArtworkYear(item.created_at);
+                if (year !== null) counts.set(year, (counts.get(year) || 0) + 1);
+                return counts;
+            }, new Map());
 
             this.renderMoreItems();
         } catch (error) {
             console.error('Error loading gallery data:', error);
-            const grid = this.element.querySelector('#gallery-grid');
-            if (grid) grid.innerHTML = `<p class="text-center text-gray-400 font-serif w-full col-span-full py-20">${i18n.t('gallery.failed')}</p>`;
+            const years = this.element.querySelector('#gallery-years');
+            if (years) years.innerHTML = `<p class="text-center text-gray-400 font-serif w-full py-20">${i18n.t('gallery.failed')}</p>`;
         }
     }
 
@@ -146,7 +167,6 @@ export default class GallerySection {
     }
 
     renderMoreItems() {
-        const grid = this.element.querySelector('#gallery-grid');
         const sentinel = this.element.querySelector('#gallery-sentinel');
 
         if (this.visibleCount >= this.galleryData.length) {
@@ -164,26 +184,35 @@ export default class GallerySection {
         // Small delay to simulate loading or just ensure smoothness
         // Actually direct render is better for perf, animation handles visual smoothness
 
-        const html = nextBatch.map((item, index) => {
+        const itemsByYear = new Map();
+        nextBatch.forEach((item, index) => {
             const globalIndex = this.visibleCount + index;
-            // Use remote url
-            const originalUrl = String(item.url || '');
-            // Optimize: Use 600px width for grid items (enough for 1 column mobile and multi-column desktop)
-            // Convert to WebP for better compression
-            const imagePath = this.getOptimizedUrl(originalUrl, 600);
+            const year = getArtworkYear(item.created_at);
+            if (year === null) return;
+            if (!itemsByYear.has(year)) itemsByYear.set(year, []);
+            itemsByYear.get(year).push(this.renderGalleryItem(item, globalIndex, index));
+        });
 
-            // Critical for LCP: First 4 items should be eager loaded
-            const isLCPRequest = globalIndex < 4;
-            const loadingAttribute = isLCPRequest ? 'eager' : 'lazy';
+        for (const [year, itemHtml] of itemsByYear) {
+            this.yearManager.append(year, this.yearCounts.get(year) || itemHtml.length, itemHtml.join(''));
+        }
 
-            // For eager loaded images, we shouldn't hide them initially with opacity-0 if we want them to paint ASAP,
-            // but the animation requires it. 
-            // Compromise: Keep animation logic but ensure network request starts immediately.
+        this.visibleCount += nextBatch.length;
 
-            return `
-                <div class="gallery-item break-inside-avoid mb-6 opacity-0 transition-opacity duration-500 ease-out" 
+        if (this.visibleCount >= this.galleryData.length) {
+            sentinel.classList.add('opacity-0');
+        }
+    }
+
+    renderGalleryItem(item, globalIndex, batchIndex) {
+        const originalUrl = String(item.url || '');
+        const imagePath = this.getOptimizedUrl(originalUrl, 600);
+        const loadingAttribute = globalIndex < 4 ? 'eager' : 'lazy';
+
+        return `
+                <div class="gallery-item opacity-0 transition-opacity duration-500 ease-out"
                      data-index="${globalIndex}" 
-                     style="transition-delay: ${index * 30}ms">
+                     style="transition-delay: ${batchIndex * 30}ms">
                      
                     <div class="relative rounded-2xl overflow-hidden group cursor-zoom-in bg-gray-100 shadow-sm hover:shadow-xl transition-shadow duration-500">
                         <img 
@@ -191,11 +220,10 @@ export default class GallerySection {
                             data-original="${escapeHtml(originalUrl)}"
                             alt="${escapeHtml(item.title)}"
                             loading="${loadingAttribute}"
+                            decoding="async"
                             width="600"
                             height="400" 
                             class="w-full h-auto block transform transition-transform duration-700 group-hover:scale-105 min-h-[200px] bg-gray-200"
-                            onload="this.parentElement.parentElement.classList.remove('opacity-0')"
-                            onerror="this.parentElement.parentElement.style.display='none'"
                         >
                         
                         <!-- Hover Overlay -->
@@ -208,14 +236,6 @@ export default class GallerySection {
                     </div>
                 </div>
             `;
-        }).join('');
-
-        grid.insertAdjacentHTML('beforeend', html);
-        this.visibleCount += nextBatch.length;
-
-        if (this.visibleCount >= this.galleryData.length) {
-            sentinel.classList.add('opacity-0');
-        }
     }
 
     bindEvents() {
@@ -226,16 +246,14 @@ export default class GallerySection {
         const lightboxTags = this.element.querySelector('#lightbox-tags');
         const lightboxInfo = this.element.querySelector('#lightbox-info');
         const lightboxImgContainer = this.element.querySelector('#lightbox-img-container');
-        const grid = this.element.querySelector('#gallery-grid');
+        const grid = this.element.querySelector('#gallery-years');
         const closeBtn = this.element.querySelector('#lightbox-close');
 
         // Open Lightbox
         grid.addEventListener('click', (e) => {
             const item = e.target.closest('.gallery-item');
             if (item) {
-                // Get all current items, find index of clicked item
-                const allItems = Array.from(grid.querySelectorAll('.gallery-item'));
-                const clickedIndex = allItems.indexOf(item);
+                const clickedIndex = Number(item.dataset.index);
                 const itemData = this.galleryData[clickedIndex];
 
                 if (!itemData) return;

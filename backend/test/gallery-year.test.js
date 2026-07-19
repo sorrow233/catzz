@@ -1,0 +1,10 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+
+test('作品年份固定使用 UTC，避免时区导致跨年错组', async () => {
+    const { getArtworkYear } = await import('../../src/utils/GalleryYearManager.mjs');
+
+    assert.equal(getArtworkYear('2025-12-31T16:30:00-08:00'), 2026);
+    assert.equal(getArtworkYear('2026-01-01T00:00:00Z'), 2026);
+    assert.equal(getArtworkYear('无效日期'), null);
+});

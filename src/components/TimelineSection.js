@@ -1,9 +1,11 @@
 import { i18n } from '../utils/i18n.js';
 import { escapeHtml, safeExternalUrl } from '../utils/html.js';
+import { extractVideoUrl, selectRecentActivities } from '../utils/activity.mjs';
 
 export default class TimelineSection {
     constructor() {
         this.timelineData = [];
+        this.MAX_ITEMS = 12;
         window.addEventListener('languageChanged', () => {
             this.updateLabels();
             this.renderItems();
@@ -88,26 +90,18 @@ export default class TimelineSection {
             if (!response.ok) throw new Error('Failed to load data');
             const data = await response.json();
 
-            // Filter items that have video links in description
-            this.timelineData = data.filter(item => {
-                return (item.description && (
-                    item.description.includes('bilibili.com') ||
-                    item.description.includes('youtu.be') ||
-                    item.description.includes('youtube.com')
-                ));
-            }).map(item => {
-                // Extract Link
-                let url = '';
-                const billiMatch = item.description.match(/https?:\/\/(www\.)?bilibili\.com\/video\/[a-zA-Z0-9]+/);
-                const ytMatch = item.description.match(/https?:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[a-zA-Z0-9_-]+/);
-
-                if (billiMatch) url = billiMatch[0];
-                else if (ytMatch) url = ytMatch[0];
-
+            this.timelineData = selectRecentActivities(data, this.MAX_ITEMS).map(item => {
+                const videoUrl = extractVideoUrl(item.description);
                 // Decode HTML entities in description for clean text
                 const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = item.description;
-                const cleanDesc = tempDiv.textContent || tempDiv.innerText || '';
+                tempDiv.innerHTML = item.description || '';
+                const cleanDesc = (tempDiv.textContent || tempDiv.innerText || '')
+                    .replace(/https?:\/\/\S+/g, '')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+                const usefulDescription = /^~*$/.test(cleanDesc)
+                    ? (item.tags || []).slice(0, 4).join(' · ')
+                    : cleanDesc;
 
                 const dateObj = new Date(item.created_at);
                 const year = dateObj.getFullYear();
@@ -119,10 +113,11 @@ export default class TimelineSection {
                     title: item.title,
                     date: `${year}.${month}.${day}`,
                     thumbnail: item.url,
-                    url: url,
-                    desc: cleanDesc.slice(0, 100) + (cleanDesc.length > 100 ? '...' : '')
+                    url: videoUrl || item.pixiv_url,
+                    isVideo: Boolean(videoUrl),
+                    desc: usefulDescription.slice(0, 100) + (usefulDescription.length > 100 ? '...' : '')
                 };
-            }).sort((a, b) => new Date(b.date.replace(/\./g, '-')) - new Date(a.date.replace(/\./g, '-'))); // Newest first
+            });
 
             this.renderItems();
         } catch (e) {
@@ -152,7 +147,7 @@ export default class TimelineSection {
                     <!-- Play Icon Overlay -->
                     <div class="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div class="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg">
-                            <svg class="w-5 h-5 text-primary ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24"><path d="${item.isVideo ? 'M8 5v14l11-7z' : 'M4 5h16v14H4z M6 16l4-5 3 3 2-2 3 4z'}"/></svg>
                         </div>
                     </div>
                 </div>
@@ -170,7 +165,7 @@ export default class TimelineSection {
                     </p>
                     
                     <div class="pt-4 border-t border-gray-50 flex items-center text-xs font-medium text-gray-400 group-hover:text-secondary transition-colors duration-300 uppercase tracking-widest mt-auto">
-                        <span>Watch Video</span>
+                        <span>${i18n.t(item.isVideo ? 'timeline.watchVideo' : 'timeline.viewArtwork')}</span>
                         <svg class="w-3 h-3 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                     </div>
                 </div>
