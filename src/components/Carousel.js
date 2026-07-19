@@ -160,8 +160,12 @@ export class Carousel {
     updateCaptions() {
         const captions = i18n.t('carousel.slides');
         const captionElements = this.element.querySelectorAll('.slide-caption');
+        const imageElements = this.element.querySelectorAll('.carousel-slide img');
         captionElements.forEach((el, index) => {
             el.textContent = captions[index];
+        });
+        imageElements.forEach((el, index) => {
+            el.alt = captions[index] || `Catzz illustration ${index + 1}`;
         });
     }
 

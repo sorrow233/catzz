@@ -50,7 +50,8 @@
 }
 
 .year-rail-button:hover .year-rail-label,
-.year-rail-button:focus-visible .year-rail-label {
+.year-rail-button:focus-visible .year-rail-label,
+.year-rail-button[aria-current="true"] .year-rail-label {
     opacity: 1;
     transform: translateX(0);
 }
@@ -60,5 +61,11 @@
     .year-rail-line,
     .year-rail-label {
         transition: none;
+    }
+}
+
+@media (hover: none), (pointer: coarse) {
+    .year-rail {
+        display: none !important;
     }
 }

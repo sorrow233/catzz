@@ -9,15 +9,15 @@ class I18n {
     }
 
     detectLanguage() {
-        // 1. Check localStorage
+        // 1. Honor the language URL used by hreflang and the sitemap.
+        const requested = new URLSearchParams(window.location.search).get('lang');
+        if (requested && this.languages.includes(requested)) return requested;
+
+        // 2. Check localStorage
         const saved = localStorage.getItem('preferred_language');
         if (saved && this.languages.includes(saved)) return saved;
 
-        // 2. Check browser language
-        const browserLang = navigator.language.split('-')[0];
-        if (this.languages.includes(browserLang)) return browserLang;
-
-        // 3. Fallback
+        // 3. Keep the canonical root deterministic for crawlers and first visits.
         return this.defaultLanguage;
     }
 
@@ -25,6 +25,7 @@ class I18n {
         if (this.languages.includes(lang)) {
             this.currentLanguage = lang;
             localStorage.setItem('preferred_language', lang);
+            this.updateLanguageUrl(lang);
             this.updateDOM();
             // Emit custom event for components to listen
             window.dispatchEvent(new CustomEvent('languageChanged', { detail: lang }));
@@ -59,8 +60,30 @@ class I18n {
         return result;
     }
 
+    interpolateMeta(value) {
+        const root = document.documentElement;
+        return String(value)
+            .replaceAll('{galleryCount}', root.dataset.galleryCount || '0')
+            .replaceAll('{videoCount}', root.dataset.videoCount || '0');
+    }
+
+    getLanguageUrl(lang) {
+        const url = new URL('https://catzz.work/');
+        if (lang !== this.defaultLanguage) url.searchParams.set('lang', lang);
+        return url.toString();
+    }
+
+    updateLanguageUrl(lang) {
+        const url = new URL(window.location.href);
+        if (lang === this.defaultLanguage) url.searchParams.delete('lang');
+        else url.searchParams.set('lang', lang);
+        window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+    }
+
     updateDOM() {
-        document.documentElement.lang = this.currentLanguage;
+        this.updateLanguageUrl(this.currentLanguage);
+        const languageTagMap = { zh: 'zh-CN', en: 'en', ja: 'ja', ko: 'ko' };
+        document.documentElement.lang = languageTagMap[this.currentLanguage] || 'zh-CN';
 
         // Helper to set meta content safely
         const setMeta = (selector, content) => {
@@ -70,8 +93,9 @@ class I18n {
             }
         };
 
-        const title = this.t('meta.title');
-        const desc = this.t('meta.description');
+        const title = this.interpolateMeta(this.t('meta.title'));
+        const desc = this.interpolateMeta(this.t('meta.description'));
+        const languageUrl = this.getLanguageUrl(this.currentLanguage);
 
         // Update Title
         document.title = title;
@@ -82,6 +106,10 @@ class I18n {
         setMeta('meta[property="og:description"]', desc);
         setMeta('meta[name="twitter:title"]', title);
         setMeta('meta[name="twitter:description"]', desc);
+        setMeta('meta[property="og:url"]', languageUrl);
+        setMeta('meta[name="twitter:url"]', languageUrl);
+        const canonical = document.querySelector('link[rel="canonical"]');
+        if (canonical) canonical.setAttribute('href', languageUrl);
 
         // Update Locale
         const localeMap = {

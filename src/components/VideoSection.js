@@ -17,6 +17,8 @@ export default class VideoSection {
 
     render() {
         this.element = document.createElement('section');
+        this.element.id = 'moving-image';
+        this.element.setAttribute('aria-labelledby', 'moving-image-title');
         this.element.className = 'w-full py-24 md:py-36 lg:py-40 bg-[#e9edef] text-[#172126] overflow-hidden';
         this.element.innerHTML = `
             <div class="max-w-[1600px] mx-auto px-5 md:px-10">
@@ -24,7 +26,7 @@ export default class VideoSection {
                     <div class="flex items-center gap-4 md:gap-5">
                         <p data-videos-eyebrow class="text-[10px] font-mono tracking-[0.3em] text-[#172126]/55 uppercase">${i18n.t('videos.eyebrow')}</p>
                         <span class="w-8 md:w-12 h-px bg-[#172126]/20"></span>
-                        <h2 data-videos-title class="text-[9px] md:text-[10px] font-mono font-normal tracking-[0.3em] text-[#172126]/30 uppercase">${i18n.t('videos.title')}</h2>
+                        <h2 id="moving-image-title" data-videos-title class="text-[9px] md:text-[10px] font-mono font-normal tracking-[0.3em] text-[#172126]/30 uppercase">${i18n.t('videos.title')}</h2>
                     </div>
                     <span id="videos-counter" class="font-mono text-[10px] tracking-[0.2em] text-[#172126]/38">00 / 00</span>
                 </div>
@@ -36,13 +38,6 @@ export default class VideoSection {
                 <div class="flex items-center gap-5 mt-14 md:mt-20">
                     <div id="videos-progress" class="videos-progress min-w-0 flex-1">
                         <span id="videos-date-label" class="videos-date-label" aria-hidden="true">--.--</span>
-                        <span class="videos-progress-cat" aria-hidden="true">
-                            <svg viewBox="0 0 32 20" focusable="false">
-                                <path class="videos-progress-cat-body" d="M5.4 16.7c-2-1.7-2.5-4.8-.8-7 1.3-1.8 3.5-2.5 5.5-1.7l2-4.8 3.3 3.4c3.9-.4 7 1.9 7 5.2 0 3-2.3 4.9-6.1 4.9H8.6"/>
-                                <path d="M22 13.4c4.3.5 7.1-1.8 6.2-4.3-.5-1.5-2.6-1.8-3.4-.3"/>
-                                <path d="M12.2 10.4h.1M17.3 10.4h.1"/>
-                            </svg>
-                        </span>
                         <input id="videos-scrubber" class="videos-scrubber" type="range" min="0" max="1000" value="0" step="1" aria-label="${i18n.t('videos.progress')}">
                     </div>
                     <span id="videos-edge-date" class="w-10 text-right font-mono text-[9px] tracking-[0.18em] text-[#172126]/32">--.--</span>

@@ -9,7 +9,7 @@ import { loadDisplayFontWhenIdle } from './utils/displayFont.mjs';
 
 class App {
     constructor() {
-        this.mainContent = document.getElementById('app'); // Changed from 'main-content' to 'app' to match original HTML context
+        this.mainContent = document.getElementById('main-content');
         this.sections = [];
         this.init();
     }

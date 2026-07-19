@@ -54,6 +54,8 @@ export default class GallerySection {
 
     render() {
         this.element = document.createElement('section');
+        this.element.id = 'works';
+        this.element.setAttribute('aria-labelledby', 'gallery-title');
         this.element.className = 'w-full min-h-screen bg-[#f8f9fa] py-24 px-4 sm:px-8 xl:pl-28 xl:pr-8 relative';
 
         this.element.innerHTML = `
@@ -136,7 +138,7 @@ export default class GallerySection {
         );
         this.yearRail = new GalleryYearRail({
             container: this.element.querySelector('#gallery-year-rail'),
-            galleryElement: this.element,
+            galleryElement: this.element.querySelector('#gallery-years'),
             onSelect: year => this.jumpToYear(year)
         });
         this.yearRail.connect();

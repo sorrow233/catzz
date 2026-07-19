@@ -1,15 +1,15 @@
 {
   "name": "catzz",
-  "version": "1.2.0-beta.14",
+  "version": "1.2.0-beta.15",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/generate_sitemap.js && vite build",
+    "build": "node scripts/generate_sitemap.js && vite build && node scripts/validate-seo.js",
     "update:gallery": "npm --prefix backend run update",
     "update:videos": "npm --prefix backend run update:videos",
     "backfill:dimensions": "npm --prefix backend run backfill:dimensions",
-    "lint": "node --check backend/update-gallery.js && node --check backend/update-videos.js && node --check backend/backfill-gallery-dimensions.js && node --check backend/lib/artwork-sync.js && node --check backend/lib/bilibili-client.js && node --check backend/lib/gallery-dimensions.js && node --check backend/lib/gallery-store.js && node --check backend/lib/http-client.js && node --check backend/lib/image-store.js && node --check backend/lib/pixiv-client.js && node --check backend/lib/video-store.js && node --check scripts/generate_sitemap.js && node --check src/utils/MasonryGrid.mjs && node --check src/utils/activity.mjs && node --check src/utils/activityView.mjs && node --check src/utils/videoView.mjs && node --check src/utils/contentData.mjs && node --check src/utils/artworkLayout.mjs && node --check src/utils/GalleryYearManager.mjs && node --check src/utils/GalleryYearRail.mjs && node --check src/utils/GalleryScrollContext.mjs && node --check src/utils/YearJumpController.mjs && node --check src/utils/AutoplayRail.mjs && node --check src/utils/ImpressionsProgress.mjs && node --check src/utils/HorizontalRail.mjs && node --check src/utils/displayFont.mjs",
+    "lint": "node --check backend/update-gallery.js && node --check backend/update-videos.js && node --check backend/backfill-gallery-dimensions.js && node --check backend/lib/artwork-sync.js && node --check backend/lib/bilibili-client.js && node --check backend/lib/gallery-dimensions.js && node --check backend/lib/gallery-store.js && node --check backend/lib/http-client.js && node --check backend/lib/image-store.js && node --check backend/lib/pixiv-client.js && node --check backend/lib/video-store.js && node --check scripts/generate_sitemap.js && node --check scripts/validate-seo.js && node --check scripts/seo-metadata.mjs && node --check src/utils/MasonryGrid.mjs && node --check src/utils/activity.mjs && node --check src/utils/activityView.mjs && node --check src/utils/videoView.mjs && node --check src/utils/contentData.mjs && node --check src/utils/artworkLayout.mjs && node --check src/utils/GalleryYearManager.mjs && node --check src/utils/GalleryYearRail.mjs && node --check src/utils/GalleryScrollContext.mjs && node --check src/utils/YearJumpController.mjs && node --check src/utils/AutoplayRail.mjs && node --check src/utils/ImpressionsProgress.mjs && node --check src/utils/HorizontalRail.mjs && node --check src/utils/displayFont.mjs",
     "test": "node --test backend/test/*.test.js",
     "verify": "npm run lint && npm test && npm run build",
     "preview": "vite preview"

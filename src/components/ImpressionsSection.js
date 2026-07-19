@@ -19,13 +19,15 @@ export default class ImpressionsSection {
 
     render() {
         this.element = document.createElement('section');
+        this.element.id = 'recent-impressions';
+        this.element.setAttribute('aria-labelledby', 'recent-impressions-title');
         this.element.className = 'w-full py-20 md:py-28 bg-[#f2f0eb] text-[#172126] overflow-hidden';
         this.element.innerHTML = `
             <div class="max-w-[1600px] mx-auto px-5 md:px-10">
                 <div class="flex items-center gap-4 md:gap-5 mb-8 md:mb-10">
                     <p data-impressions-eyebrow class="text-[10px] font-mono tracking-[0.3em] text-[#172126]/55 uppercase">${i18n.t('impressions.eyebrow')}</p>
                     <span class="w-8 md:w-12 h-px bg-[#172126]/20"></span>
-                    <h2 data-impressions-title class="text-[9px] md:text-[10px] font-mono font-normal tracking-[0.3em] text-[#172126]/30 uppercase">${i18n.t('impressions.title')}</h2>
+                    <h2 id="recent-impressions-title" data-impressions-title class="text-[9px] md:text-[10px] font-mono font-normal tracking-[0.3em] text-[#172126]/30 uppercase">${i18n.t('impressions.title')}</h2>
                 </div>
 
                 <div id="impressions-viewport" aria-roledescription="carousel" class="overflow-hidden touch-pan-y">

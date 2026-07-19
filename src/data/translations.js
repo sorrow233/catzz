@@ -1,8 +1,8 @@
 export const translations = {
     zh: {
         meta: {
-            title: "Catzz - 雨夜、忧郁、少女",
-            description: "Catzz - 雨夜、忧郁、少女"
+            title: "Catzz 插画作品集｜雨夜少女、城市光影与哔哩哔哩创作",
+            description: "收录 Catzz {galleryCount} 张插画与 {videoCount} 个哔哩哔哩投稿，按年份浏览雨景、少女、城市夜色与百日绘主题作品，并查看近期创作动态。"
         },
         hero: {
             prefixes: ["清凉雨夜", "脆弱雨伞", "街边电话", "路旁雨滩"],
@@ -46,8 +46,8 @@ export const translations = {
     },
     en: {
         meta: {
-            title: "Catzz - Rain & Solitude",
-            description: "Catzz - Rainy Night, Melancholy, Maiden"
+            title: "Catzz Illustration Portfolio | Rain, Girls and City Lights",
+            description: "Explore {galleryCount} Catzz illustrations and {videoCount} Bilibili posts, organized by year with recent works, rainy streets, city lights and the 100-day drawing series."
         },
         hero: {
             prefixes: ["Cool Rainy Night", "Fragile Umbrella", "Street Phone", "Roadside Puddle"],
@@ -91,8 +91,8 @@ export const translations = {
     },
     ja: {
         meta: {
-            title: "Catzz - 雨の夜、憂鬱、少女",
-            description: "Catzz - 雨の夜、憂鬱、少女"
+            title: "Catzz イラスト作品集｜雨、少女、都市の光",
+            description: "Catzz のイラスト {galleryCount} 点と Bilibili 投稿 {videoCount} 本を年代別に収録。雨の街、少女、夜景、100日チャレンジと最新作品を閲覧できます。"
         },
         hero: {
             prefixes: ["涼しい雨の夜", "脆い傘", "街角の電話", "道端の水たまり"],
@@ -136,8 +136,8 @@ export const translations = {
     },
     ko: {
         meta: {
-            title: "Catzz - 비 오는 밤, 우울, 소녀",
-            description: "Catzz - 비 오는 밤, 우울, 소녀"
+            title: "Catzz 일러스트 작품집 | 비, 소녀와 도시의 빛",
+            description: "Catzz 일러스트 {galleryCount}점과 Bilibili 게시물 {videoCount}개를 연도별로 감상하세요. 비 내리는 거리, 소녀, 도시 야경과 최신 작품을 담았습니다."
         },
         hero: {
             prefixes: ["시원한 비 오는 밤", "깨지기 쉬운 우산", "거리의 전화기", "길가의 물웅덩이"],
