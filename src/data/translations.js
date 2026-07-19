@@ -8,17 +8,26 @@ export const translations = {
             prefixes: ["清凉雨夜", "脆弱雨伞", "街边电话", "路旁雨滩"],
             suffixes: ["温暖过谁的心", "保护了谁前行", "少女心伤忧郁", "天空触手可及"]
         },
-        timeline: {
-            title: "TIMELINE",
-            loading: "正在加载历史...",
-            failed: "加载时间轴失败。",
-            empty: "暂时没有活动记录。",
-            watchVideo: "观看视频",
-            viewArtwork: "查看作品",
+        impressions: {
+            title: "RECENT IMPRESSIONS",
             eyebrow: "近期印象",
+            loading: "正在加载近期作品...",
+            failed: "加载近期印象失败。",
+            empty: "暂时没有近期作品。",
+            viewArtwork: "查看作品",
             drag: "横向浏览",
-            previous: "上一项活动",
-            next: "下一项活动"
+            previous: "上一幅作品",
+            next: "下一幅作品"
+        },
+        videos: {
+            title: "MOVING IMAGE",
+            eyebrow: "哔哩哔哩投稿",
+            loading: "正在加载视频作品...",
+            failed: "加载视频作品失败。",
+            empty: "暂时没有视频作品。",
+            drag: "横向浏览",
+            previous: "上一个视频",
+            next: "下一个视频"
         },
         gallery: {
             title: "WORKS",
@@ -27,8 +36,7 @@ export const translations = {
             allLoaded: "已加载全部作品",
             failed: "加载作品失败。",
             viewOriginal: "查看原图",
-            images: "张插画",
-            posts: "个投稿"
+            images: "张插画"
         },
         carousel: {
             slides: [
@@ -50,17 +58,26 @@ export const translations = {
             prefixes: ["Cool Rainy Night", "Fragile Umbrella", "Street Phone", "Roadside Puddle"],
             suffixes: ["Whose heart was warmed", "Who was protected ahead", "Melancholy maiden's heart", "The sky is within reach"]
         },
-        timeline: {
-            title: "TIMELINE",
-            loading: "Loading history...",
-            failed: "Failed to load timeline.",
-            empty: "No recent activities found.",
-            watchVideo: "Watch Video",
+        impressions: {
+            title: "RECENT IMPRESSIONS",
+            eyebrow: "Selected moments",
+            loading: "Loading recent works...",
+            failed: "Failed to load recent impressions.",
+            empty: "No recent works found.",
             viewArtwork: "View Artwork",
-            eyebrow: "Recent Impressions",
             drag: "Drag to explore",
-            previous: "Previous activity",
-            next: "Next activity"
+            previous: "Previous artwork",
+            next: "Next artwork"
+        },
+        videos: {
+            title: "MOVING IMAGE",
+            eyebrow: "Bilibili releases",
+            loading: "Loading video works...",
+            failed: "Failed to load video works.",
+            empty: "No video works found.",
+            drag: "Drag to explore",
+            previous: "Previous video",
+            next: "Next video"
         },
         gallery: {
             title: "WORKS",
@@ -69,8 +86,7 @@ export const translations = {
             allLoaded: "End of Collection",
             failed: "Failed to load artworks.",
             viewOriginal: "View Original",
-            images: "images",
-            posts: "posts"
+            images: "images"
         },
         carousel: {
             slides: [
@@ -92,17 +108,26 @@ export const translations = {
             prefixes: ["涼しい雨の夜", "脆い傘", "街角の電話", "道端の水たまり"],
             suffixes: ["誰の心を温めたか", "誰の歩みを守ったか", "少女の傷つく憂鬱", "手が届きそうな空"]
         },
-        timeline: {
-            title: "タイムライン",
-            loading: "履歴を読み込み中...",
-            failed: "タイムラインの読み込みに失敗しました。",
-            empty: "最近の活動はありません。",
-            watchVideo: "動画を見る",
-            viewArtwork: "作品を見る",
+        impressions: {
+            title: "RECENT IMPRESSIONS",
             eyebrow: "最近の印象",
+            loading: "最近の作品を読み込み中...",
+            failed: "最近の作品を読み込めませんでした。",
+            empty: "最近の作品はありません。",
+            viewArtwork: "作品を見る",
             drag: "横にスライド",
-            previous: "前の活動",
-            next: "次の活動"
+            previous: "前の作品",
+            next: "次の作品"
+        },
+        videos: {
+            title: "MOVING IMAGE",
+            eyebrow: "Bilibili 投稿",
+            loading: "映像作品を読み込み中...",
+            failed: "映像作品を読み込めませんでした。",
+            empty: "映像作品はありません。",
+            drag: "横にスライド",
+            previous: "前の動画",
+            next: "次の動画"
         },
         gallery: {
             title: "作品集",
@@ -111,8 +136,7 @@ export const translations = {
             allLoaded: "これ以上はありません",
             failed: "作品の読み込みに失敗しました。",
             viewOriginal: "オリジナルを見る",
-            images: "枚",
-            posts: "投稿"
+            images: "枚"
         },
         carousel: {
             slides: [
@@ -134,17 +158,26 @@ export const translations = {
             prefixes: ["시원한 비 오는 밤", "깨지기 쉬운 우산", "거리의 전화기", "길가의 물웅덩이"],
             suffixes: ["누구의 마음을 따뜻하게 했나", "누구의 발걸음을 지켜줬나", "소녀의 상처받은 우울함", "손이 닿을 듯한 하늘"]
         },
-        timeline: {
-            title: "타임라인",
-            loading: "기록을 불러오는 중...",
-            failed: "타임라인을 불러오지 못했습니다.",
-            empty: "최근 활동이 없습니다.",
-            watchVideo: "동영상 보기",
-            viewArtwork: "작품 보기",
+        impressions: {
+            title: "RECENT IMPRESSIONS",
             eyebrow: "최근의 인상",
+            loading: "최근 작품을 불러오는 중...",
+            failed: "최근 작품을 불러오지 못했습니다.",
+            empty: "최근 작품이 없습니다.",
+            viewArtwork: "작품 보기",
             drag: "가로로 탐색",
-            previous: "이전 활동",
-            next: "다음 활동"
+            previous: "이전 작품",
+            next: "다음 작품"
+        },
+        videos: {
+            title: "MOVING IMAGE",
+            eyebrow: "Bilibili 게시물",
+            loading: "영상 작품을 불러오는 중...",
+            failed: "영상 작품을 불러오지 못했습니다.",
+            empty: "영상 작품이 없습니다.",
+            drag: "가로로 탐색",
+            previous: "이전 영상",
+            next: "다음 영상"
         },
         gallery: {
             title: "작품집",
@@ -153,8 +186,7 @@ export const translations = {
             allLoaded: "모든 작품을 불러왔습니다",
             failed: "작품을 불러오지 못했습니다.",
             viewOriginal: "원본 보기",
-            images: "장",
-            posts: "개 게시물"
+            images: "장"
         },
         carousel: {
             slides: [

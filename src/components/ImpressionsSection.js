@@ -1,0 +1,121 @@
+import { i18n } from '../utils/i18n.js';
+import { escapeHtml, safeExternalUrl } from '../utils/html.js';
+import { selectRecentActivities } from '../utils/activity.mjs';
+import { createActivityViewModel } from '../utils/activityView.mjs';
+import HorizontalRail from '../utils/HorizontalRail.mjs';
+
+export default class ImpressionsSection {
+    constructor() {
+        this.items = [];
+        this.rail = null;
+        this.MAX_ITEMS = 12;
+        window.addEventListener('languageChanged', () => {
+            this.updateLabels();
+            this.renderItems();
+        });
+    }
+
+    render() {
+        this.element = document.createElement('section');
+        this.element.className = 'w-full py-24 md:py-32 bg-[#f2f0eb] text-[#172126] overflow-hidden';
+        this.element.innerHTML = `
+            <div class="max-w-[1600px] mx-auto px-5 md:px-10">
+                <div class="flex items-end justify-between gap-6 mb-12 md:mb-16">
+                    <div>
+                        <p data-impressions-eyebrow class="text-[10px] md:text-xs font-mono tracking-[0.32em] text-[#172126]/40 uppercase mb-4">${i18n.t('impressions.eyebrow')}</p>
+                        <h2 data-impressions-title class="font-art text-5xl md:text-7xl lg:text-8xl font-normal leading-none tracking-[0.025em]">${i18n.t('impressions.title')}</h2>
+                    </div>
+                    <div class="flex items-center gap-3 md:gap-5">
+                        <span id="impressions-counter" class="hidden sm:block font-mono text-xs tracking-[0.2em] text-[#172126]/40">00 / 00</span>
+                        <button id="impressions-previous" aria-label="${i18n.t('impressions.previous')}" class="p-3 md:p-4 rounded-full border border-[#172126]/20 hover:bg-[#172126] hover:text-white transition-colors disabled:opacity-20 disabled:cursor-not-allowed">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
+                        </button>
+                        <button id="impressions-next" aria-label="${i18n.t('impressions.next')}" class="p-3 md:p-4 rounded-full border border-[#172126]/20 hover:bg-[#172126] hover:text-white transition-colors disabled:opacity-20 disabled:cursor-not-allowed">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="impressions-rail" class="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-5 md:-mx-10 px-5 md:px-10">
+                    <div class="loading-text w-full py-32 text-center text-[#172126]/30 font-mono text-xs tracking-wider">${i18n.t('impressions.loading')}</div>
+                </div>
+
+                <div class="flex items-center gap-5 mt-8">
+                    <div class="h-px bg-[#172126]/15 flex-1 overflow-hidden">
+                        <div id="impressions-progress" class="h-full bg-[#172126] origin-left scale-x-0 transition-transform duration-500"></div>
+                    </div>
+                    <span data-impressions-drag class="font-mono text-[10px] tracking-[0.28em] text-[#172126]/35 uppercase">${i18n.t('impressions.drag')}</span>
+                </div>
+            </div>
+        `;
+        return this.element;
+    }
+
+    mount() {
+        this.rail = new HorizontalRail({
+            container: this.element.querySelector('#impressions-rail'),
+            previousButton: this.element.querySelector('#impressions-previous'),
+            nextButton: this.element.querySelector('#impressions-next'),
+            counter: this.element.querySelector('#impressions-counter'),
+            progress: this.element.querySelector('#impressions-progress')
+        });
+        this.rail.connect();
+        this.fetchData();
+    }
+
+    updateLabels() {
+        if (!this.element) return;
+        this.element.querySelector('[data-impressions-title]').textContent = i18n.t('impressions.title');
+        this.element.querySelector('[data-impressions-eyebrow]').textContent = i18n.t('impressions.eyebrow');
+        this.element.querySelector('[data-impressions-drag]').textContent = i18n.t('impressions.drag');
+        this.element.querySelector('#impressions-previous').setAttribute('aria-label', i18n.t('impressions.previous'));
+        this.element.querySelector('#impressions-next').setAttribute('aria-label', i18n.t('impressions.next'));
+    }
+
+    async fetchData() {
+        const container = this.element.querySelector('#impressions-rail');
+        try {
+            const response = await fetch('/gallery.json');
+            if (!response.ok) throw new Error('Failed to load recent impressions');
+            const data = await response.json();
+            this.items = selectRecentActivities(data, this.MAX_ITEMS).map(createActivityViewModel);
+            this.renderItems();
+        } catch (error) {
+            console.error(error);
+            container.innerHTML = `<div class="w-full py-32 text-center text-[#172126]/35">${i18n.t('impressions.failed')}</div>`;
+        }
+    }
+
+    renderItems() {
+        const container = this.element?.querySelector('#impressions-rail');
+        if (!container) return;
+        if (this.items.length === 0) {
+            container.innerHTML = `<div class="w-full py-32 text-center text-[#172126]/35">${i18n.t('impressions.empty')}</div>`;
+            this.rail?.refresh();
+            return;
+        }
+
+        container.innerHTML = this.items.map((item, index) => `
+            <a class="rail-item snap-center shrink-0 w-[calc(100vw-2.5rem)] max-w-[1400px] mr-8 md:mr-14 border-y border-[#172126]/12 py-5 md:py-7 grid md:grid-cols-[minmax(0,1.65fr)_minmax(280px,0.65fr)] gap-7 md:gap-12 group" href="${escapeHtml(safeExternalUrl(item.artworkUrl))}" target="_blank" rel="noopener noreferrer">
+                <div class="relative aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-[#d9d7d1]">
+                    <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title)}" loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.025]">
+                </div>
+                <div class="flex flex-col justify-between py-1 md:py-4 min-h-[220px] md:min-h-0">
+                    <div class="flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-[#172126]/42 uppercase">
+                        <span>${String(index + 1).padStart(2, '0')}</span>
+                        <span>${item.date}</span>
+                    </div>
+                    <div>
+                        <h3 class="font-art text-4xl md:text-5xl lg:text-6xl leading-[0.98] mb-5">${escapeHtml(item.title)}</h3>
+                        <p class="text-sm text-[#172126]/55 leading-relaxed line-clamp-3 max-w-md mb-7">${escapeHtml(item.description)}</p>
+                        <span class="inline-flex items-center gap-3 text-[10px] font-mono tracking-[0.24em] uppercase text-[#172126]/60 group-hover:text-[#172126]">
+                            ${i18n.t('impressions.viewArtwork')}
+                            <span class="w-9 h-px bg-current transition-all group-hover:w-14"></span>
+                        </span>
+                    </div>
+                </div>
+            </a>
+        `).join('');
+        this.rail?.refresh();
+    }
+}

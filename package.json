@@ -1,13 +1,13 @@
 {
   "name": "catzz",
-  "version": "1.2.0-beta.2",
+  "version": "1.2.0-beta.3",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
     "build": "node scripts/generate_sitemap.js && vite build",
     "update:gallery": "npm --prefix backend run update",
-    "lint": "node --check backend/update-gallery.js && node --check backend/lib/artwork-sync.js && node --check backend/lib/gallery-store.js && node --check backend/lib/http-client.js && node --check backend/lib/image-store.js && node --check backend/lib/pixiv-client.js && node --check scripts/generate_sitemap.js && node --check src/utils/MasonryGrid.mjs && node --check src/utils/activity.mjs && node --check src/utils/GalleryYearManager.mjs && node --check src/utils/HorizontalRail.mjs && node --check src/utils/displayFont.mjs",
+    "lint": "node --check backend/update-gallery.js && node --check backend/lib/artwork-sync.js && node --check backend/lib/gallery-store.js && node --check backend/lib/http-client.js && node --check backend/lib/image-store.js && node --check backend/lib/pixiv-client.js && node --check scripts/generate_sitemap.js && node --check src/utils/MasonryGrid.mjs && node --check src/utils/activity.mjs && node --check src/utils/activityView.mjs && node --check src/utils/GalleryYearManager.mjs && node --check src/utils/HorizontalRail.mjs && node --check src/utils/displayFont.mjs",
     "test": "node --test backend/test/*.test.js",
     "verify": "npm run lint && npm test && npm run build",
     "preview": "vite preview"

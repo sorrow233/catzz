@@ -8,12 +8,13 @@ export function findClosestItemIndex(itemCenters, viewportCenter) {
 }
 
 export default class HorizontalRail {
-    constructor({ container, previousButton, nextButton, counter, progress }) {
+    constructor({ container, previousButton, nextButton, counter, progress, itemSelector = '.rail-item' }) {
         this.container = container;
         this.previousButton = previousButton;
         this.nextButton = nextButton;
         this.counter = counter;
         this.progress = progress;
+        this.itemSelector = itemSelector;
         this.currentIndex = 0;
         this.frameId = null;
     }
@@ -27,7 +28,7 @@ export default class HorizontalRail {
     }
 
     refresh() {
-        this.items = Array.from(this.container.querySelectorAll('.timeline-item'));
+        this.items = Array.from(this.container.querySelectorAll(this.itemSelector));
         this.update();
     }
 

@@ -103,8 +103,6 @@ export default class GallerySection {
             </div>
 
             <style>
-                .scrollbar-hide::-webkit-scrollbar { display: none; }
-                .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
                 .gallery-masonry {
                     display: grid;
                     grid-auto-rows: 8px;
@@ -254,8 +252,7 @@ export default class GallerySection {
     }
 
     formatStats(stats) {
-        const postCount = stats?.postIds instanceof Set ? stats.postIds.size : Number(stats?.posts) || 0;
-        return `${stats?.images || 0} ${i18n.t('gallery.images')} · ${postCount} ${i18n.t('gallery.posts')}`;
+        return `${stats?.images || 0} ${i18n.t('gallery.images')}`;
     }
 
     updateTotalStats() {

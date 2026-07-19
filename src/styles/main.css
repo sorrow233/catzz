@@ -20,3 +20,12 @@
 .display-font-ready .font-art {
     font-family: "Catzz Italiana", Georgia, "Times New Roman", serif;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

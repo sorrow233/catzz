@@ -1,6 +1,7 @@
 import './styles/main.css';
 import HeroSection from './components/HeroSection.js';
-import TimelineSection from './components/TimelineSection.js';
+import ImpressionsSection from './components/ImpressionsSection.js';
+import VideoSection from './components/VideoSection.js';
 import GallerySection from './components/GallerySection.js';
 import FooterSection from './components/FooterSection.js';
 import { i18n } from './utils/i18n.js';
@@ -20,7 +21,8 @@ class App {
         // Instantiate components
         this.sections = [
             new HeroSection(),
-            new TimelineSection(),
+            new ImpressionsSection(),
+            new VideoSection(),
             new GallerySection(),
             new FooterSection()
         ];
