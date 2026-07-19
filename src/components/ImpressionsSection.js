@@ -34,7 +34,11 @@ export default class ImpressionsSection {
                 </div>
 
                 <div class="flex items-center gap-4 md:gap-6 mt-5">
-                    <input id="impressions-scrubber" class="impressions-scrubber flex-1" type="range" min="0" max="0" value="0" step="1" aria-label="${i18n.t('impressions.progress')}">
+                    <div id="impressions-progress" class="impressions-progress min-w-0 flex-1">
+                        <span class="impressions-progress-fill" aria-hidden="true"></span>
+                        <span class="impressions-progress-dot" aria-hidden="true"></span>
+                        <input id="impressions-scrubber" class="impressions-scrubber" type="range" min="0" max="0" value="0" step="1" aria-label="${i18n.t('impressions.progress')}">
+                    </div>
                     <span id="impressions-position" class="w-14 text-right font-mono text-[9px] tracking-[0.18em] text-[#172126]/36">00 / 00</span>
                 </div>
             </div>
@@ -46,8 +50,10 @@ export default class ImpressionsSection {
         this.rail = new AutoplayRail({
             track: this.element.querySelector('#impressions-track'),
             scrubber: this.element.querySelector('#impressions-scrubber'),
+            progress: this.element.querySelector('#impressions-progress'),
             positionLabel: this.element.querySelector('#impressions-position'),
-            intervalMs: 6_500
+            intervalMs: 7_200,
+            transitionMs: 1_400
         });
         this.rail.connect();
         this.fetchData();
@@ -84,18 +90,15 @@ export default class ImpressionsSection {
         }
 
         container.innerHTML = this.items.map(item => `
-            <a class="rail-item snap-start shrink-0 w-full grid md:grid-cols-[minmax(0,1.9fr)_minmax(250px,0.65fr)] gap-7 md:gap-12 lg:gap-16 group" href="${escapeHtml(safeExternalUrl(item.artworkUrl))}" target="_blank" rel="noopener noreferrer">
-                <div class="relative aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-[#d9d7d1]">
-                    <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title)}" loading="lazy" decoding="async" draggable="false" class="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.025]">
+            <a class="rail-item impressions-slide shrink-0 w-full grid md:grid-cols-[minmax(0,1.9fr)_minmax(250px,0.65fr)] gap-7 md:gap-12 lg:gap-16 group" href="${escapeHtml(safeExternalUrl(item.artworkUrl))}" target="_blank" rel="noopener noreferrer">
+                <div class="impressions-media relative aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-[#d9d7d1]">
+                    <img src="${escapeHtml(item.thumbnail)}" alt="${escapeHtml(item.title)}" loading="lazy" decoding="async" draggable="false" class="impressions-image w-full h-full object-cover">
                 </div>
-                <div class="flex flex-col justify-center py-2 md:py-8 min-h-[190px] md:min-h-0">
+                <div class="impressions-copy flex flex-col justify-center py-2 md:py-8 min-h-[190px] md:min-h-0">
                     <span class="font-mono text-[10px] tracking-[0.22em] text-[#172126]/38 uppercase mb-6">${item.date}</span>
                     <div>
                         <h3 class="font-art text-3xl md:text-4xl lg:text-5xl leading-[1.02] mb-8">${escapeHtml(item.title)}</h3>
-                        <span class="inline-flex items-center gap-3 text-[10px] font-mono tracking-[0.24em] uppercase text-[#172126]/60 group-hover:text-[#172126]">
-                            ${i18n.t('impressions.viewArtwork')}
-                            <span class="w-9 h-px bg-current transition-all group-hover:w-14"></span>
-                        </span>
+                        <span aria-hidden="true" class="block w-9 h-px bg-[#172126]/45 transition-all duration-700 ease-out group-hover:w-14 group-hover:bg-[#172126]/75"></span>
                     </div>
                 </div>
             </a>

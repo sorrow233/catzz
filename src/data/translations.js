@@ -14,7 +14,6 @@ export const translations = {
             loading: "正在加载近期作品...",
             failed: "加载近期印象失败。",
             empty: "暂时没有近期作品。",
-            viewArtwork: "查看作品",
             progress: "拖动选择近期印象"
         },
         videos: {
@@ -61,7 +60,6 @@ export const translations = {
             loading: "Loading recent works...",
             failed: "Failed to load recent impressions.",
             empty: "No recent works found.",
-            viewArtwork: "View Artwork",
             progress: "Scrub through recent impressions"
         },
         videos: {
@@ -108,7 +106,6 @@ export const translations = {
             loading: "最近の作品を読み込み中...",
             failed: "最近の作品を読み込めませんでした。",
             empty: "最近の作品はありません。",
-            viewArtwork: "作品を見る",
             progress: "最近の作品を選択"
         },
         videos: {
@@ -155,7 +152,6 @@ export const translations = {
             loading: "최근 작품을 불러오는 중...",
             failed: "최근 작품을 불러오지 못했습니다.",
             empty: "최근 작품이 없습니다.",
-            viewArtwork: "작품 보기",
             progress: "최근 작품 선택"
         },
         videos: {

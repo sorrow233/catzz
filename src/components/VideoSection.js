@@ -19,10 +19,11 @@ export default class VideoSection {
         this.element.className = 'w-full py-20 md:py-28 bg-[#e9edef] text-[#172126] overflow-hidden';
         this.element.innerHTML = `
             <div class="max-w-[1600px] mx-auto px-5 md:px-10">
-                <div class="flex items-end justify-between gap-6 pb-8 mb-10 md:mb-12 border-b border-[#172126]/10">
-                    <div>
-                        <p data-videos-eyebrow class="text-[10px] font-mono tracking-[0.3em] text-[#172126]/42 uppercase mb-3">${i18n.t('videos.eyebrow')}</p>
-                        <h2 data-videos-title class="font-art text-4xl md:text-5xl font-normal leading-none tracking-[0.025em]">${i18n.t('videos.title')}</h2>
+                <div class="flex items-center justify-between gap-6 pb-8 mb-10 md:mb-12 border-b border-[#172126]/10">
+                    <div class="flex items-center gap-4 md:gap-5">
+                        <p data-videos-eyebrow class="text-[10px] font-mono tracking-[0.3em] text-[#172126]/55 uppercase">${i18n.t('videos.eyebrow')}</p>
+                        <span class="w-8 md:w-12 h-px bg-[#172126]/20"></span>
+                        <h2 data-videos-title class="text-[9px] md:text-[10px] font-mono font-normal tracking-[0.3em] text-[#172126]/30 uppercase">${i18n.t('videos.title')}</h2>
                     </div>
                     <span id="videos-counter" class="font-mono text-[10px] tracking-[0.2em] text-[#172126]/38">00 / 00</span>
                 </div>
