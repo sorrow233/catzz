@@ -1,6 +1,7 @@
 const config = require('./config');
 const { ArtworkSync } = require('./lib/artwork-sync');
 const { GalleryStore, getGalleryId, mergeGallery } = require('./lib/gallery-store');
+const { addMissingImageDimensions } = require('./lib/gallery-dimensions');
 const { mapWithConcurrency } = require('./lib/http-client');
 const { ImageStore } = require('./lib/image-store');
 const { PixivClient } = require('./lib/pixiv-client');
@@ -53,8 +54,14 @@ async function main() {
     }
 
     const mergedItems = mergeGallery(existingItems, completedItems);
-    await galleryStore.write(mergedItems);
-    console.log(`同步完成：${new Set(mergedItems.map(item => item.id)).size} 个投稿，共 ${mergedItems.length} 张图片。`);
+    const dimensionedItems = await addMissingImageDimensions(
+        mergedItems,
+        config.publicDir,
+        config.requestConcurrency,
+        { retries: config.requestRetries, timeoutMs: config.requestTimeoutMs }
+    );
+    await galleryStore.write(dimensionedItems);
+    console.log(`同步完成：${new Set(dimensionedItems.map(item => item.id)).size} 个投稿，共 ${dimensionedItems.length} 张图片。`);
 
     for (const failure of failures) {
         console.warn(`部分作品同步失败，将在下次任务重试：${failure.reason.message}`);

@@ -15,7 +15,12 @@ class ArtworkSync {
         );
         const pages = artwork.page_count > 1
             ? await this.pixiv.getArtworkPages(artworkId)
-            : [{ page_index: 0, original_url: artwork.original_url }];
+            : [{
+                page_index: 0,
+                original_url: artwork.original_url,
+                width: artwork.width,
+                height: artwork.height
+            }];
 
         const synchronizedItems = [];
         for (const page of pages) {
@@ -34,6 +39,8 @@ class ArtworkSync {
                 gallery_id: galleryId,
                 page_index: page.page_index,
                 page_count: pages.length,
+                width: page.width || artwork.width || existing?.width,
+                height: page.height || artwork.height || existing?.height,
                 original_url: page.original_url,
                 local_path: existing?.local_path || publicImagePath.replace(/^\//, ''),
                 remote_url: existing?.remote_url || publicImagePath,

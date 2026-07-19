@@ -55,7 +55,9 @@ class PixivClient {
             created_at: artwork.createDate,
             original_url: imageUrl,
             pixiv_url: `https://www.pixiv.net/artworks/${artwork.id}`,
-            page_count: Number(artwork.pageCount) || 1
+            page_count: Number(artwork.pageCount) || 1,
+            width: Number(artwork.width) || null,
+            height: Number(artwork.height) || null
         };
     }
 
@@ -81,7 +83,9 @@ class PixivClient {
 
         return payload.body.map((page, pageIndex) => ({
             page_index: pageIndex,
-            original_url: page.urls?.original || page.urls?.regular
+            original_url: page.urls?.original || page.urls?.regular,
+            width: Number(page.width) || null,
+            height: Number(page.height) || null
         })).filter(page => page.original_url);
     }
 }

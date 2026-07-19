@@ -10,7 +10,7 @@ npm run update:gallery
 BILIBILI_COOKIE='仅包含 Cookie 请求头内容' npm run update:videos
 ```
 
-后端拥有独立的 `package.json` 和依赖目录，Cloudflare 的前端构建不会安装或打包这些依赖。插画更新器读取 Pixiv 用户 `1056186` 的公开插画与 manga 列表，并完整展开多页投稿；视频更新器通过 WBI 签名读取哔哩哔哩空间 `287054703` 的全部投稿。请求和图片下载使用受控并发，每次请求都有超时、指数退避和最多 4 次重试。图片会压缩成 WebP 后写入前端公开资源目录。
+后端拥有独立的 `package.json` 和依赖目录，Cloudflare 的前端构建不会安装或打包这些依赖。插画更新器读取 Pixiv 用户 `1056186` 的公开插画与 manga 列表，并完整展开多页投稿；视频更新器使用登录 Cookie 作为鉴权，通过 WBI 签名读取目标 UP `308124` 的全部投稿。请求和图片下载使用受控并发，每次请求都有超时、指数退避和最多 4 次重试。图片会压缩成 WebP 后写入前端公开资源目录。
 
 `BILIBILI_COOKIE` 只从环境变量读取，禁止写入 `.env` 以外的本地文件或提交到 Git。定时任务需要在 GitHub Actions Secrets 中单独配置同名值；未配置时会安全跳过视频同步，不影响 Pixiv 更新。
 

@@ -4,8 +4,9 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 
 module.exports = Object.freeze({
     rootDir: ROOT_DIR,
+    publicDir: path.join(ROOT_DIR, 'public'),
     pixivUserId: '1056186',
-    bilibiliUserId: '287054703',
+    bilibiliUserId: '308124',
     galleryPath: path.join(ROOT_DIR, 'public/gallery.json'),
     videosPath: path.join(ROOT_DIR, 'public/videos.json'),
     artworkDir: path.join(ROOT_DIR, 'public/artworks'),

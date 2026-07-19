@@ -18,7 +18,9 @@
     "url": "/artworks/146824736.webp",
     "original_url_display": "/artworks/146824736.webp",
     "gallery_id": "146824736_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1920,
+    "height": 1080
   },
   {
     "id": 146254732,
@@ -40,7 +42,9 @@
     "url": "/artworks/146254732.webp",
     "original_url_display": "/artworks/146254732.webp",
     "gallery_id": "146254732_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 1132
   },
   {
     "id": 145893732,
@@ -67,7 +71,9 @@
     "url": "/artworks/145893732.webp",
     "original_url_display": "/artworks/145893732.webp",
     "gallery_id": "145893732_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 1125
   },
   {
     "id": 142116649,
@@ -91,7 +97,9 @@
     "url": "/artworks/142116649.webp",
     "original_url_display": "/artworks/142116649.webp",
     "gallery_id": "142116649_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 2000
   },
   {
     "id": 140457811,
@@ -116,7 +124,9 @@
     "url": "/artworks/140457811.webp",
     "original_url_display": "/artworks/140457811.webp",
     "gallery_id": "140457811_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 1125
   },
   {
     "id": 138045922,
@@ -142,7 +152,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900371563_138045922_%E6%84%9F%E8%A7%89%E6%9C%89%E7%82%B9%E5%86%B7%E5%8F%AF%E4%BB%A5%E5%BC%80%E5%A7%8B%E6%94%BE%E5%AF%92%E5%81%87%E4%BA%86%E5%90%97.jpg",
     "page_count": 1,
     "gallery_id": "138045922_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 1200
   },
   {
     "id": 137779301,
@@ -167,7 +179,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900369016_137779301_Solitude.jpg",
     "page_count": 1,
     "gallery_id": "137779301_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 1200
   },
   {
     "id": 131979178,
@@ -194,7 +208,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900374506_131979178_100%E6%97%A5%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B7%E3%82%99%E3%80%8071%E6%97%A5%E7%9B%AE%EF%BD%9E80%E6%97%A5%E7%9B%AE.jpg",
     "page_count": 11,
     "gallery_id": "131979178_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 675
   },
   {
     "id": 131979178,
@@ -220,7 +236,9 @@
     "local_path": "artworks/131979178_p1.webp",
     "remote_url": "/artworks/131979178_p1.webp",
     "url": "/artworks/131979178_p1.webp",
-    "original_url_display": "/artworks/131979178_p1.webp"
+    "original_url_display": "/artworks/131979178_p1.webp",
+    "width": 1209,
+    "height": 2104
   },
   {
     "id": 131979178,
@@ -246,7 +264,9 @@
     "local_path": "artworks/131979178_p2.webp",
     "remote_url": "/artworks/131979178_p2.webp",
     "url": "/artworks/131979178_p2.webp",
-    "original_url_display": "/artworks/131979178_p2.webp"
+    "original_url_display": "/artworks/131979178_p2.webp",
+    "width": 2000,
+    "height": 2076
   },
   {
     "id": 131979178,
@@ -272,7 +292,9 @@
     "local_path": "artworks/131979178_p3.webp",
     "remote_url": "/artworks/131979178_p3.webp",
     "url": "/artworks/131979178_p3.webp",
-    "original_url_display": "/artworks/131979178_p3.webp"
+    "original_url_display": "/artworks/131979178_p3.webp",
+    "width": 1918,
+    "height": 1864
   },
   {
     "id": 131979178,
@@ -298,7 +320,9 @@
     "local_path": "artworks/131979178_p4.webp",
     "remote_url": "/artworks/131979178_p4.webp",
     "url": "/artworks/131979178_p4.webp",
-    "original_url_display": "/artworks/131979178_p4.webp"
+    "original_url_display": "/artworks/131979178_p4.webp",
+    "width": 2000,
+    "height": 2000
   },
   {
     "id": 131979178,
@@ -324,7 +348,9 @@
     "local_path": "artworks/131979178_p5.webp",
     "remote_url": "/artworks/131979178_p5.webp",
     "url": "/artworks/131979178_p5.webp",
-    "original_url_display": "/artworks/131979178_p5.webp"
+    "original_url_display": "/artworks/131979178_p5.webp",
+    "width": 1718,
+    "height": 1974
   },
   {
     "id": 131979178,
@@ -350,7 +376,9 @@
     "local_path": "artworks/131979178_p6.webp",
     "remote_url": "/artworks/131979178_p6.webp",
     "url": "/artworks/131979178_p6.webp",
-    "original_url_display": "/artworks/131979178_p6.webp"
+    "original_url_display": "/artworks/131979178_p6.webp",
+    "width": 2000,
+    "height": 3422
   },
   {
     "id": 131979178,
@@ -376,7 +404,9 @@
     "local_path": "artworks/131979178_p7.webp",
     "remote_url": "/artworks/131979178_p7.webp",
     "url": "/artworks/131979178_p7.webp",
-    "original_url_display": "/artworks/131979178_p7.webp"
+    "original_url_display": "/artworks/131979178_p7.webp",
+    "width": 1698,
+    "height": 2290
   },
   {
     "id": 131979178,
@@ -402,7 +432,9 @@
     "local_path": "artworks/131979178_p8.webp",
     "remote_url": "/artworks/131979178_p8.webp",
     "url": "/artworks/131979178_p8.webp",
-    "original_url_display": "/artworks/131979178_p8.webp"
+    "original_url_display": "/artworks/131979178_p8.webp",
+    "width": 1700,
+    "height": 2664
   },
   {
     "id": 131979178,
@@ -428,7 +460,9 @@
     "local_path": "artworks/131979178_p9.webp",
     "remote_url": "/artworks/131979178_p9.webp",
     "url": "/artworks/131979178_p9.webp",
-    "original_url_display": "/artworks/131979178_p9.webp"
+    "original_url_display": "/artworks/131979178_p9.webp",
+    "width": 2000,
+    "height": 2823
   },
   {
     "id": 131979178,
@@ -454,7 +488,9 @@
     "local_path": "artworks/131979178_p10.webp",
     "remote_url": "/artworks/131979178_p10.webp",
     "url": "/artworks/131979178_p10.webp",
-    "original_url_display": "/artworks/131979178_p10.webp"
+    "original_url_display": "/artworks/131979178_p10.webp",
+    "width": 1404,
+    "height": 2782
   },
   {
     "id": 131571863,
@@ -482,7 +518,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900369749_131571863_100%E6%97%A5%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B7%E3%82%99%E3%80%8061%E6%97%A5%E7%9B%AE%EF%BD%9E70%E6%97%A5%E7%9B%AE.jpg",
     "page_count": 10,
     "gallery_id": "131571863_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 637
   },
   {
     "id": 131571863,
@@ -509,7 +547,9 @@
     "local_path": "artworks/131571863_p1.webp",
     "remote_url": "/artworks/131571863_p1.webp",
     "url": "/artworks/131571863_p1.webp",
-    "original_url_display": "/artworks/131571863_p1.webp"
+    "original_url_display": "/artworks/131571863_p1.webp",
+    "width": 2000,
+    "height": 1050
   },
   {
     "id": 131571863,
@@ -536,7 +576,9 @@
     "local_path": "artworks/131571863_p2.webp",
     "remote_url": "/artworks/131571863_p2.webp",
     "url": "/artworks/131571863_p2.webp",
-    "original_url_display": "/artworks/131571863_p2.webp"
+    "original_url_display": "/artworks/131571863_p2.webp",
+    "width": 2000,
+    "height": 3111
   },
   {
     "id": 131571863,
@@ -563,7 +605,9 @@
     "local_path": "artworks/131571863_p3.webp",
     "remote_url": "/artworks/131571863_p3.webp",
     "url": "/artworks/131571863_p3.webp",
-    "original_url_display": "/artworks/131571863_p3.webp"
+    "original_url_display": "/artworks/131571863_p3.webp",
+    "width": 1130,
+    "height": 1899
   },
   {
     "id": 131571863,
@@ -590,7 +634,9 @@
     "local_path": "artworks/131571863_p4.webp",
     "remote_url": "/artworks/131571863_p4.webp",
     "url": "/artworks/131571863_p4.webp",
-    "original_url_display": "/artworks/131571863_p4.webp"
+    "original_url_display": "/artworks/131571863_p4.webp",
+    "width": 2000,
+    "height": 2895
   },
   {
     "id": 131571863,
@@ -617,7 +663,9 @@
     "local_path": "artworks/131571863_p5.webp",
     "remote_url": "/artworks/131571863_p5.webp",
     "url": "/artworks/131571863_p5.webp",
-    "original_url_display": "/artworks/131571863_p5.webp"
+    "original_url_display": "/artworks/131571863_p5.webp",
+    "width": 2000,
+    "height": 1125
   },
   {
     "id": 131571863,
@@ -644,7 +692,9 @@
     "local_path": "artworks/131571863_p6.webp",
     "remote_url": "/artworks/131571863_p6.webp",
     "url": "/artworks/131571863_p6.webp",
-    "original_url_display": "/artworks/131571863_p6.webp"
+    "original_url_display": "/artworks/131571863_p6.webp",
+    "width": 1402,
+    "height": 1638
   },
   {
     "id": 131571863,
@@ -671,7 +721,9 @@
     "local_path": "artworks/131571863_p7.webp",
     "remote_url": "/artworks/131571863_p7.webp",
     "url": "/artworks/131571863_p7.webp",
-    "original_url_display": "/artworks/131571863_p7.webp"
+    "original_url_display": "/artworks/131571863_p7.webp",
+    "width": 1186,
+    "height": 1838
   },
   {
     "id": 131571863,
@@ -698,7 +750,9 @@
     "local_path": "artworks/131571863_p8.webp",
     "remote_url": "/artworks/131571863_p8.webp",
     "url": "/artworks/131571863_p8.webp",
-    "original_url_display": "/artworks/131571863_p8.webp"
+    "original_url_display": "/artworks/131571863_p8.webp",
+    "width": 1340,
+    "height": 2194
   },
   {
     "id": 131571863,
@@ -725,7 +779,9 @@
     "local_path": "artworks/131571863_p9.webp",
     "remote_url": "/artworks/131571863_p9.webp",
     "url": "/artworks/131571863_p9.webp",
-    "original_url_display": "/artworks/131571863_p9.webp"
+    "original_url_display": "/artworks/131571863_p9.webp",
+    "width": 1580,
+    "height": 2622
   },
   {
     "id": 131188010,
@@ -752,7 +808,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900370551_131188010_100%E6%97%A5%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B7%E3%82%99%E3%80%8041%E6%97%A5%E7%9B%AE%EF%BD%9E60%E6%97%A5%E7%9B%AE.jpg",
     "page_count": 17,
     "gallery_id": "131188010_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 849,
+    "height": 1200
   },
   {
     "id": 131188010,
@@ -778,7 +836,9 @@
     "local_path": "artworks/131188010_p1.webp",
     "remote_url": "/artworks/131188010_p1.webp",
     "url": "/artworks/131188010_p1.webp",
-    "original_url_display": "/artworks/131188010_p1.webp"
+    "original_url_display": "/artworks/131188010_p1.webp",
+    "width": 2000,
+    "height": 1206
   },
   {
     "id": 131188010,
@@ -804,7 +864,9 @@
     "local_path": "artworks/131188010_p2.webp",
     "remote_url": "/artworks/131188010_p2.webp",
     "url": "/artworks/131188010_p2.webp",
-    "original_url_display": "/artworks/131188010_p2.webp"
+    "original_url_display": "/artworks/131188010_p2.webp",
+    "width": 2000,
+    "height": 2929
   },
   {
     "id": 131188010,
@@ -830,7 +892,9 @@
     "local_path": "artworks/131188010_p3.webp",
     "remote_url": "/artworks/131188010_p3.webp",
     "url": "/artworks/131188010_p3.webp",
-    "original_url_display": "/artworks/131188010_p3.webp"
+    "original_url_display": "/artworks/131188010_p3.webp",
+    "width": 1507,
+    "height": 1023
   },
   {
     "id": 131188010,
@@ -856,7 +920,9 @@
     "local_path": "artworks/131188010_p4.webp",
     "remote_url": "/artworks/131188010_p4.webp",
     "url": "/artworks/131188010_p4.webp",
-    "original_url_display": "/artworks/131188010_p4.webp"
+    "original_url_display": "/artworks/131188010_p4.webp",
+    "width": 1619,
+    "height": 1000
   },
   {
     "id": 131188010,
@@ -882,7 +948,9 @@
     "local_path": "artworks/131188010_p5.webp",
     "remote_url": "/artworks/131188010_p5.webp",
     "url": "/artworks/131188010_p5.webp",
-    "original_url_display": "/artworks/131188010_p5.webp"
+    "original_url_display": "/artworks/131188010_p5.webp",
+    "width": 1908,
+    "height": 2590
   },
   {
     "id": 131188010,
@@ -908,7 +976,9 @@
     "local_path": "artworks/131188010_p6.webp",
     "remote_url": "/artworks/131188010_p6.webp",
     "url": "/artworks/131188010_p6.webp",
-    "original_url_display": "/artworks/131188010_p6.webp"
+    "original_url_display": "/artworks/131188010_p6.webp",
+    "width": 1778,
+    "height": 1000
   },
   {
     "id": 131188010,
@@ -934,7 +1004,9 @@
     "local_path": "artworks/131188010_p7.webp",
     "remote_url": "/artworks/131188010_p7.webp",
     "url": "/artworks/131188010_p7.webp",
-    "original_url_display": "/artworks/131188010_p7.webp"
+    "original_url_display": "/artworks/131188010_p7.webp",
+    "width": 1512,
+    "height": 2472
   },
   {
     "id": 131188010,
@@ -960,7 +1032,9 @@
     "local_path": "artworks/131188010_p8.webp",
     "remote_url": "/artworks/131188010_p8.webp",
     "url": "/artworks/131188010_p8.webp",
-    "original_url_display": "/artworks/131188010_p8.webp"
+    "original_url_display": "/artworks/131188010_p8.webp",
+    "width": 2000,
+    "height": 1125
   },
   {
     "id": 131188010,
@@ -986,7 +1060,9 @@
     "local_path": "artworks/131188010_p9.webp",
     "remote_url": "/artworks/131188010_p9.webp",
     "url": "/artworks/131188010_p9.webp",
-    "original_url_display": "/artworks/131188010_p9.webp"
+    "original_url_display": "/artworks/131188010_p9.webp",
+    "width": 2000,
+    "height": 1321
   },
   {
     "id": 131188010,
@@ -1012,7 +1088,9 @@
     "local_path": "artworks/131188010_p10.webp",
     "remote_url": "/artworks/131188010_p10.webp",
     "url": "/artworks/131188010_p10.webp",
-    "original_url_display": "/artworks/131188010_p10.webp"
+    "original_url_display": "/artworks/131188010_p10.webp",
+    "width": 1984,
+    "height": 3096
   },
   {
     "id": 131188010,
@@ -1038,7 +1116,9 @@
     "local_path": "artworks/131188010_p11.webp",
     "remote_url": "/artworks/131188010_p11.webp",
     "url": "/artworks/131188010_p11.webp",
-    "original_url_display": "/artworks/131188010_p11.webp"
+    "original_url_display": "/artworks/131188010_p11.webp",
+    "width": 2000,
+    "height": 3077
   },
   {
     "id": 131188010,
@@ -1064,7 +1144,9 @@
     "local_path": "artworks/131188010_p12.webp",
     "remote_url": "/artworks/131188010_p12.webp",
     "url": "/artworks/131188010_p12.webp",
-    "original_url_display": "/artworks/131188010_p12.webp"
+    "original_url_display": "/artworks/131188010_p12.webp",
+    "width": 2000,
+    "height": 2855
   },
   {
     "id": 131188010,
@@ -1090,7 +1172,9 @@
     "local_path": "artworks/131188010_p13.webp",
     "remote_url": "/artworks/131188010_p13.webp",
     "url": "/artworks/131188010_p13.webp",
-    "original_url_display": "/artworks/131188010_p13.webp"
+    "original_url_display": "/artworks/131188010_p13.webp",
+    "width": 2000,
+    "height": 2177
   },
   {
     "id": 131188010,
@@ -1116,7 +1200,9 @@
     "local_path": "artworks/131188010_p14.webp",
     "remote_url": "/artworks/131188010_p14.webp",
     "url": "/artworks/131188010_p14.webp",
-    "original_url_display": "/artworks/131188010_p14.webp"
+    "original_url_display": "/artworks/131188010_p14.webp",
+    "width": 1698,
+    "height": 1926
   },
   {
     "id": 131188010,
@@ -1142,7 +1228,9 @@
     "local_path": "artworks/131188010_p15.webp",
     "remote_url": "/artworks/131188010_p15.webp",
     "url": "/artworks/131188010_p15.webp",
-    "original_url_display": "/artworks/131188010_p15.webp"
+    "original_url_display": "/artworks/131188010_p15.webp",
+    "width": 1000,
+    "height": 1543
   },
   {
     "id": 131188010,
@@ -1168,7 +1256,9 @@
     "local_path": "artworks/131188010_p16.webp",
     "remote_url": "/artworks/131188010_p16.webp",
     "url": "/artworks/131188010_p16.webp",
-    "original_url_display": "/artworks/131188010_p16.webp"
+    "original_url_display": "/artworks/131188010_p16.webp",
+    "width": 1313,
+    "height": 1999
   },
   {
     "id": 130449095,
@@ -1195,7 +1285,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900374464_130449095_100%E6%97%A5%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B7%E3%82%99%E3%80%8031%E6%97%A5%E7%9B%AE%EF%BD%9E40%E6%97%A5%E7%9B%AE.jpg",
     "page_count": 10,
     "gallery_id": "130449095_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 677
   },
   {
     "id": 130449095,
@@ -1221,7 +1313,9 @@
     "local_path": "artworks/130449095_p1.webp",
     "remote_url": "/artworks/130449095_p1.webp",
     "url": "/artworks/130449095_p1.webp",
-    "original_url_display": "/artworks/130449095_p1.webp"
+    "original_url_display": "/artworks/130449095_p1.webp",
+    "width": 2000,
+    "height": 1125
   },
   {
     "id": 130449095,
@@ -1247,7 +1341,9 @@
     "local_path": "artworks/130449095_p2.webp",
     "remote_url": "/artworks/130449095_p2.webp",
     "url": "/artworks/130449095_p2.webp",
-    "original_url_display": "/artworks/130449095_p2.webp"
+    "original_url_display": "/artworks/130449095_p2.webp",
+    "width": 2000,
+    "height": 2968
   },
   {
     "id": 130449095,
@@ -1273,7 +1369,9 @@
     "local_path": "artworks/130449095_p3.webp",
     "remote_url": "/artworks/130449095_p3.webp",
     "url": "/artworks/130449095_p3.webp",
-    "original_url_display": "/artworks/130449095_p3.webp"
+    "original_url_display": "/artworks/130449095_p3.webp",
+    "width": 1115,
+    "height": 2000
   },
   {
     "id": 130449095,
@@ -1299,7 +1397,9 @@
     "local_path": "artworks/130449095_p4.webp",
     "remote_url": "/artworks/130449095_p4.webp",
     "url": "/artworks/130449095_p4.webp",
-    "original_url_display": "/artworks/130449095_p4.webp"
+    "original_url_display": "/artworks/130449095_p4.webp",
+    "width": 2000,
+    "height": 1323
   },
   {
     "id": 130449095,
@@ -1325,7 +1425,9 @@
     "local_path": "artworks/130449095_p5.webp",
     "remote_url": "/artworks/130449095_p5.webp",
     "url": "/artworks/130449095_p5.webp",
-    "original_url_display": "/artworks/130449095_p5.webp"
+    "original_url_display": "/artworks/130449095_p5.webp",
+    "width": 1550,
+    "height": 859
   },
   {
     "id": 130449095,
@@ -1351,7 +1453,9 @@
     "local_path": "artworks/130449095_p6.webp",
     "remote_url": "/artworks/130449095_p6.webp",
     "url": "/artworks/130449095_p6.webp",
-    "original_url_display": "/artworks/130449095_p6.webp"
+    "original_url_display": "/artworks/130449095_p6.webp",
+    "width": 1812,
+    "height": 1902
   },
   {
     "id": 130449095,
@@ -1377,7 +1481,9 @@
     "local_path": "artworks/130449095_p7.webp",
     "remote_url": "/artworks/130449095_p7.webp",
     "url": "/artworks/130449095_p7.webp",
-    "original_url_display": "/artworks/130449095_p7.webp"
+    "original_url_display": "/artworks/130449095_p7.webp",
+    "width": 1306,
+    "height": 2000
   },
   {
     "id": 130449095,
@@ -1403,7 +1509,9 @@
     "local_path": "artworks/130449095_p8.webp",
     "remote_url": "/artworks/130449095_p8.webp",
     "url": "/artworks/130449095_p8.webp",
-    "original_url_display": "/artworks/130449095_p8.webp"
+    "original_url_display": "/artworks/130449095_p8.webp",
+    "width": 1238,
+    "height": 2000
   },
   {
     "id": 130449095,
@@ -1429,7 +1537,9 @@
     "local_path": "artworks/130449095_p9.webp",
     "remote_url": "/artworks/130449095_p9.webp",
     "url": "/artworks/130449095_p9.webp",
-    "original_url_display": "/artworks/130449095_p9.webp"
+    "original_url_display": "/artworks/130449095_p9.webp",
+    "width": 2000,
+    "height": 2061
   },
   {
     "id": 130085857,
@@ -1456,7 +1566,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900367757_130085857_100%E6%97%A5%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B7%E3%82%99%E3%80%8021%E6%97%A5%E7%9B%AE%EF%BD%9E30%E6%97%A5%E7%9B%AE.jpg",
     "page_count": 10,
     "gallery_id": "130085857_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 675
   },
   {
     "id": 130085857,
@@ -1482,7 +1594,9 @@
     "local_path": "artworks/130085857_p1.webp",
     "remote_url": "/artworks/130085857_p1.webp",
     "url": "/artworks/130085857_p1.webp",
-    "original_url_display": "/artworks/130085857_p1.webp"
+    "original_url_display": "/artworks/130085857_p1.webp",
+    "width": 2000,
+    "height": 2658
   },
   {
     "id": 130085857,
@@ -1508,7 +1622,9 @@
     "local_path": "artworks/130085857_p2.webp",
     "remote_url": "/artworks/130085857_p2.webp",
     "url": "/artworks/130085857_p2.webp",
-    "original_url_display": "/artworks/130085857_p2.webp"
+    "original_url_display": "/artworks/130085857_p2.webp",
+    "width": 1807,
+    "height": 3398
   },
   {
     "id": 130085857,
@@ -1534,7 +1650,9 @@
     "local_path": "artworks/130085857_p3.webp",
     "remote_url": "/artworks/130085857_p3.webp",
     "url": "/artworks/130085857_p3.webp",
-    "original_url_display": "/artworks/130085857_p3.webp"
+    "original_url_display": "/artworks/130085857_p3.webp",
+    "width": 2000,
+    "height": 1333
   },
   {
     "id": 130085857,
@@ -1560,7 +1678,9 @@
     "local_path": "artworks/130085857_p4.webp",
     "remote_url": "/artworks/130085857_p4.webp",
     "url": "/artworks/130085857_p4.webp",
-    "original_url_display": "/artworks/130085857_p4.webp"
+    "original_url_display": "/artworks/130085857_p4.webp",
+    "width": 1779,
+    "height": 2683
   },
   {
     "id": 130085857,
@@ -1586,7 +1706,9 @@
     "local_path": "artworks/130085857_p5.webp",
     "remote_url": "/artworks/130085857_p5.webp",
     "url": "/artworks/130085857_p5.webp",
-    "original_url_display": "/artworks/130085857_p5.webp"
+    "original_url_display": "/artworks/130085857_p5.webp",
+    "width": 1282,
+    "height": 2000
   },
   {
     "id": 130085857,
@@ -1612,7 +1734,9 @@
     "local_path": "artworks/130085857_p6.webp",
     "remote_url": "/artworks/130085857_p6.webp",
     "url": "/artworks/130085857_p6.webp",
-    "original_url_display": "/artworks/130085857_p6.webp"
+    "original_url_display": "/artworks/130085857_p6.webp",
+    "width": 1255,
+    "height": 2000
   },
   {
     "id": 130085857,
@@ -1638,7 +1762,9 @@
     "local_path": "artworks/130085857_p7.webp",
     "remote_url": "/artworks/130085857_p7.webp",
     "url": "/artworks/130085857_p7.webp",
-    "original_url_display": "/artworks/130085857_p7.webp"
+    "original_url_display": "/artworks/130085857_p7.webp",
+    "width": 628,
+    "height": 875
   },
   {
     "id": 130085857,
@@ -1664,7 +1790,9 @@
     "local_path": "artworks/130085857_p8.webp",
     "remote_url": "/artworks/130085857_p8.webp",
     "url": "/artworks/130085857_p8.webp",
-    "original_url_display": "/artworks/130085857_p8.webp"
+    "original_url_display": "/artworks/130085857_p8.webp",
+    "width": 1000,
+    "height": 2016
   },
   {
     "id": 130085857,
@@ -1690,7 +1818,9 @@
     "local_path": "artworks/130085857_p9.webp",
     "remote_url": "/artworks/130085857_p9.webp",
     "url": "/artworks/130085857_p9.webp",
-    "original_url_display": "/artworks/130085857_p9.webp"
+    "original_url_display": "/artworks/130085857_p9.webp",
+    "width": 2000,
+    "height": 1125
   },
   {
     "id": 129779664,
@@ -1714,7 +1844,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900364037_129779664_100%E6%97%A5%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B7%E3%82%99%E3%80%8011%E6%97%A5%E7%9B%AE%EF%BD%9E20%E6%97%A5%E7%9B%AE.jpg",
     "page_count": 10,
     "gallery_id": "129779664_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 601
   },
   {
     "id": 129779664,
@@ -1737,7 +1869,9 @@
     "local_path": "artworks/129779664_p1.webp",
     "remote_url": "/artworks/129779664_p1.webp",
     "url": "/artworks/129779664_p1.webp",
-    "original_url_display": "/artworks/129779664_p1.webp"
+    "original_url_display": "/artworks/129779664_p1.webp",
+    "width": 1200,
+    "height": 2334
   },
   {
     "id": 129779664,
@@ -1760,7 +1894,9 @@
     "local_path": "artworks/129779664_p2.webp",
     "remote_url": "/artworks/129779664_p2.webp",
     "url": "/artworks/129779664_p2.webp",
-    "original_url_display": "/artworks/129779664_p2.webp"
+    "original_url_display": "/artworks/129779664_p2.webp",
+    "width": 1718,
+    "height": 3072
   },
   {
     "id": 129779664,
@@ -1783,7 +1919,9 @@
     "local_path": "artworks/129779664_p3.webp",
     "remote_url": "/artworks/129779664_p3.webp",
     "url": "/artworks/129779664_p3.webp",
-    "original_url_display": "/artworks/129779664_p3.webp"
+    "original_url_display": "/artworks/129779664_p3.webp",
+    "width": 2000,
+    "height": 968
   },
   {
     "id": 129779664,
@@ -1806,7 +1944,9 @@
     "local_path": "artworks/129779664_p4.webp",
     "remote_url": "/artworks/129779664_p4.webp",
     "url": "/artworks/129779664_p4.webp",
-    "original_url_display": "/artworks/129779664_p4.webp"
+    "original_url_display": "/artworks/129779664_p4.webp",
+    "width": 1070,
+    "height": 2000
   },
   {
     "id": 129779664,
@@ -1829,7 +1969,9 @@
     "local_path": "artworks/129779664_p5.webp",
     "remote_url": "/artworks/129779664_p5.webp",
     "url": "/artworks/129779664_p5.webp",
-    "original_url_display": "/artworks/129779664_p5.webp"
+    "original_url_display": "/artworks/129779664_p5.webp",
+    "width": 1731,
+    "height": 3204
   },
   {
     "id": 129779664,
@@ -1852,7 +1994,9 @@
     "local_path": "artworks/129779664_p6.webp",
     "remote_url": "/artworks/129779664_p6.webp",
     "url": "/artworks/129779664_p6.webp",
-    "original_url_display": "/artworks/129779664_p6.webp"
+    "original_url_display": "/artworks/129779664_p6.webp",
+    "width": 1876,
+    "height": 1876
   },
   {
     "id": 129779664,
@@ -1875,7 +2019,9 @@
     "local_path": "artworks/129779664_p7.webp",
     "remote_url": "/artworks/129779664_p7.webp",
     "url": "/artworks/129779664_p7.webp",
-    "original_url_display": "/artworks/129779664_p7.webp"
+    "original_url_display": "/artworks/129779664_p7.webp",
+    "width": 2000,
+    "height": 2429
   },
   {
     "id": 129779664,
@@ -1898,7 +2044,9 @@
     "local_path": "artworks/129779664_p8.webp",
     "remote_url": "/artworks/129779664_p8.webp",
     "url": "/artworks/129779664_p8.webp",
-    "original_url_display": "/artworks/129779664_p8.webp"
+    "original_url_display": "/artworks/129779664_p8.webp",
+    "width": 1595,
+    "height": 2670
   },
   {
     "id": 129779664,
@@ -1921,7 +2069,9 @@
     "local_path": "artworks/129779664_p9.webp",
     "remote_url": "/artworks/129779664_p9.webp",
     "url": "/artworks/129779664_p9.webp",
-    "original_url_display": "/artworks/129779664_p9.webp"
+    "original_url_display": "/artworks/129779664_p9.webp",
+    "width": 1073,
+    "height": 1920
   },
   {
     "id": 129351877,
@@ -1948,7 +2098,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900363974_129351877_100%E6%97%A5%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B7%E3%82%99%E3%80%801%E6%97%A5%E7%9B%AE%EF%BD%9E10%E6%97%A5%E7%9B%AE.jpg",
     "page_count": 10,
     "gallery_id": "129351877_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 849,
+    "height": 1200
   },
   {
     "id": 129351877,
@@ -1974,7 +2126,9 @@
     "local_path": "artworks/129351877_p1.webp",
     "remote_url": "/artworks/129351877_p1.webp",
     "url": "/artworks/129351877_p1.webp",
-    "original_url_display": "/artworks/129351877_p1.webp"
+    "original_url_display": "/artworks/129351877_p1.webp",
+    "width": 2000,
+    "height": 3453
   },
   {
     "id": 129351877,
@@ -2000,7 +2154,9 @@
     "local_path": "artworks/129351877_p2.webp",
     "remote_url": "/artworks/129351877_p2.webp",
     "url": "/artworks/129351877_p2.webp",
-    "original_url_display": "/artworks/129351877_p2.webp"
+    "original_url_display": "/artworks/129351877_p2.webp",
+    "width": 2000,
+    "height": 2829
   },
   {
     "id": 129351877,
@@ -2026,7 +2182,9 @@
     "local_path": "artworks/129351877_p3.webp",
     "remote_url": "/artworks/129351877_p3.webp",
     "url": "/artworks/129351877_p3.webp",
-    "original_url_display": "/artworks/129351877_p3.webp"
+    "original_url_display": "/artworks/129351877_p3.webp",
+    "width": 2000,
+    "height": 1696
   },
   {
     "id": 129351877,
@@ -2052,7 +2210,9 @@
     "local_path": "artworks/129351877_p4.webp",
     "remote_url": "/artworks/129351877_p4.webp",
     "url": "/artworks/129351877_p4.webp",
-    "original_url_display": "/artworks/129351877_p4.webp"
+    "original_url_display": "/artworks/129351877_p4.webp",
+    "width": 2000,
+    "height": 2829
   },
   {
     "id": 129351877,
@@ -2078,7 +2238,9 @@
     "local_path": "artworks/129351877_p5.webp",
     "remote_url": "/artworks/129351877_p5.webp",
     "url": "/artworks/129351877_p5.webp",
-    "original_url_display": "/artworks/129351877_p5.webp"
+    "original_url_display": "/artworks/129351877_p5.webp",
+    "width": 2000,
+    "height": 2829
   },
   {
     "id": 129351877,
@@ -2104,7 +2266,9 @@
     "local_path": "artworks/129351877_p6.webp",
     "remote_url": "/artworks/129351877_p6.webp",
     "url": "/artworks/129351877_p6.webp",
-    "original_url_display": "/artworks/129351877_p6.webp"
+    "original_url_display": "/artworks/129351877_p6.webp",
+    "width": 2000,
+    "height": 1976
   },
   {
     "id": 129351877,
@@ -2130,7 +2294,9 @@
     "local_path": "artworks/129351877_p7.webp",
     "remote_url": "/artworks/129351877_p7.webp",
     "url": "/artworks/129351877_p7.webp",
-    "original_url_display": "/artworks/129351877_p7.webp"
+    "original_url_display": "/artworks/129351877_p7.webp",
+    "width": 2000,
+    "height": 1285
   },
   {
     "id": 129351877,
@@ -2156,7 +2322,9 @@
     "local_path": "artworks/129351877_p8.webp",
     "remote_url": "/artworks/129351877_p8.webp",
     "url": "/artworks/129351877_p8.webp",
-    "original_url_display": "/artworks/129351877_p8.webp"
+    "original_url_display": "/artworks/129351877_p8.webp",
+    "width": 2000,
+    "height": 1262
   },
   {
     "id": 129351877,
@@ -2182,7 +2350,9 @@
     "local_path": "artworks/129351877_p9.webp",
     "remote_url": "/artworks/129351877_p9.webp",
     "url": "/artworks/129351877_p9.webp",
-    "original_url_display": "/artworks/129351877_p9.webp"
+    "original_url_display": "/artworks/129351877_p9.webp",
+    "width": 1220,
+    "height": 1726
   },
   {
     "id": 127425513,
@@ -2208,7 +2378,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900367518_127425513_%E5%A4%9C%E9%9B%A8.jpg",
     "page_count": 1,
     "gallery_id": "127425513_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 800,
+    "height": 1200
   },
   {
     "id": 127416960,
@@ -2234,7 +2406,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900363923_127416960_%E7%9E%AC%E3%81%8D.jpg",
     "page_count": 1,
     "gallery_id": "127416960_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 675
   },
   {
     "id": 119558538,
@@ -2262,7 +2436,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900367881_119558538_-The%20Waiting-.jpg",
     "page_count": 1,
     "gallery_id": "119558538_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 675
   },
   {
     "id": 116952992,
@@ -2286,7 +2462,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900367427_116952992_%E5%B9%B8%E7%A5%9C%E3%80%81%E4%BC%8D%E7%95%AA%E8%A1%97%E3%81%A6%E3%82%99%E6%98%A5%E7%8C%BF%E7%81%AB%E3%82%92%E5%8A%A9%E3%81%91%E3%82%8B.jpg",
     "page_count": 1,
     "gallery_id": "116952992_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 849
   },
   {
     "id": 116686084,
@@ -2313,7 +2491,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900371696_116686084_Shelter%20of%20Blooming%20Life.jpg",
     "page_count": 1,
     "gallery_id": "116686084_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 675
   },
   {
     "id": 116302432,
@@ -2339,7 +2519,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900365334_116302432_%E5%90%9B%E3%81%8B%E3%82%99%E3%81%84%E3%81%AA%E3%81%84%E5%AD%A3%E7%AF%80.jpg",
     "page_count": 1,
     "gallery_id": "116302432_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 675
   },
   {
     "id": 114011113,
@@ -2367,7 +2549,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900364317_114011113_%E5%A4%A7%E4%BA%BA%E3%81%93%E3%82%99%E3%81%A3%E3%81%93.jpg",
     "page_count": 1,
     "gallery_id": "114011113_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 681
   },
   {
     "id": 113793915,
@@ -2395,7 +2579,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900362650_113793915_%E7%9B%AE%E7%9A%84%E5%9C%B0%E7%9F%A5%E3%82%89%E3%81%99%E3%82%99.jpg",
     "page_count": 1,
     "gallery_id": "113793915_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 596
   },
   {
     "id": 113575664,
@@ -2422,7 +2608,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900368047_113575664_%E5%AF%92%E3%81%8F%E3%81%AA%E3%81%A3%E3%81%A6%E3%81%8D%E3%81%9F%E3%82%89%E3%83%A9%E3%83%BC%E3%83%A1%E3%83%B3%E9%A3%9F%E3%81%B8%E3%82%99%E3%81%9F%E3%81%8F%E3%81%AA%E3%81%A3%E3%81%9F.jpg",
     "page_count": 1,
     "gallery_id": "113575664_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 615
   },
   {
     "id": 113390096,
@@ -2450,7 +2638,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900367596_113390096_City%20Light.jpg",
     "page_count": 1,
     "gallery_id": "113390096_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 675
   },
   {
     "id": 113114668,
@@ -2478,7 +2668,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900369147_113114668_%E7%B9%AB%E8%8F%AF%E8%A1%97.jpg",
     "page_count": 1,
     "gallery_id": "113114668_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 686
   },
   {
     "id": 112901502,
@@ -2506,7 +2698,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900367258_112901502_%E7%A9%BA%E3%82%92%E6%B9%BF%E3%82%89%E3%81%99%E9%9B%A8.jpg",
     "page_count": 1,
     "gallery_id": "112901502_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 881,
+    "height": 1200
   },
   {
     "id": 112167497,
@@ -2534,7 +2728,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900363554_112167497_I%20feel%20serene.jpg",
     "page_count": 1,
     "gallery_id": "112167497_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 750
   },
   {
     "id": 112087392,
@@ -2561,7 +2757,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900367042_112087392_%E8%87%AA%E8%BB%A2%E8%BB%8A.jpg",
     "page_count": 1,
     "gallery_id": "112087392_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 849,
+    "height": 1200
   },
   {
     "id": 112052584,
@@ -2589,7 +2787,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900366348_112052584_Cytokine%20NITRO.jpg",
     "page_count": 1,
     "gallery_id": "112052584_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 648
   },
   {
     "id": 111668251,
@@ -2613,7 +2813,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900363994_111668251_%E6%83%85%E7%B7%92%E3%81%A8%E7%90%86%E8%8A%BD%E3%80%81%E5%9B%B3%E6%9B%B8%E9%A4%A8%E3%81%AB%E6%8E%A2%E3%82%8B.jpg",
     "page_count": 1,
     "gallery_id": "111668251_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 780
   },
   {
     "id": 111294212,
@@ -2633,7 +2835,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900361408_111294212_NewJeans.jpg",
     "page_count": 6,
     "gallery_id": "111294212_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 685
   },
   {
     "id": 111294212,
@@ -2652,7 +2856,9 @@
     "local_path": "artworks/111294212_p1.webp",
     "remote_url": "/artworks/111294212_p1.webp",
     "url": "/artworks/111294212_p1.webp",
-    "original_url_display": "/artworks/111294212_p1.webp"
+    "original_url_display": "/artworks/111294212_p1.webp",
+    "width": 689,
+    "height": 1000
   },
   {
     "id": 111294212,
@@ -2671,7 +2877,9 @@
     "local_path": "artworks/111294212_p2.webp",
     "remote_url": "/artworks/111294212_p2.webp",
     "url": "/artworks/111294212_p2.webp",
-    "original_url_display": "/artworks/111294212_p2.webp"
+    "original_url_display": "/artworks/111294212_p2.webp",
+    "width": 669,
+    "height": 1000
   },
   {
     "id": 111294212,
@@ -2690,7 +2898,9 @@
     "local_path": "artworks/111294212_p3.webp",
     "remote_url": "/artworks/111294212_p3.webp",
     "url": "/artworks/111294212_p3.webp",
-    "original_url_display": "/artworks/111294212_p3.webp"
+    "original_url_display": "/artworks/111294212_p3.webp",
+    "width": 631,
+    "height": 1000
   },
   {
     "id": 111294212,
@@ -2709,7 +2919,9 @@
     "local_path": "artworks/111294212_p4.webp",
     "remote_url": "/artworks/111294212_p4.webp",
     "url": "/artworks/111294212_p4.webp",
-    "original_url_display": "/artworks/111294212_p4.webp"
+    "original_url_display": "/artworks/111294212_p4.webp",
+    "width": 658,
+    "height": 1000
   },
   {
     "id": 111294212,
@@ -2728,7 +2940,9 @@
     "local_path": "artworks/111294212_p5.webp",
     "remote_url": "/artworks/111294212_p5.webp",
     "url": "/artworks/111294212_p5.webp",
-    "original_url_display": "/artworks/111294212_p5.webp"
+    "original_url_display": "/artworks/111294212_p5.webp",
+    "width": 694,
+    "height": 1000
   },
   {
     "id": 109645771,
@@ -2753,7 +2967,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900358824_109645771_%E3%83%A9%E3%82%A4%E3%83%95%E3%82%99%E3%83%98%E3%82%9A%E3%82%A4%E3%83%B3%E3%83%86%E3%82%A3%E3%83%B3%E3%82%AF%E3%82%99%E5%A7%8B%E3%82%81%E3%81%9F.jpg",
     "page_count": 11,
     "gallery_id": "109645771_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1013,
+    "height": 986
   },
   {
     "id": 109645771,
@@ -2777,7 +2993,9 @@
     "local_path": "artworks/109645771_p1.webp",
     "remote_url": "/artworks/109645771_p1.webp",
     "url": "/artworks/109645771_p1.webp",
-    "original_url_display": "/artworks/109645771_p1.webp"
+    "original_url_display": "/artworks/109645771_p1.webp",
+    "width": 1168,
+    "height": 714
   },
   {
     "id": 109645771,
@@ -2801,7 +3019,9 @@
     "local_path": "artworks/109645771_p2.webp",
     "remote_url": "/artworks/109645771_p2.webp",
     "url": "/artworks/109645771_p2.webp",
-    "original_url_display": "/artworks/109645771_p2.webp"
+    "original_url_display": "/artworks/109645771_p2.webp",
+    "width": 1103,
+    "height": 639
   },
   {
     "id": 109645771,
@@ -2825,7 +3045,9 @@
     "local_path": "artworks/109645771_p3.webp",
     "remote_url": "/artworks/109645771_p3.webp",
     "url": "/artworks/109645771_p3.webp",
-    "original_url_display": "/artworks/109645771_p3.webp"
+    "original_url_display": "/artworks/109645771_p3.webp",
+    "width": 790,
+    "height": 1017
   },
   {
     "id": 109645771,
@@ -2849,7 +3071,9 @@
     "local_path": "artworks/109645771_p4.webp",
     "remote_url": "/artworks/109645771_p4.webp",
     "url": "/artworks/109645771_p4.webp",
-    "original_url_display": "/artworks/109645771_p4.webp"
+    "original_url_display": "/artworks/109645771_p4.webp",
+    "width": 1094,
+    "height": 619
   },
   {
     "id": 109645771,
@@ -2873,7 +3097,9 @@
     "local_path": "artworks/109645771_p5.webp",
     "remote_url": "/artworks/109645771_p5.webp",
     "url": "/artworks/109645771_p5.webp",
-    "original_url_display": "/artworks/109645771_p5.webp"
+    "original_url_display": "/artworks/109645771_p5.webp",
+    "width": 1166,
+    "height": 610
   },
   {
     "id": 109645771,
@@ -2897,7 +3123,9 @@
     "local_path": "artworks/109645771_p6.webp",
     "remote_url": "/artworks/109645771_p6.webp",
     "url": "/artworks/109645771_p6.webp",
-    "original_url_display": "/artworks/109645771_p6.webp"
+    "original_url_display": "/artworks/109645771_p6.webp",
+    "width": 1166,
+    "height": 622
   },
   {
     "id": 109645771,
@@ -2921,7 +3149,9 @@
     "local_path": "artworks/109645771_p7.webp",
     "remote_url": "/artworks/109645771_p7.webp",
     "url": "/artworks/109645771_p7.webp",
-    "original_url_display": "/artworks/109645771_p7.webp"
+    "original_url_display": "/artworks/109645771_p7.webp",
+    "width": 615,
+    "height": 866
   },
   {
     "id": 109645771,
@@ -2945,7 +3175,9 @@
     "local_path": "artworks/109645771_p8.webp",
     "remote_url": "/artworks/109645771_p8.webp",
     "url": "/artworks/109645771_p8.webp",
-    "original_url_display": "/artworks/109645771_p8.webp"
+    "original_url_display": "/artworks/109645771_p8.webp",
+    "width": 617,
+    "height": 874
   },
   {
     "id": 109645771,
@@ -2969,7 +3201,9 @@
     "local_path": "artworks/109645771_p9.webp",
     "remote_url": "/artworks/109645771_p9.webp",
     "url": "/artworks/109645771_p9.webp",
-    "original_url_display": "/artworks/109645771_p9.webp"
+    "original_url_display": "/artworks/109645771_p9.webp",
+    "width": 1167,
+    "height": 637
   },
   {
     "id": 109645771,
@@ -2993,7 +3227,9 @@
     "local_path": "artworks/109645771_p10.webp",
     "remote_url": "/artworks/109645771_p10.webp",
     "url": "/artworks/109645771_p10.webp",
-    "original_url_display": "/artworks/109645771_p10.webp"
+    "original_url_display": "/artworks/109645771_p10.webp",
+    "width": 1167,
+    "height": 562
   },
   {
     "id": 106031896,
@@ -3021,7 +3257,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900367408_106031896_lil%20lull.jpg",
     "page_count": 1,
     "gallery_id": "106031896_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 629
   },
   {
     "id": 104979521,
@@ -3047,7 +3285,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900367251_104979521_202301%E7%B7%B4%E7%BF%92%E3%81%BE%E3%81%A8%E3%82%81.jpg",
     "page_count": 15,
     "gallery_id": "104979521_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 617,
+    "height": 874
   },
   {
     "id": 104979521,
@@ -3072,7 +3312,9 @@
     "local_path": "artworks/104979521_p1.webp",
     "remote_url": "/artworks/104979521_p1.webp",
     "url": "/artworks/104979521_p1.webp",
-    "original_url_display": "/artworks/104979521_p1.webp"
+    "original_url_display": "/artworks/104979521_p1.webp",
+    "width": 616,
+    "height": 872
   },
   {
     "id": 104979521,
@@ -3097,7 +3339,9 @@
     "local_path": "artworks/104979521_p2.webp",
     "remote_url": "/artworks/104979521_p2.webp",
     "url": "/artworks/104979521_p2.webp",
-    "original_url_display": "/artworks/104979521_p2.webp"
+    "original_url_display": "/artworks/104979521_p2.webp",
+    "width": 617,
+    "height": 874
   },
   {
     "id": 104979521,
@@ -3122,7 +3366,9 @@
     "local_path": "artworks/104979521_p3.webp",
     "remote_url": "/artworks/104979521_p3.webp",
     "url": "/artworks/104979521_p3.webp",
-    "original_url_display": "/artworks/104979521_p3.webp"
+    "original_url_display": "/artworks/104979521_p3.webp",
+    "width": 1167,
+    "height": 557
   },
   {
     "id": 104979521,
@@ -3147,7 +3393,9 @@
     "local_path": "artworks/104979521_p4.webp",
     "remote_url": "/artworks/104979521_p4.webp",
     "url": "/artworks/104979521_p4.webp",
-    "original_url_display": "/artworks/104979521_p4.webp"
+    "original_url_display": "/artworks/104979521_p4.webp",
+    "width": 1167,
+    "height": 612
   },
   {
     "id": 104979521,
@@ -3172,7 +3420,9 @@
     "local_path": "artworks/104979521_p5.webp",
     "remote_url": "/artworks/104979521_p5.webp",
     "url": "/artworks/104979521_p5.webp",
-    "original_url_display": "/artworks/104979521_p5.webp"
+    "original_url_display": "/artworks/104979521_p5.webp",
+    "width": 1126,
+    "height": 577
   },
   {
     "id": 104979521,
@@ -3197,7 +3447,9 @@
     "local_path": "artworks/104979521_p6.webp",
     "remote_url": "/artworks/104979521_p6.webp",
     "url": "/artworks/104979521_p6.webp",
-    "original_url_display": "/artworks/104979521_p6.webp"
+    "original_url_display": "/artworks/104979521_p6.webp",
+    "width": 822,
+    "height": 1165
   },
   {
     "id": 104979521,
@@ -3222,7 +3474,9 @@
     "local_path": "artworks/104979521_p7.webp",
     "remote_url": "/artworks/104979521_p7.webp",
     "url": "/artworks/104979521_p7.webp",
-    "original_url_display": "/artworks/104979521_p7.webp"
+    "original_url_display": "/artworks/104979521_p7.webp",
+    "width": 1164,
+    "height": 586
   },
   {
     "id": 104979521,
@@ -3247,7 +3501,9 @@
     "local_path": "artworks/104979521_p8.webp",
     "remote_url": "/artworks/104979521_p8.webp",
     "url": "/artworks/104979521_p8.webp",
-    "original_url_display": "/artworks/104979521_p8.webp"
+    "original_url_display": "/artworks/104979521_p8.webp",
+    "width": 993,
+    "height": 518
   },
   {
     "id": 104979521,
@@ -3272,7 +3528,9 @@
     "local_path": "artworks/104979521_p9.webp",
     "remote_url": "/artworks/104979521_p9.webp",
     "url": "/artworks/104979521_p9.webp",
-    "original_url_display": "/artworks/104979521_p9.webp"
+    "original_url_display": "/artworks/104979521_p9.webp",
+    "width": 875,
+    "height": 592
   },
   {
     "id": 104979521,
@@ -3297,7 +3555,9 @@
     "local_path": "artworks/104979521_p10.webp",
     "remote_url": "/artworks/104979521_p10.webp",
     "url": "/artworks/104979521_p10.webp",
-    "original_url_display": "/artworks/104979521_p10.webp"
+    "original_url_display": "/artworks/104979521_p10.webp",
+    "width": 614,
+    "height": 870
   },
   {
     "id": 104979521,
@@ -3322,7 +3582,9 @@
     "local_path": "artworks/104979521_p11.webp",
     "remote_url": "/artworks/104979521_p11.webp",
     "url": "/artworks/104979521_p11.webp",
-    "original_url_display": "/artworks/104979521_p11.webp"
+    "original_url_display": "/artworks/104979521_p11.webp",
+    "width": 1082,
+    "height": 620
   },
   {
     "id": 104979521,
@@ -3347,7 +3609,9 @@
     "local_path": "artworks/104979521_p12.webp",
     "remote_url": "/artworks/104979521_p12.webp",
     "url": "/artworks/104979521_p12.webp",
-    "original_url_display": "/artworks/104979521_p12.webp"
+    "original_url_display": "/artworks/104979521_p12.webp",
+    "width": 707,
+    "height": 1106
   },
   {
     "id": 104979521,
@@ -3372,7 +3636,9 @@
     "local_path": "artworks/104979521_p13.webp",
     "remote_url": "/artworks/104979521_p13.webp",
     "url": "/artworks/104979521_p13.webp",
-    "original_url_display": "/artworks/104979521_p13.webp"
+    "original_url_display": "/artworks/104979521_p13.webp",
+    "width": 590,
+    "height": 973
   },
   {
     "id": 104979521,
@@ -3397,7 +3663,9 @@
     "local_path": "artworks/104979521_p14.webp",
     "remote_url": "/artworks/104979521_p14.webp",
     "url": "/artworks/104979521_p14.webp",
-    "original_url_display": "/artworks/104979521_p14.webp"
+    "original_url_display": "/artworks/104979521_p14.webp",
+    "width": 1165,
+    "height": 592
   },
   {
     "id": 103829884,
@@ -3423,7 +3691,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900358653_103829884_%E5%AF%84%E3%82%8A%E3%81%8B%E3%81%8B%E3%82%8B.jpg",
     "page_count": 1,
     "gallery_id": "103829884_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 675
   },
   {
     "id": 102852101,
@@ -3451,7 +3721,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900358677_102852101_%E5%AF%A1%E6%AC%B2%EF%BC%A0%E3%81%97%E3%82%85%E3%83%BC%E3%81%99%E3%82%99.jpg",
     "page_count": 1,
     "gallery_id": "102852101_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 707
   },
   {
     "id": 102387252,
@@ -3476,7 +3748,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900362705_102387252_%E3%83%88%E3%82%99%E3%83%9F%E3%83%8E%E5%B0%91%E5%A5%B3.jpg",
     "page_count": 1,
     "gallery_id": "102387252_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 849,
+    "height": 1200
   },
   {
     "id": 101805095,
@@ -3501,7 +3775,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900363108_101805095_%E3%83%A9%E3%83%A0%E3%83%AC%E3%83%BC%E3%82%B9%E3%82%99%E3%83%B3%E3%83%BB%E3%83%8F%E3%82%9A%E3%83%B3%E3%82%B1%E3%83%BC%E3%82%AD.jpg",
     "page_count": 1,
     "gallery_id": "101805095_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 657
   },
   {
     "id": 100669875,
@@ -3529,7 +3805,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900361972_100669875_%E3%83%8D%E3%82%B3%E3%81%A8%E6%95%A3%E6%AD%A9.jpg",
     "page_count": 1,
     "gallery_id": "100669875_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 646
   },
   {
     "id": 93821718,
@@ -3553,7 +3831,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900358676_93821718_%E8%83%A1%E6%A1%83%E3%81%A8%E9%A6%99%E8%8F%B1%E3%81%AE%E3%83%8F%E3%83%AD%E3%82%A6%E3%82%A3%E3%83%B3.jpg",
     "page_count": 1,
     "gallery_id": "93821718_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 675
   },
   {
     "id": 74451722,
@@ -3581,7 +3861,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900364036_74451722_%E9%80%9A%E3%82%8A%E3%81%99%E3%81%8B%E3%82%99%E3%82%8AJK.jpg",
     "page_count": 1,
     "gallery_id": "74451722_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 609
   },
   {
     "id": 73838366,
@@ -3606,7 +3888,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900363426_73838366_%E6%B0%B4%E9%8F%A1.jpg",
     "page_count": 1,
     "gallery_id": "73838366_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 1108
   },
   {
     "id": 73205835,
@@ -3634,7 +3918,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900356929_73205835_%E3%80%8C%E7%A7%81%E3%82%92%E9%80%A3%E3%82%8C%E3%81%A6%E5%B8%B0%E3%82%8C%E3%82%8B%E3%83%8B%E3%83%A3%E3%83%BC%EF%BC%9F%E3%80%8D.jpg",
     "page_count": 1,
     "gallery_id": "73205835_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1167,
+    "height": 1200
   },
   {
     "id": 72955418,
@@ -3662,7 +3948,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900364030_72955418_%E6%96%B0%E3%81%97%E3%81%84%E6%97%A5%E3%81%AE.jpg",
     "page_count": 1,
     "gallery_id": "72955418_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 609
   },
   {
     "id": 72668704,
@@ -3689,7 +3977,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900363060_72668704_PAIN.jpg",
     "page_count": 1,
     "gallery_id": "72668704_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 655
   },
   {
     "id": 72200609,
@@ -3716,7 +4006,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900360331_72200609_%E9%9B%A8%E3%81%AE%E6%97%A52.jpg",
     "page_count": 1,
     "gallery_id": "72200609_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 848,
+    "height": 1200
   },
   {
     "id": 72055179,
@@ -3743,7 +4035,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900356195_72055179_%E9%9B%A8%E3%81%AE%E6%97%A5.jpg",
     "page_count": 1,
     "gallery_id": "72055179_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 623
   },
   {
     "id": 71794922,
@@ -3765,7 +4059,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900354504_71794922_%E6%99%AE%E6%AE%B5%E3%81%AB%E4%BD%BF%E3%82%8F%E3%82%8C%E3%82%8B%E3%83%A9%E3%82%A4%E3%83%86%E3%82%A3%E3%83%B3%E3%82%AF%E3%82%99%E6%96%B9%E3%82%92%E6%8F%8F%E3%81%84%E3%81%A6%E3%81%BF%E3%81%9F.jpg",
     "page_count": 1,
     "gallery_id": "71794922_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 1103
   },
   {
     "id": 71359340,
@@ -3790,7 +4086,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900362972_71359340_%E9%AD%94%E5%A5%B3%E3%81%AE%E9%83%A8%E5%B1%8B.jpg",
     "page_count": 1,
     "gallery_id": "71359340_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 621
   },
   {
     "id": 71033422,
@@ -3814,7 +4112,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900358474_71033422_%E8%A6%9A%E9%86%92%E3%83%8D%E3%83%95%E3%83%86%E3%82%A3%E3%82%B9.jpg",
     "page_count": 1,
     "gallery_id": "71033422_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 878
   },
   {
     "id": 70526434,
@@ -3840,7 +4140,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900358559_70526434_%E3%81%95%E3%81%8F%E3%82%89%E3%81%A1%E3%82%83%E3%82%93%E3%82%A2%E3%83%8B%E3%83%A1%E5%A1%97%E3%82%8A.jpg",
     "page_count": 1,
     "gallery_id": "70526434_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 1091
   },
   {
     "id": 69553890,
@@ -3867,7 +4169,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900357584_69553890_Location%20Unknown%20%E2%97%90.jpg",
     "page_count": 2,
     "gallery_id": "69553890_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 846
   },
   {
     "id": 69553890,
@@ -3893,7 +4197,9 @@
     "local_path": "artworks/69553890_p1.webp",
     "remote_url": "/artworks/69553890_p1.webp",
     "url": "/artworks/69553890_p1.webp",
-    "original_url_display": "/artworks/69553890_p1.webp"
+    "original_url_display": "/artworks/69553890_p1.webp",
+    "width": 2000,
+    "height": 1125
   },
   {
     "id": 69338337,
@@ -3919,7 +4225,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900357085_69338337_%E5%B1%8B%E4%B8%8A%E3%81%AE%E9%81%8A%E5%9C%92%E5%9C%B0.jpg",
     "page_count": 1,
     "gallery_id": "69338337_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 675
   },
   {
     "id": 68686407,
@@ -3947,7 +4255,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900358693_68686407_%E6%98%9F%E6%98%9F%E5%9D%A0%E8%90%BD%E7%9A%84%E5%82%8D%E6%99%9A.jpg",
     "page_count": 1,
     "gallery_id": "68686407_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 675
   },
   {
     "id": 68559847,
@@ -3969,7 +4279,9 @@
     "original_url_display": "https://blog.catzz.work/file/1765900356416_68559847_COMITIA124%20%E3%81%8A%E5%93%81%E6%9B%B8%E3%81%8D.jpg",
     "page_count": 1,
     "gallery_id": "68559847_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 849,
+    "height": 1200
   },
   {
     "id": 68135789,
@@ -3995,7 +4307,9 @@
     "url": "/artworks/68135789.webp",
     "original_url_display": "/artworks/68135789.webp",
     "gallery_id": "68135789_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 1149
   },
   {
     "id": 67861832,
@@ -4021,7 +4335,9 @@
     "url": "/artworks/67861832.webp",
     "original_url_display": "/artworks/67861832.webp",
     "gallery_id": "67861832_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1996,
+    "height": 1224
   },
   {
     "id": 67633780,
@@ -4046,7 +4362,9 @@
     "url": "/artworks/67633780.webp",
     "original_url_display": "/artworks/67633780.webp",
     "gallery_id": "67633780_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 1320
   },
   {
     "id": 66817931,
@@ -4072,7 +4390,9 @@
     "url": "/artworks/66817931.webp",
     "original_url_display": "/artworks/66817931.webp",
     "gallery_id": "66817931_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 1209
   },
   {
     "id": 66723274,
@@ -4096,7 +4416,9 @@
     "url": "/artworks/66723274.webp",
     "original_url_display": "/artworks/66723274.webp",
     "gallery_id": "66723274_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 1800
   },
   {
     "id": 66373775,
@@ -4122,7 +4444,9 @@
     "url": "/artworks/66373775.webp",
     "original_url_display": "/artworks/66373775.webp",
     "gallery_id": "66373775_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1000,
+    "height": 1416
   },
   {
     "id": 65865303,
@@ -4143,7 +4467,9 @@
     "url": "/artworks/65865303.webp",
     "original_url_display": "/artworks/65865303.webp",
     "gallery_id": "65865303_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1200,
+    "height": 882
   },
   {
     "id": 65417142,
@@ -4167,7 +4493,9 @@
     "url": "/artworks/65417142.webp",
     "original_url_display": "/artworks/65417142.webp",
     "gallery_id": "65417142_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 800,
+    "height": 633
   },
   {
     "id": 65164953,
@@ -4190,7 +4518,9 @@
     "url": "/artworks/65164953.webp",
     "original_url_display": "/artworks/65164953.webp",
     "gallery_id": "65164953_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 800,
+    "height": 1129
   },
   {
     "id": 64525768,
@@ -4212,7 +4542,9 @@
     "url": "/artworks/64525768.webp",
     "original_url_display": "/artworks/64525768.webp",
     "gallery_id": "64525768_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1500,
+    "height": 2118
   },
   {
     "id": 64187781,
@@ -4233,7 +4565,9 @@
     "url": "/artworks/64187781.webp",
     "original_url_display": "/artworks/64187781.webp",
     "gallery_id": "64187781_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1000,
+    "height": 786
   },
   {
     "id": 64078501,
@@ -4255,7 +4589,9 @@
     "url": "/artworks/64078501.webp",
     "original_url_display": "/artworks/64078501.webp",
     "gallery_id": "64078501_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1500,
+    "height": 1060
   },
   {
     "id": 63720710,
@@ -4279,7 +4615,9 @@
     "url": "/artworks/63720710.webp",
     "original_url_display": "/artworks/63720710.webp",
     "gallery_id": "63720710_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 1119
   },
   {
     "id": 62782558,
@@ -4300,7 +4638,9 @@
     "url": "/artworks/62782558.webp",
     "original_url_display": "/artworks/62782558.webp",
     "gallery_id": "62782558_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1500,
+    "height": 1061
   },
   {
     "id": 62511480,
@@ -4318,7 +4658,9 @@
     "url": "/artworks/62511480.webp",
     "original_url_display": "/artworks/62511480.webp",
     "gallery_id": "62511480_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1500,
+    "height": 1159
   },
   {
     "id": 62257425,
@@ -4340,7 +4682,9 @@
     "url": "/artworks/62257425.webp",
     "original_url_display": "/artworks/62257425.webp",
     "gallery_id": "62257425_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1500,
+    "height": 1229
   },
   {
     "id": 62237949,
@@ -4361,7 +4705,9 @@
     "url": "/artworks/62237949.webp",
     "original_url_display": "/artworks/62237949.webp",
     "gallery_id": "62237949_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1624,
+    "height": 2195
   },
   {
     "id": 60999687,
@@ -4381,7 +4727,9 @@
     "url": "/artworks/60999687.webp",
     "original_url_display": "/artworks/60999687.webp",
     "gallery_id": "60999687_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1500,
+    "height": 1703
   },
   {
     "id": 56058094,
@@ -4402,7 +4750,9 @@
     "url": "/artworks/56058094.webp",
     "original_url_display": "/artworks/56058094.webp",
     "gallery_id": "56058094_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 2137
   },
   {
     "id": 55774293,
@@ -4427,7 +4777,9 @@
     "url": "/artworks/55774293.webp",
     "original_url_display": "/artworks/55774293.webp",
     "gallery_id": "55774293_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 2825
   },
   {
     "id": 55469046,
@@ -4450,7 +4802,9 @@
     "url": "/artworks/55469046.webp",
     "original_url_display": "/artworks/55469046.webp",
     "gallery_id": "55469046_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 2162
   },
   {
     "id": 55468820,
@@ -4471,7 +4825,9 @@
     "url": "/artworks/55468820.webp",
     "original_url_display": "/artworks/55468820.webp",
     "gallery_id": "55468820_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 2728
   },
   {
     "id": 55468820,
@@ -4492,7 +4848,9 @@
     "local_path": "artworks/55468820_p1.webp",
     "remote_url": "/artworks/55468820_p1.webp",
     "url": "/artworks/55468820_p1.webp",
-    "original_url_display": "/artworks/55468820_p1.webp"
+    "original_url_display": "/artworks/55468820_p1.webp",
+    "width": 1251,
+    "height": 1818
   },
   {
     "id": 55468820,
@@ -4513,7 +4871,9 @@
     "local_path": "artworks/55468820_p2.webp",
     "remote_url": "/artworks/55468820_p2.webp",
     "url": "/artworks/55468820_p2.webp",
-    "original_url_display": "/artworks/55468820_p2.webp"
+    "original_url_display": "/artworks/55468820_p2.webp",
+    "width": 2000,
+    "height": 2443
   },
   {
     "id": 55468820,
@@ -4534,7 +4894,9 @@
     "local_path": "artworks/55468820_p3.webp",
     "remote_url": "/artworks/55468820_p3.webp",
     "url": "/artworks/55468820_p3.webp",
-    "original_url_display": "/artworks/55468820_p3.webp"
+    "original_url_display": "/artworks/55468820_p3.webp",
+    "width": 1000,
+    "height": 1004
   },
   {
     "id": 55468820,
@@ -4555,7 +4917,9 @@
     "local_path": "artworks/55468820_p4.webp",
     "remote_url": "/artworks/55468820_p4.webp",
     "url": "/artworks/55468820_p4.webp",
-    "original_url_display": "/artworks/55468820_p4.webp"
+    "original_url_display": "/artworks/55468820_p4.webp",
+    "width": 1915,
+    "height": 1000
   },
   {
     "id": 55468820,
@@ -4576,7 +4940,9 @@
     "local_path": "artworks/55468820_p5.webp",
     "remote_url": "/artworks/55468820_p5.webp",
     "url": "/artworks/55468820_p5.webp",
-    "original_url_display": "/artworks/55468820_p5.webp"
+    "original_url_display": "/artworks/55468820_p5.webp",
+    "width": 1000,
+    "height": 1453
   },
   {
     "id": 55468820,
@@ -4597,7 +4963,9 @@
     "local_path": "artworks/55468820_p6.webp",
     "remote_url": "/artworks/55468820_p6.webp",
     "url": "/artworks/55468820_p6.webp",
-    "original_url_display": "/artworks/55468820_p6.webp"
+    "original_url_display": "/artworks/55468820_p6.webp",
+    "width": 1499,
+    "height": 1000
   },
   {
     "id": 55053087,
@@ -4618,7 +4986,9 @@
     "url": "/artworks/55053087.webp",
     "original_url_display": "/artworks/55053087.webp",
     "gallery_id": "55053087_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 1555
   },
   {
     "id": 54344364,
@@ -4642,7 +5012,9 @@
     "url": "/artworks/54344364.webp",
     "original_url_display": "/artworks/54344364.webp",
     "gallery_id": "54344364_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1181,
+    "height": 1748
   },
   {
     "id": 54059421,
@@ -4667,7 +5039,9 @@
     "url": "/artworks/54059421.webp",
     "original_url_display": "/artworks/54059421.webp",
     "gallery_id": "54059421_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1000,
+    "height": 1165
   },
   {
     "id": 53528571,
@@ -4689,7 +5063,9 @@
     "local_path": "artworks/53528571.webp",
     "remote_url": "/artworks/53528571.webp",
     "url": "/artworks/53528571.webp",
-    "original_url_display": "/artworks/53528571.webp"
+    "original_url_display": "/artworks/53528571.webp",
+    "width": 2000,
+    "height": 2297
   },
   {
     "id": 53528571,
@@ -4711,7 +5087,9 @@
     "local_path": "artworks/53528571_p1.webp",
     "remote_url": "/artworks/53528571_p1.webp",
     "url": "/artworks/53528571_p1.webp",
-    "original_url_display": "/artworks/53528571_p1.webp"
+    "original_url_display": "/artworks/53528571_p1.webp",
+    "width": 2000,
+    "height": 2479
   },
   {
     "id": 53528571,
@@ -4733,7 +5111,9 @@
     "local_path": "artworks/53528571_p2.webp",
     "remote_url": "/artworks/53528571_p2.webp",
     "url": "/artworks/53528571_p2.webp",
-    "original_url_display": "/artworks/53528571_p2.webp"
+    "original_url_display": "/artworks/53528571_p2.webp",
+    "width": 900,
+    "height": 903
   },
   {
     "id": 53528571,
@@ -4755,7 +5135,9 @@
     "local_path": "artworks/53528571_p3.webp",
     "remote_url": "/artworks/53528571_p3.webp",
     "url": "/artworks/53528571_p3.webp",
-    "original_url_display": "/artworks/53528571_p3.webp"
+    "original_url_display": "/artworks/53528571_p3.webp",
+    "width": 1000,
+    "height": 1245
   },
   {
     "id": 53528571,
@@ -4777,7 +5159,9 @@
     "local_path": "artworks/53528571_p4.webp",
     "remote_url": "/artworks/53528571_p4.webp",
     "url": "/artworks/53528571_p4.webp",
-    "original_url_display": "/artworks/53528571_p4.webp"
+    "original_url_display": "/artworks/53528571_p4.webp",
+    "width": 1000,
+    "height": 1042
   },
   {
     "id": 53528571,
@@ -4799,7 +5183,9 @@
     "local_path": "artworks/53528571_p5.webp",
     "remote_url": "/artworks/53528571_p5.webp",
     "url": "/artworks/53528571_p5.webp",
-    "original_url_display": "/artworks/53528571_p5.webp"
+    "original_url_display": "/artworks/53528571_p5.webp",
+    "width": 1306,
+    "height": 1178
   },
   {
     "id": 53528571,
@@ -4821,7 +5207,9 @@
     "local_path": "artworks/53528571_p6.webp",
     "remote_url": "/artworks/53528571_p6.webp",
     "url": "/artworks/53528571_p6.webp",
-    "original_url_display": "/artworks/53528571_p6.webp"
+    "original_url_display": "/artworks/53528571_p6.webp",
+    "width": 1134,
+    "height": 1380
   },
   {
     "id": 53528571,
@@ -4843,7 +5231,9 @@
     "local_path": "artworks/53528571_p7.webp",
     "remote_url": "/artworks/53528571_p7.webp",
     "url": "/artworks/53528571_p7.webp",
-    "original_url_display": "/artworks/53528571_p7.webp"
+    "original_url_display": "/artworks/53528571_p7.webp",
+    "width": 2000,
+    "height": 1332
   },
   {
     "id": 51707164,
@@ -4867,7 +5257,9 @@
     "url": "/artworks/51707164.webp",
     "original_url_display": "/artworks/51707164.webp",
     "gallery_id": "51707164_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1748,
+    "height": 1700
   },
   {
     "id": 48204214,
@@ -4886,7 +5278,9 @@
     "url": "/artworks/48204214.webp",
     "original_url_display": "/artworks/48204214.webp",
     "gallery_id": "48204214_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1795,
+    "height": 1228
   },
   {
     "id": 46242434,
@@ -4911,7 +5305,9 @@
     "url": "/artworks/46242434.webp",
     "original_url_display": "/artworks/46242434.webp",
     "gallery_id": "46242434_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 2294
   },
   {
     "id": 46072850,
@@ -4931,7 +5327,9 @@
     "local_path": "artworks/46072850.webp",
     "remote_url": "/artworks/46072850.webp",
     "url": "/artworks/46072850.webp",
-    "original_url_display": "/artworks/46072850.webp"
+    "original_url_display": "/artworks/46072850.webp",
+    "width": 1373,
+    "height": 1467
   },
   {
     "id": 46072850,
@@ -4951,7 +5349,9 @@
     "local_path": "artworks/46072850_p1.webp",
     "remote_url": "/artworks/46072850_p1.webp",
     "url": "/artworks/46072850_p1.webp",
-    "original_url_display": "/artworks/46072850_p1.webp"
+    "original_url_display": "/artworks/46072850_p1.webp",
+    "width": 2000,
+    "height": 1925
   },
   {
     "id": 46072850,
@@ -4971,7 +5371,9 @@
     "local_path": "artworks/46072850_p2.webp",
     "remote_url": "/artworks/46072850_p2.webp",
     "url": "/artworks/46072850_p2.webp",
-    "original_url_display": "/artworks/46072850_p2.webp"
+    "original_url_display": "/artworks/46072850_p2.webp",
+    "width": 1022,
+    "height": 1530
   },
   {
     "id": 46072850,
@@ -4991,7 +5393,9 @@
     "local_path": "artworks/46072850_p3.webp",
     "remote_url": "/artworks/46072850_p3.webp",
     "url": "/artworks/46072850_p3.webp",
-    "original_url_display": "/artworks/46072850_p3.webp"
+    "original_url_display": "/artworks/46072850_p3.webp",
+    "width": 1480,
+    "height": 1915
   },
   {
     "id": 45935497,
@@ -5014,7 +5418,9 @@
     "url": "/artworks/45935497.webp",
     "original_url_display": "/artworks/45935497.webp",
     "gallery_id": "45935497_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 560,
+    "height": 876
   },
   {
     "id": 45905975,
@@ -5039,7 +5445,9 @@
     "url": "/artworks/45905975.webp",
     "original_url_display": "/artworks/45905975.webp",
     "gallery_id": "45905975_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 2000,
+    "height": 2091
   },
   {
     "id": 45660518,
@@ -5058,7 +5466,9 @@
     "local_path": "artworks/45660518.webp",
     "remote_url": "/artworks/45660518.webp",
     "url": "/artworks/45660518.webp",
-    "original_url_display": "/artworks/45660518.webp"
+    "original_url_display": "/artworks/45660518.webp",
+    "width": 479,
+    "height": 847
   },
   {
     "id": 45660518,
@@ -5077,7 +5487,9 @@
     "local_path": "artworks/45660518_p1.webp",
     "remote_url": "/artworks/45660518_p1.webp",
     "url": "/artworks/45660518_p1.webp",
-    "original_url_display": "/artworks/45660518_p1.webp"
+    "original_url_display": "/artworks/45660518_p1.webp",
+    "width": 885,
+    "height": 1128
   },
   {
     "id": 45660518,
@@ -5096,7 +5508,9 @@
     "local_path": "artworks/45660518_p2.webp",
     "remote_url": "/artworks/45660518_p2.webp",
     "url": "/artworks/45660518_p2.webp",
-    "original_url_display": "/artworks/45660518_p2.webp"
+    "original_url_display": "/artworks/45660518_p2.webp",
+    "width": 945,
+    "height": 809
   },
   {
     "id": 45660518,
@@ -5115,7 +5529,9 @@
     "local_path": "artworks/45660518_p3.webp",
     "remote_url": "/artworks/45660518_p3.webp",
     "url": "/artworks/45660518_p3.webp",
-    "original_url_display": "/artworks/45660518_p3.webp"
+    "original_url_display": "/artworks/45660518_p3.webp",
+    "width": 531,
+    "height": 520
   },
   {
     "id": 45660518,
@@ -5134,7 +5550,9 @@
     "local_path": "artworks/45660518_p4.webp",
     "remote_url": "/artworks/45660518_p4.webp",
     "url": "/artworks/45660518_p4.webp",
-    "original_url_display": "/artworks/45660518_p4.webp"
+    "original_url_display": "/artworks/45660518_p4.webp",
+    "width": 1500,
+    "height": 2000
   },
   {
     "id": 45660518,
@@ -5153,7 +5571,9 @@
     "local_path": "artworks/45660518_p5.webp",
     "remote_url": "/artworks/45660518_p5.webp",
     "url": "/artworks/45660518_p5.webp",
-    "original_url_display": "/artworks/45660518_p5.webp"
+    "original_url_display": "/artworks/45660518_p5.webp",
+    "width": 1628,
+    "height": 2190
   },
   {
     "id": 45660518,
@@ -5172,7 +5592,9 @@
     "local_path": "artworks/45660518_p6.webp",
     "remote_url": "/artworks/45660518_p6.webp",
     "url": "/artworks/45660518_p6.webp",
-    "original_url_display": "/artworks/45660518_p6.webp"
+    "original_url_display": "/artworks/45660518_p6.webp",
+    "width": 1680,
+    "height": 1620
   },
   {
     "id": 45660518,
@@ -5191,7 +5613,9 @@
     "local_path": "artworks/45660518_p7.webp",
     "remote_url": "/artworks/45660518_p7.webp",
     "url": "/artworks/45660518_p7.webp",
-    "original_url_display": "/artworks/45660518_p7.webp"
+    "original_url_display": "/artworks/45660518_p7.webp",
+    "width": 1197,
+    "height": 1466
   },
   {
     "id": 45660518,
@@ -5210,7 +5634,9 @@
     "local_path": "artworks/45660518_p8.webp",
     "remote_url": "/artworks/45660518_p8.webp",
     "url": "/artworks/45660518_p8.webp",
-    "original_url_display": "/artworks/45660518_p8.webp"
+    "original_url_display": "/artworks/45660518_p8.webp",
+    "width": 1200,
+    "height": 848
   },
   {
     "id": 45660518,
@@ -5229,7 +5655,9 @@
     "local_path": "artworks/45660518_p9.webp",
     "remote_url": "/artworks/45660518_p9.webp",
     "url": "/artworks/45660518_p9.webp",
-    "original_url_display": "/artworks/45660518_p9.webp"
+    "original_url_display": "/artworks/45660518_p9.webp",
+    "width": 950,
+    "height": 973
   },
   {
     "id": 42679745,
@@ -5248,7 +5676,9 @@
     "url": "/artworks/42679745.webp",
     "original_url_display": "/artworks/42679745.webp",
     "gallery_id": "42679745_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1188,
+    "height": 995
   },
   {
     "id": 39531812,
@@ -5270,7 +5700,9 @@
     "url": "/artworks/39531812.webp",
     "original_url_display": "/artworks/39531812.webp",
     "gallery_id": "39531812_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1600,
+    "height": 1200
   },
   {
     "id": 39158675,
@@ -5290,7 +5722,9 @@
     "url": "/artworks/39158675.webp",
     "original_url_display": "/artworks/39158675.webp",
     "gallery_id": "39158675_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1014,
+    "height": 930
   },
   {
     "id": 38045100,
@@ -5312,7 +5746,9 @@
     "url": "/artworks/38045100.webp",
     "original_url_display": "/artworks/38045100.webp",
     "gallery_id": "38045100_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1146,
+    "height": 1192
   },
   {
     "id": 36814856,
@@ -5331,7 +5767,9 @@
     "url": "/artworks/36814856.webp",
     "original_url_display": "/artworks/36814856.webp",
     "gallery_id": "36814856_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 860,
+    "height": 585
   },
   {
     "id": 36791350,
@@ -5351,7 +5789,9 @@
     "url": "/artworks/36791350.webp",
     "original_url_display": "/artworks/36791350.webp",
     "gallery_id": "36791350_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 587,
+    "height": 775
   },
   {
     "id": 35937614,
@@ -5371,7 +5811,9 @@
     "local_path": "artworks/35937614.webp",
     "remote_url": "/artworks/35937614.webp",
     "url": "/artworks/35937614.webp",
-    "original_url_display": "/artworks/35937614.webp"
+    "original_url_display": "/artworks/35937614.webp",
+    "width": 642,
+    "height": 520
   },
   {
     "id": 35937614,
@@ -5391,7 +5833,9 @@
     "local_path": "artworks/35937614_p1.webp",
     "remote_url": "/artworks/35937614_p1.webp",
     "url": "/artworks/35937614_p1.webp",
-    "original_url_display": "/artworks/35937614_p1.webp"
+    "original_url_display": "/artworks/35937614_p1.webp",
+    "width": 1103,
+    "height": 1167
   },
   {
     "id": 35647451,
@@ -5411,7 +5855,9 @@
     "url": "/artworks/35647451.webp",
     "original_url_display": "/artworks/35647451.webp",
     "gallery_id": "35647451_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 674,
+    "height": 540
   },
   {
     "id": 32308779,
@@ -5433,7 +5879,9 @@
     "url": "/artworks/32308779.webp",
     "original_url_display": "/artworks/32308779.webp",
     "gallery_id": "32308779_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 1287,
+    "height": 858
   },
   {
     "id": 27971475,
@@ -5453,6 +5901,8 @@
     "url": "/artworks/27971475.webp",
     "original_url_display": "/artworks/27971475.webp",
     "gallery_id": "27971475_p0",
-    "page_index": 0
+    "page_index": 0,
+    "width": 709,
+    "height": 683
   }
 ]

@@ -2,6 +2,7 @@ import { i18n } from '../utils/i18n.js';
 import { escapeHtml, safeExternalUrl } from '../utils/html.js';
 import GalleryYearManager, { getArtworkYear } from '../utils/GalleryYearManager.mjs';
 import GalleryYearRail from '../utils/GalleryYearRail.mjs';
+import YearJumpController from '../utils/YearJumpController.mjs';
 import '../styles/gallery-year-rail.css';
 
 export default class GallerySection {
@@ -12,6 +13,7 @@ export default class GallerySection {
         this.observer = null;
         this.yearManager = null;
         this.yearRail = null;
+        this.yearJump = null;
         this.yearStats = new Map();
 
         window.addEventListener('languageChanged', () => {
@@ -134,6 +136,10 @@ export default class GallerySection {
             onSelect: year => this.jumpToYear(year)
         });
         this.yearRail.connect();
+        this.yearJump = new YearJumpController({
+            layoutRoot: this.element.querySelector('#gallery-years'),
+            stickyHeader: this.element.querySelector('#gallery-header')
+        });
         this.fetchData();
         this.bindEvents();
         this.setupIntersectionObserver();
@@ -233,15 +239,15 @@ export default class GallerySection {
 
         const section = this.yearManager.getSection(year);
         if (!section) return;
-        requestAnimationFrame(() => {
-            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
+        this.yearJump.jumpTo(section);
     }
 
     renderGalleryItem(item, globalIndex, batchIndex) {
         const originalUrl = String(item.url || '');
         const imagePath = this.getOptimizedUrl(originalUrl, 600);
         const loadingAttribute = globalIndex < 4 ? 'eager' : 'lazy';
+        const imageWidth = Number(item.width) > 0 ? Number(item.width) : 600;
+        const imageHeight = Number(item.height) > 0 ? Number(item.height) : 400;
 
         const pageBadge = Number(item.page_count) > 1
             ? `<span class="absolute top-4 right-4 z-20 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md text-[10px] font-mono tracking-wider text-white/85">P ${String((Number(item.page_index) || 0) + 1).padStart(2, '0')} / ${String(item.page_count).padStart(2, '0')}</span>`
@@ -260,8 +266,8 @@ export default class GallerySection {
                             alt="${escapeHtml(item.title)}"
                             loading="${loadingAttribute}"
                             decoding="async"
-                            width="600"
-                            height="400" 
+                            width="${imageWidth}"
+                            height="${imageHeight}"
                             class="w-full h-auto block transform transition-transform duration-700 group-hover:scale-105 min-h-[200px] bg-gray-200"
                         >
                         

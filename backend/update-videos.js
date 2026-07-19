@@ -15,6 +15,14 @@ async function fileExists(filePath) {
     }
 }
 
+async function removeStaleThumbnails(videos) {
+    const activeNames = new Set(videos.map(video => path.basename(video.thumbnail)));
+    const files = await fs.readdir(config.videoThumbnailDir, { withFileTypes: true });
+    await Promise.all(files
+        .filter(file => file.isFile() && file.name.endsWith('.webp') && !activeNames.has(file.name))
+        .map(file => fs.unlink(path.join(config.videoThumbnailDir, file.name))));
+}
+
 async function main() {
     const cookie = process.env.BILIBILI_COOKIE?.trim();
     if (!cookie) {
@@ -60,6 +68,7 @@ async function main() {
         return video;
     });
     await store.write(publicVideos);
+    await removeStaleThumbnails(publicVideos);
     console.log(`同步完成：哔哩哔哩空间 ${config.bilibiliUserId} 共 ${publicVideos.length} 条视频投稿。`);
 }
 
