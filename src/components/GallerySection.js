@@ -3,6 +3,7 @@ import { escapeHtml, safeExternalUrl } from '../utils/html.js';
 import GalleryYearManager, { getArtworkYear } from '../utils/GalleryYearManager.mjs';
 import GalleryYearRail from '../utils/GalleryYearRail.mjs';
 import YearJumpController from '../utils/YearJumpController.mjs';
+import { getArtworkLayout } from '../utils/artworkLayout.mjs';
 import '../styles/gallery-year-rail.css';
 
 export default class GallerySection {
@@ -116,6 +117,9 @@ export default class GallerySection {
                     column-gap: 1.5rem;
                     row-gap: 1.5rem;
                     align-items: start;
+                }
+                @media (min-width: 768px) {
+                    .gallery-item--wide { grid-column: span 2; }
                 }
                 .gallery-year-section + .gallery-year-section { margin-top: 5rem; }
                 .gallery-year-section { scroll-margin-top: 8.5rem; }
@@ -244,18 +248,20 @@ export default class GallerySection {
 
     renderGalleryItem(item, globalIndex, batchIndex) {
         const originalUrl = String(item.url || '');
-        const imagePath = this.getOptimizedUrl(originalUrl, 600);
         const loadingAttribute = globalIndex < 4 ? 'eager' : 'lazy';
         const imageWidth = Number(item.width) > 0 ? Number(item.width) : 600;
         const imageHeight = Number(item.height) > 0 ? Number(item.height) : 400;
+        const layout = getArtworkLayout(imageWidth, imageHeight);
+        const imagePath = this.getOptimizedUrl(originalUrl, layout === 'wide' ? 1200 : 600);
 
         const pageBadge = Number(item.page_count) > 1
             ? `<span class="absolute top-4 right-4 z-20 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md text-[10px] font-mono tracking-wider text-white/85">P ${String((Number(item.page_index) || 0) + 1).padStart(2, '0')} / ${String(item.page_count).padStart(2, '0')}</span>`
             : '';
 
         return `
-                <div class="gallery-item opacity-0 transition-opacity duration-500 ease-out"
-                     data-index="${globalIndex}" 
+                <div class="gallery-item ${layout === 'wide' ? 'gallery-item--wide' : ''} opacity-0 transition-opacity duration-500 ease-out"
+                     data-index="${globalIndex}"
+                     data-layout="${layout}"
                      style="transition-delay: ${batchIndex * 30}ms">
                      
                     <div class="relative rounded-2xl overflow-hidden group cursor-zoom-in bg-gray-100 shadow-sm hover:shadow-xl transition-shadow duration-500">
@@ -268,7 +274,7 @@ export default class GallerySection {
                             decoding="async"
                             width="${imageWidth}"
                             height="${imageHeight}"
-                            class="w-full h-auto block transform transition-transform duration-700 group-hover:scale-105 min-h-[200px] bg-gray-200"
+                            class="w-full h-auto block transform transition-transform duration-700 group-hover:scale-105 bg-gray-200"
                         >
                         
                         <!-- Hover Overlay -->
