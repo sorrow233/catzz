@@ -3,6 +3,7 @@ import { escapeHtml, safeExternalUrl } from '../utils/html.js';
 import { selectRecentActivities } from '../utils/activity.mjs';
 import { createActivityViewModel } from '../utils/activityView.mjs';
 import AutoplayRail from '../utils/AutoplayRail.mjs';
+import '../styles/impressions.css';
 
 export default class ImpressionsSection {
     constructor() {
@@ -26,12 +27,15 @@ export default class ImpressionsSection {
                     <h2 data-impressions-title class="text-[9px] md:text-[10px] font-mono font-normal tracking-[0.3em] text-[#172126]/30 uppercase">${i18n.t('impressions.title')}</h2>
                 </div>
 
-                <div id="impressions-rail" aria-roledescription="carousel" class="flex overflow-hidden touch-pan-y">
-                    <div class="loading-text w-full py-32 text-center text-[#172126]/30 font-mono text-xs tracking-wider">${i18n.t('impressions.loading')}</div>
+                <div id="impressions-viewport" aria-roledescription="carousel" class="overflow-hidden touch-pan-y">
+                    <div id="impressions-track" class="impressions-track flex">
+                        <div class="loading-text w-full shrink-0 py-32 text-center text-[#172126]/30 font-mono text-xs tracking-wider">${i18n.t('impressions.loading')}</div>
+                    </div>
                 </div>
 
-                <div class="h-px bg-[#172126]/12 mt-7 overflow-hidden">
-                    <div id="impressions-progress" class="h-full bg-[#172126]/65 origin-left scale-x-0"></div>
+                <div class="flex items-center gap-4 md:gap-6 mt-5">
+                    <input id="impressions-scrubber" class="impressions-scrubber flex-1" type="range" min="0" max="0" value="0" step="1" aria-label="${i18n.t('impressions.progress')}">
+                    <span id="impressions-position" class="w-14 text-right font-mono text-[9px] tracking-[0.18em] text-[#172126]/36">00 / 00</span>
                 </div>
             </div>
         `;
@@ -40,8 +44,9 @@ export default class ImpressionsSection {
 
     mount() {
         this.rail = new AutoplayRail({
-            container: this.element.querySelector('#impressions-rail'),
-            progress: this.element.querySelector('#impressions-progress'),
+            track: this.element.querySelector('#impressions-track'),
+            scrubber: this.element.querySelector('#impressions-scrubber'),
+            positionLabel: this.element.querySelector('#impressions-position'),
             intervalMs: 6_500
         });
         this.rail.connect();
@@ -52,10 +57,11 @@ export default class ImpressionsSection {
         if (!this.element) return;
         this.element.querySelector('[data-impressions-title]').textContent = i18n.t('impressions.title');
         this.element.querySelector('[data-impressions-eyebrow]').textContent = i18n.t('impressions.eyebrow');
+        this.element.querySelector('#impressions-scrubber').setAttribute('aria-label', i18n.t('impressions.progress'));
     }
 
     async fetchData() {
-        const container = this.element.querySelector('#impressions-rail');
+        const container = this.element.querySelector('#impressions-track');
         try {
             const response = await fetch('/gallery.json');
             if (!response.ok) throw new Error('Failed to load recent impressions');
@@ -69,7 +75,7 @@ export default class ImpressionsSection {
     }
 
     renderItems() {
-        const container = this.element?.querySelector('#impressions-rail');
+        const container = this.element?.querySelector('#impressions-track');
         if (!container) return;
         if (this.items.length === 0) {
             container.innerHTML = `<div class="w-full py-32 text-center text-[#172126]/35">${i18n.t('impressions.empty')}</div>`;

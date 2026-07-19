@@ -15,9 +15,7 @@ export const translations = {
             failed: "加载近期印象失败。",
             empty: "暂时没有近期作品。",
             viewArtwork: "查看作品",
-            drag: "横向浏览",
-            previous: "上一幅作品",
-            next: "下一幅作品"
+            progress: "拖动选择近期印象"
         },
         videos: {
             title: "MOVING IMAGE",
@@ -65,9 +63,7 @@ export const translations = {
             failed: "Failed to load recent impressions.",
             empty: "No recent works found.",
             viewArtwork: "View Artwork",
-            drag: "Drag to explore",
-            previous: "Previous artwork",
-            next: "Next artwork"
+            progress: "Scrub through recent impressions"
         },
         videos: {
             title: "MOVING IMAGE",
@@ -115,9 +111,7 @@ export const translations = {
             failed: "最近の作品を読み込めませんでした。",
             empty: "最近の作品はありません。",
             viewArtwork: "作品を見る",
-            drag: "横にスライド",
-            previous: "前の作品",
-            next: "次の作品"
+            progress: "最近の作品を選択"
         },
         videos: {
             title: "MOVING IMAGE",
@@ -165,9 +159,7 @@ export const translations = {
             failed: "최근 작품을 불러오지 못했습니다.",
             empty: "최근 작품이 없습니다.",
             viewArtwork: "작품 보기",
-            drag: "가로로 탐색",
-            previous: "이전 작품",
-            next: "다음 작품"
+            progress: "최근 작품 선택"
         },
         videos: {
             title: "MOVING IMAGE",
